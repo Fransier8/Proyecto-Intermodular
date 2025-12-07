@@ -13,15 +13,26 @@
 
 <body>
     <header>
-        <nav class="navbar bg-orange-primary p-2">
-            <img src="img/logo.png" class="logo" alt="Logo">
-            <ul class="nav justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link text-black">Inicio</a></li>
-                <li class="nav-item"><a href="#" class="nav-link text-black">Contacto</a></li>
-                <li class="nav-item"><a href="#" class="nav-link text-black">Iniciar sesión</a></li>
-            </ul>
+        <nav class="navbar navbar-expand-md bg-orange-primary p-2">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="img/logo.png" class="logo" alt="Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto text-center text-md-start">
+                        <li class="nav-item"><a href="index.html" class="nav-link text-black">Inicio</a></li>
+                        <li class="nav-item"><a href="#footer" class="nav-link text-black">Contacto</a></li>
+                        <li class="nav-item"><a href="pages/login.html" class="nav-link text-black">Iniciar
+                                sesión</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
-        <div class="banner p-5">
+        <div id="banner" class="banner p-5">
             <div class="text-center bg-dark bg-opacity-75 text-white p-5">
                 <h1 class="display-2 fw-bold">Protectora de animales de La Hoya</h1>
                 <p class="h5">En esta página web puedes adoptar, apadrinar o reservar visitas para ver a los animales
@@ -30,42 +41,84 @@
             </div>
         </div>
     </header>
-    <main class="p-5 bg-orange-300">
-        <h2>Funciones</h2>
-        <section id="carousel" class="carousel slide">
-              <article class="carousel-indicators">
-    <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"></button>
-              </article>
-            <article class="carousel-inner">
-                <article class="carousel-item active">
-                    <h3>Consultar los animales de la protectora</h3>
-                </article>
-                <article class="carousel-item">
-                    <h3>Consultar las salas diponibles para las visitas</h3>
-                </article>
-                <article class="carousel-item">
-                    <h3>Consultar tus reservas</h3>
-                </article>
-                            </article>
-                <a class="carousel-control-prev" href="#carousel" role="button" data-bs-slide="prev">
+    <main class="p-md-5 bg-orange-300 p-2">
+        <h2 class="text-center mb-2 mb-md-5 fw-bold">Funciones</h2>
+        <div id="carousel" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner pb-4">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mb-2 mb-md-0">
+                            <img src="img/perro.jpg" class="w-50">
+                        </div>
+                        <div class="col-12 col-md-6 text-center text-md-start">
+                            <h3>Consultar los animales de la protectora</h3>
+                            <p>Puedes ver todos los animales y sus estados (sin adoptar, adoptados, apadrinados...)
+                                desde la vista de animales de la página. También podras ver todos sus datos, tales como
+                                el nombre, fecha de nacimiento, especie, raza...</p>
+                            <p>Puedes seleccionar el animal en el que estes interesado y solicitar su adopción o
+                                apadrinamiento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row ">
+                        <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mb-2 mb-md-0">
+                            <img src="img/sala.jpg" class="w-50">
+                        </div>
+                        <div class="col-12 col-md-6 text-center text-md-start">
+                            <h3>Consultar las salas diponibles</h3>
+                            <p>Puedes ver todas las salas que disponemos en la protectora para realizar visitas a los
+                                animales en los que estes interesado desde la
+                                vista de salas. También podras ver todos sus datos, tales como los horarios, capacidad,
+                                ubicación...
+                            </p>
+                            <p>En ellas
+                                podras interactuar con el animal que hayas elegido bajo la supervisión de un monitor.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mb-2 mb-md-0">
+                            <img src="img/persona-con-mascota.webp" class="w-50">
+                        </div>
+                        <div class="col-12 col-md-6 text-center text-md-start">
+                            <h3>Consultar tus reservas</h3>
+                            <p>Una vez hayas realizado una reserva de una visita, podrás ver toda la información en la
+                                vista de reservas. También podras ver
+                                los procesos de adopción y de apadrinamiento que estes llevando a cabo en la vista de
+                                mis mascotas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" href="#carousel" role="button" data-bs-target="#carousel"
+                    data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Anterior</span>
-                </a>
-                <a class="carousel-control-next" href="#carousel" role="button" data-bs-slide="next">
+                </button>
+                <button class="carousel-control-next" href="#carousel" role="button" data-bs-target="#carousel"
+                    data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Siguiente</span>
-                </a>
-        </section>
+                </button>
+            </div>
+        </div>
     </main>
-    <footer class="bg-orange-primary p-4 container-fluid">
+    <footer id="footer" class="bg-orange-primary p-2 p-md-4 container-fluid">
         <section class="row justify-content-around">
-            <article class="col-auto row align-items-center">
-                <img src="img/logo.png" class="logo col-auto" alt="Logo">
-                <h5 class="col-auto">Protectora de animales de La Hoya</h5>
+            <article
+                class="col-auto d-flex flex-column flex-md-row align-items-center mb-3 mb-md-0 text-center text-md-start">
+                <img src="img/logo.png" class="logo col-auto mb-1 mb-md-0" alt="Logo">
+                <h5 class="col-auto ms-0 ms-md-3">Protectora de animales de La Hoya</h5>
             </article>
-            <article class="col-auto">
+            <article class="col-auto mb-3 mb-md-0">
                 <h3>Datos de contacto</h3>
                 <p>Correo electrónico: protectora@gmail.com</p>
                 <p>Teléfono: 654 456 456</p>
@@ -74,11 +127,11 @@
                     src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d718.6122505867475!2d-0.6858312023988516!3d38.21899165561132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1765108071138!5m2!1ses!2ses"
                     allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </article>
-            <article class="col-auto">
+            <article class="col-auto text-center text-md-start">
                 <h3>Redes sociales</h3>
-                <a href="#" class="text-black"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="text-black"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="text-black"><i class="bi bi-instagram"></i></a>
+                <a href="https://www.facebook.com/" class="text-black"><i class="bi bi-facebook fs-1"></i></a>
+                <a href="https://x.com" class="text-black mx-2"><i class="bi bi-twitter fs-1"></i></a>
+                <a href="https://www.instagram.com/" class="text-black"><i class="bi bi-instagram fs-1"></i></a>
             </article>
         </section>
     </footer>
