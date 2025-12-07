@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --orange-50: #fff9ed;
+    --orange-100: #fff2d4;
+    --orange-200: #ffe1a9;
+    --orange-300: #ffca72;
+    --orange-400: #fda93a;
+    --orange-500: #fc9727;
+    --orange-600: #ed7109;
+    --orange-700: #c4560a;
+    --orange-800: #9c4310;
+    --orange-900: #7d3911;
+    --orange-950: #441b06;
+    --bs-body-font-family: 'Poppins', sans-serif;
+    --bs-heading-font-family: 'Poppins', sans-serif;
+}
+
+.bg-orange-primary {
+    background-color: var(--orange-400);
+}
+
+.bg-orange-300 {
+    background-color: var(--orange-300);
+}
+
+.logo {
+    height: 80px;
+}
+
+.banner {
+    background-image: url("../img/banner-portada.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: #000;
+}
+
+.carousel-indicators .active {
+    background-color: #000;
+}
+
+.carousel-control-prev-icon {
+ background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+
+.mapa {
+        width: 100%;
+    max-width: 400px;  
+    height: 300px;  
+    border: 0; 
+}
+

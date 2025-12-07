@@ -7,20 +7,80 @@
     <!-- Enlace al archivo CSS de Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>Protectora de animales</title>
 </head>
 
 <body>
-    <header class="position-relative">
-        <img class="img-fluid" src="img/banner-portada.jpg">
-        <div class="position-absolute translate-middle text-center top-50 start-50">
-            <h1>Protectora de animales de La Hoya</h1>
-            <p>En esta página web puedes adoptar, apadrinar o reservar visitas para ver a los animales que estan buscando un hogar</p>
+    <header>
+        <nav class="navbar bg-orange-primary p-2">
+            <img src="img/logo.png" class="logo" alt="Logo">
+            <ul class="nav justify-content-end">
+                <li class="nav-item"><a href="#" class="nav-link text-black">Inicio</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-black">Contacto</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-black">Iniciar sesión</a></li>
+            </ul>
+        </nav>
+        <div class="banner p-5">
+            <div class="text-center bg-dark bg-opacity-75 text-white p-5">
+                <h1 class="display-2 fw-bold">Protectora de animales de La Hoya</h1>
+                <p class="h5">En esta página web puedes adoptar, apadrinar o reservar visitas para ver a los animales
+                    que estan
+                    buscando un hogar</p>
+            </div>
         </div>
     </header>
-    <main></main>
-    <footer>
-        
+    <main class="p-5 bg-orange-300">
+        <h2>Funciones</h2>
+        <section id="carousel" class="carousel slide">
+              <article class="carousel-indicators">
+    <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"></button>
+              </article>
+            <article class="carousel-inner">
+                <article class="carousel-item active">
+                    <h3>Consultar los animales de la protectora</h3>
+                </article>
+                <article class="carousel-item">
+                    <h3>Consultar las salas diponibles para las visitas</h3>
+                </article>
+                <article class="carousel-item">
+                    <h3>Consultar tus reservas</h3>
+                </article>
+                            </article>
+                <a class="carousel-control-prev" href="#carousel" role="button" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel" role="button" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </a>
+        </section>
+    </main>
+    <footer class="bg-orange-primary p-4 container-fluid">
+        <section class="row justify-content-around">
+            <article class="col-auto row align-items-center">
+                <img src="img/logo.png" class="logo col-auto" alt="Logo">
+                <h5 class="col-auto">Protectora de animales de La Hoya</h5>
+            </article>
+            <article class="col-auto">
+                <h3>Datos de contacto</h3>
+                <p>Correo electrónico: protectora@gmail.com</p>
+                <p>Teléfono: 654 456 456</p>
+                <p>Dirección: Camí Fondo de l'Ermita, 03294 Elx, Alicante</p>
+                <iframe class="mapa"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d718.6122505867475!2d-0.6858312023988516!3d38.21899165561132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2ses!4v1765108071138!5m2!1ses!2ses"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </article>
+            <article class="col-auto">
+                <h3>Redes sociales</h3>
+                <a href="#" class="text-black"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-black"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-black"><i class="bi bi-instagram"></i></a>
+            </article>
+        </section>
     </footer>
     <!-- Enlace a los archivos JavaScript de Bootstrap 5 y Popper en un solo archivo (bootstrap.bundle.min.js) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
