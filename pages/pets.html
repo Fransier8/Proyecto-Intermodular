@@ -13,7 +13,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-md bg-orange-primary p-2">
+        <nav class="navbar navbar-expand-md bg-orange-primary p-2 border-bottom border-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="../img/logo.png" class="logo" alt="Logo">
@@ -24,10 +24,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul class="navbar-nav ms-auto text-center text-md-start">
-                        <li class="nav-item"><a href="../index.html" class="nav-link text-black">Inicio</a></li>
-                        <li class="nav-item"><a href="#footer" class="nav-link text-black">Contacto</a></li>
-                        <li class="nav-item"><a href="login.html" class="nav-link text-black">Iniciar
-                                sesión</a></li>
+                        <li class="nav-item"><a href="../index.html" class="text-black btn">Inicio</a></li>
+                        <li class="nav-item"><a href="#footer" class="text-black btn">Contacto</a></li>
+                        <li class="nav-item"><a href="login.html" class="text-black btn">Iniciar sesión</a></li>
+                        <li class="nav-item d-md-none"><a href="pets.html" class="text-black btn">Animales</a></li>
+                        <li class="nav-item d-md-none"><a class="text-black btn">Salas</a></li>
+                        <li class="nav-item d-md-none"><a class="text-black btn">Mis animales</a></li>
+                        <li class="nav-item d-md-none"><a class="text-black btn">Mis reservas</a></li>
                     </ul>
                 </div>
             </div>
@@ -35,148 +38,223 @@
     </header>
     <main class="container-fluid bg-orange-300">
         <section class="row">
-            <aside class="bg-orange-primary p-3 col-auto">
-                <h4>Animales</h4>
-                <h4>Salas</h4>
-                <h4>Mis animales</h4>
-                <h4>Mis reservas</h4>
+            <aside class="bg-orange-primary pt-3 pb-3 col-auto border-end border-dark d-none d-md-flex flex-column">
+                <a href="pets.html" class="btn fs-4 text-start">Animales</a>
+                <a class="btn fs-4 text-start">Salas</a>
+                <a class="btn fs-4 text-start">Mis animales</a>
+                <a class="btn fs-4 text-start">Mis reservas</a>
             </aside>
             <section class="col p-3">
                 <h1>Animales</h1>
                 <h4>Búsqueda y filtros</h4>
-                <form>
-                    <input name="buscar" type="text">
-                    <input type="button" value="Buscar">
+                <form class="row g-2 align-items-end">
+                    <div class="col-12 col-md-3">
+                        <label class="form-label">Ordenar por</label>
+                        <select class="form-select" name="ordenar">
+                            <option value="jovenes">Más jóvenes</option>
+                            <option value="viejos">Más viejos</option>
+                            <option value="nombre_asc">Nombre A–Z</option>
+                            <option value="nombre_desc">Nombre Z–A</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label class="form-label">Especie</label>
+                        <select class="form-select" name="especie">
+                            <option value="">Todas</option>
+                            <option value="perro">Perro</option>
+                            <option value="gato">Gato</option>
+                            <option value="conejo">Conejo</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <label class="form-label">Estado</label>
+                        <select class="form-select" name="estado">
+                            <option value="">Todos</option>
+                            <option value="sin_adoptar">Sin adoptar</option>
+                            <option value="adoptado">Adoptado</option>
+                            <option value="apadrinado">Apadrinado</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <label class="form-label">Buscar</label>
+                        <input name="buscar" type="text" class="form-control">
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <button type="submit" class="btn bg-orange-primary w-100">
+                            Buscar
+                        </button>
+                    </div>
                 </form>
+
                 <section class="container-fluid mt-4">
                     <article class="row g-3">
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="bg-orange-primary rounded card p-3">
                                 <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
+                                <img class="card-img-top mb-3" alt="Perrito"
                                     src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                                 <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button class="btn">Más información</button>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="bg-orange-primary rounded card p-3">
                                 <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
+                                <img class="card-img-top mb-3" alt="Perrito"
                                     src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                                 <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="bg-orange-primary rounded card p-3">
-                                <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
-                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
-                                <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="bg-orange-primary rounded card p-3">
-                                <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
-                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
-                                <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
                             </div>
                         </div>
                                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="bg-orange-primary rounded card p-3">
                                 <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
+                                <img class="card-img-top mb-3" alt="Perrito"
                                     src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                                 <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="bg-orange-primary rounded card p-3">
-                                <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
-                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
-                                <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="bg-orange-primary rounded card p-3">
-                                <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
-                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
-                                <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="bg-orange-primary rounded card p-3">
-                                <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
-                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
-                                <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
                             </div>
                         </div>
                                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="bg-orange-primary rounded card p-3">
                                 <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
+                                <img class="card-img-top mb-3" alt="Perrito"
                                     src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                                 <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="bg-orange-primary rounded card p-3">
                                 <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
+                                <img class="card-img-top mb-3" alt="Perrito"
                                     src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                                 <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="bg-orange-primary rounded card p-3">
                                 <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
+                                <img class="card-img-top mb-3" alt="Perrito"
                                     src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                                 <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="bg-orange-primary rounded card p-3">
                                 <h4 class="card-title">Perrito</h4>
-                                <img class="card-img-top"
+                                <img class="card-img-top mb-3" alt="Perrito"
                                     src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                                 <p>Especie: Perro</p>
-                                <p>Raza: Dalmata</p>
-                                <button>Más información</button>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
+                            </div>
+                        </div>
+                                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="bg-orange-primary rounded card p-3">
+                                <h4 class="card-title">Perrito</h4>
+                                <img class="card-img-top mb-3" alt="Perrito"
+                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
+                                <p>Especie: Perro</p>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
+                            </div>
+                        </div>
+                                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="bg-orange-primary rounded card p-3">
+                                <h4 class="card-title">Perrito</h4>
+                                <img class="card-img-top mb-3" alt="Perrito"
+                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
+                                <p>Especie: Perro</p>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
+                            </div>
+                        </div>
+                                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="bg-orange-primary rounded card p-3">
+                                <h4 class="card-title">Perrito</h4>
+                                <img class="card-img-top mb-3" alt="Perrito"
+                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
+                                <p>Especie: Perro</p>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
+                            </div>
+                        </div>
+                                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="bg-orange-primary rounded card p-3">
+                                <h4 class="card-title">Perrito</h4>
+                                <img class="card-img-top mb-3" alt="Perrito"
+                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
+                                <p>Especie: Perro</p>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
+                            </div>
+                        </div>
+                                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="bg-orange-primary rounded card p-3">
+                                <h4 class="card-title">Perrito</h4>
+                                <img class="card-img-top mb-3" alt="Perrito"
+                                    src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
+                                <p>Especie: Perro</p>
+                                <p>Raza: Dálmata</p>
+                                <p>Estado: Sin adoptar</p>
+                                <a href="pet.html" class="btn bg-orange-primary">Más información</a>
                             </div>
                         </div>
                     </article>
+                    <nav class="mt-4 d-flex justify-content-center">
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link text-black" href="#" aria-label="Anterior">
+                                    &laquo;
+                                </a>
+                            </li>
+
+                            <li class="page-item active">
+                                <a class="page-link bg-orange-primary border-dark text-black" href="#">1</a>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link text-black" href="#">2</a>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link text-black" href="#">3</a>
+                            </li>
+
+                            <li class="page-item">
+                                <a class="page-link text-black" href="#" aria-label="Siguiente">
+                                    &raquo;
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
                 </section>
             </section>
         </section>
 
     </main>
-    <footer id="footer" class="bg-orange-primary p-2 p-md-4 container-fluid">
+    <footer id="footer" class="bg-orange-primary p-2 p-md-4 container-fluid border-top border-dark">
         <section class="row justify-content-around">
             <article
                 class="col-auto d-flex flex-column flex-md-row align-items-center mb-3 mb-md-0 text-center text-md-start">

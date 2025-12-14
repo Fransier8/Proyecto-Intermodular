@@ -16,6 +16,10 @@
     --bs-heading-font-family: 'Poppins', sans-serif;
 }
 
+.btn:hover {
+    background-color: var(--orange-500);
+}
+
 .bg-orange-primary {
     background-color: var(--orange-400);
 }
@@ -53,6 +57,14 @@
 .card-img-top {
     max-height: 300px;
     object-fit: cover;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--orange-400) !important;
+}
+
+.breadcrumb-item:not(.active) a {
+    color: var(--orange-700);
 }
 
 .mapa {
