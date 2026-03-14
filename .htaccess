@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteBase /proyecto/Proyecto-Intermodular
 
-RewriteCond %{THE_REQUEST} \s/+proyecto/Proyecto-Intermodular/index\.php\?vew=([^&\s]+) [NC]
+RewriteCond %{THE_REQUEST} \s/+proyecto/Proyecto-Intermodular/index\.php\?view=([^&\s]+) [NC]
 RewriteRule ^index\.php$ %1? [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} -f [OR]

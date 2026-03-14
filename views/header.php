@@ -14,6 +14,10 @@
                     <li class="nav-item"><a href="#footer" class="text-black btn">Contacto</a></li>
                     <li class="nav-item"><a href="<?= BASE_URL ?>login" class="text-black btn">Iniciar
                             sesión</a></li>
+                    <li class="nav-item"><a href="<?= BASE_URL ?>login" class="text-black btn">Registrarse</a></li>
+                    <?php if (!empty($_SESSION['user'])): ?>
+                        <p><?= $_SESSION['user']['user_name'] ?></p>
+                    <?php endif; ?>
                     <?php if ($view == "pets"): ?>
                         <li class="nav-item d-md-none"><a href="pets.html" class="text-black btn">Animales</a></li>
                         <li class="nav-item d-md-none"><a class="text-black btn">Salas</a></li>

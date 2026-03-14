@@ -1,7 +1,4 @@
 <?php
-header("Cache-Control: no-cache, must-revalidate");
-header("Pragma: no-cache");
-header("Expires: 0");
 define('BASE_URL', '/proyecto/Proyecto-Intermodular/');
 session_start();
 ?>

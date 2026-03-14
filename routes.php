@@ -1,7 +1,7 @@
 <?php
 $routes = [
     'home' => ['views/home.php', null],
-    'login' => ['views/login.php', null],
+    'login' => ['controllers/users_controller.php', 'login'],
     'pets' => ['controllers/pets_controller.php', 'listPets']
 ];
 

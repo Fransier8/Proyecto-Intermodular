@@ -52,7 +52,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -64,7 +64,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -76,7 +76,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -88,7 +88,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -100,7 +100,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -112,7 +112,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -124,7 +124,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -136,7 +136,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -148,7 +148,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -160,7 +160,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -172,7 +172,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
@@ -184,7 +184,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="bg-orange-primary rounded card p-3">
                             <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito"
+                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
                                 src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
