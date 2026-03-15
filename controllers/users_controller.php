@@ -1,7 +1,7 @@
 <?php
 require_once 'models/users_model.php';
 
-function login()
+function logIn()
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'] ?? '';
@@ -17,7 +17,7 @@ function login()
                 'user_name' => $user['user_name']
             ];
             //unset($_SESSION['errores'], $_SESSION['datos_antiguos']);
-            header("Location: " . BASE_URL . "pets");
+            header("Location: " . BASE_URL . "animals");
             exit;
         } else {
             $_SESSION['errors'] = ["Email o contraseña incorrectos o user inactivo"];
@@ -27,5 +27,31 @@ function login()
         }
     }
     require 'views/login.php';
+}
+
+function logOut()
+{
+    if (!empty($_SESSION['shopping_basket'])) {
+        setcookie('shopping_basket', json_encode($_SESSION['shopping_basket']), time() + 604800, "/");
+    }
+    session_unset();
+    session_destroy();
+    header("Location: " . BASE_URL . "home");
+    exit();
+}
+
+function listUsers()
+{
+    require 'views/users.php';
+}
+
+function viewUserDetails()
+{
+    require 'views/user.php';
+}
+
+function viewProfileDetails()
+{
+    require 'views/profile.php';
 }
 ?>

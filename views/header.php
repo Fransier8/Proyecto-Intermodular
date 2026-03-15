@@ -10,19 +10,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto text-center text-md-start">
-                    <li class="nav-item"><a href="<?= BASE_URL ?>home" class="text-black btn">Inicio</a></li>
-                    <li class="nav-item"><a href="#footer" class="text-black btn">Contacto</a></li>
-                    <li class="nav-item"><a href="<?= BASE_URL ?>login" class="text-black btn">Iniciar
-                            sesión</a></li>
-                    <li class="nav-item"><a href="<?= BASE_URL ?>login" class="text-black btn">Registrarse</a></li>
                     <?php if (!empty($_SESSION['user'])): ?>
-                        <p><?= $_SESSION['user']['user_name'] ?></p>
-                    <?php endif; ?>
-                    <?php if ($view == "pets"): ?>
-                        <li class="nav-item d-md-none"><a href="pets.html" class="text-black btn">Animales</a></li>
+                        <a href="<?= BASE_URL ?>profile"><?= $_SESSION['user']['user_name'] ?></a>
+                        <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>animals" class="text-black btn">Animales</a>
+                        </li>
                         <li class="nav-item d-md-none"><a class="text-black btn">Salas</a></li>
                         <li class="nav-item d-md-none"><a class="text-black btn">Mis animales</a></li>
                         <li class="nav-item d-md-none"><a class="text-black btn">Mis reservas</a></li>
+                        <li class="nav-item"><a href="<?= BASE_URL ?>logout" class="text-black btn">Cerrar
+                                sesión</a></li>
+                    <?php else: ?>
+                        <li class="nav-item"><a href="<?= BASE_URL ?>home" class="text-black btn">Inicio</a></li>
+                        <li class="nav-item"><a href="#footer" class="text-black btn">Contacto</a></li>
+                        <li class="nav-item"><a href="<?= BASE_URL ?>login" class="text-black btn">Iniciar
+                                sesión</a></li>
+                        <li class="nav-item"><a href="<?= BASE_URL ?>login" class="text-black btn">Registrarse</a></li>
                     <?php endif; ?>
                 </ul>
             </div>

@@ -1,13 +1,10 @@
 <main class="container-fluid bg-orange-300">
     <section class="row">
-        <aside class="bg-orange-primary pt-3 pb-3 col-auto border-end border-dark d-none d-md-flex flex-column">
-            <a href="<?= BASE_URL ?>pets" class="btn fs-4 text-start">Animales</a>
-            <a class="btn fs-4 text-start">Salas</a>
-            <a class="btn fs-4 text-start">Mis animales</a>
-            <a class="btn fs-4 text-start">Mis reservas</a>
-        </aside>
+        <?php
+        require 'views/aside.php';
+        ?>
         <section class="col p-3">
-            <h1>Animales</h1>
+            <h1>Mis animales</h1>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
                 <div class="col-12 col-md-3">
@@ -57,7 +54,7 @@
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
                             <p>Estado: Sin adoptar</p>
-                            <a href="pet.html" class="btn bg-orange-primary border-dark border-1">Más
+                            <a href="<?= BASE_URL ?>animal" class="btn bg-orange-primary border-dark border-1">Más
                                 información</a>
                         </div>
                     </div>
