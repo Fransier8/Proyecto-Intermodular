@@ -18,7 +18,7 @@ $routes = [
 
 
 $publicViews = ['home', 'login'];
-$privateViews = ['animals', 'animal', 'rooms', 'room', 'users', 'user', 'reservations', 'reservation', 'my_animals', 'my_reservations' . 'profile'];
+$privateViews = ['animals', 'animal', 'rooms', 'room', 'users', 'user', 'reservations', 'reservation', 'my_animals', 'my_reservations', 'profile'];
 
 if (!isset($routes[$view]) && !isset($_SESSION['user'])) {
     header("Location: " . BASE_URL . "home");

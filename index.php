@@ -20,10 +20,14 @@ session_start();
 <body>
     <?php
     $view = $_GET['view'] ?? 'home';
-    require 'views/header.php';
+    if (!isset($_GET['ajax'])) {
+        require 'views/header.php';
+    }
     require_once 'routes.php';
-    require 'views/footer.php'
-        ?>
+    if (!isset($_GET['ajax'])) {
+        require 'views/footer.php';
+    }
+    ?>
     <!-- Enlace a los archivos JavaScript de Bootstrap 5 y Popper en un solo archivo (bootstrap.bundle.min.js) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

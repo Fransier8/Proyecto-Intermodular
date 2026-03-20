@@ -42,6 +42,23 @@ function logOut()
 
 function listUsers()
 {
+    $search = $_GET['search'] ?? '';
+    $order = $_GET['order'] ?? '';
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $perPage = 8;
+
+    $totalUsers = count(getUsers($search, $order));
+    $totalPages = ceil($totalUsers / $perPage);
+
+    $offset = ($page - 1) * $perPage;
+    $users = getUsers($search, $order, $perPage, $offset);
+
+
+    if (isset($_GET['ajax'])) {
+        require 'views/lists/users_list.php';
+        exit;
+    }
+
     require 'views/users.php';
 }
 
