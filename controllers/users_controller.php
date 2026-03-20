@@ -44,15 +44,16 @@ function listUsers()
 {
     $search = $_GET['search'] ?? '';
     $order = $_GET['order'] ?? '';
+    $role = $_GET['role'] ?? '';
+    $active = $_GET['active'] ?? '';
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $perPage = 8;
 
-    $totalUsers = count(getUsers($search, $order));
+    $totalUsers = countUsers($search, $role, $active);
     $totalPages = ceil($totalUsers / $perPage);
 
     $offset = ($page - 1) * $perPage;
-    $users = getUsers($search, $order, $perPage, $offset);
-
+    $users = getUsers($search, $order, $role, $active, $perPage, $offset);
 
     if (isset($_GET['ajax'])) {
         require 'views/lists/users_list.php';

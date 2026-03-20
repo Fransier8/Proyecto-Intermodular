@@ -16,6 +16,8 @@
                         <option value="name_desc">Nombre Z–A</option>
                         <option value="email_asc">Email A–Z</option>
                         <option value="email_desc">Email Z–A</option>
+                        <option value="identification_asc">Identificación ascendente</option>
+                        <option value="identification_desc">Identificación descendente</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-2">
@@ -69,12 +71,12 @@
                 .then(html => {
                     usersContainer.innerHTML = html;
 
-                    document.querySelectorAll('.pagination .page-link').forEach(link => {
-                        link.addEventListener('click', function (e) {
+                    usersContainer.addEventListener('click', function (e) {
+                        if (e.target.classList.contains('page-link')) {
                             e.preventDefault();
-                            const page = this.dataset.page;
+                            const page = e.target.dataset.page;
                             fetchUsers(page);
-                        });
+                        }
                     });
                 });
         }
