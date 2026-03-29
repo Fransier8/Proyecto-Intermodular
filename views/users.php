@@ -70,16 +70,38 @@
                 .then(res => res.text())
                 .then(html => {
                     usersContainer.innerHTML = html;
-
-                    usersContainer.addEventListener('click', function (e) {
-                        if (e.target.classList.contains('page-link')) {
-                            e.preventDefault();
-                            const page = e.target.dataset.page;
-                            fetchUsers(page);
-                        }
-                    });
                 });
         }
+
+        usersContainer.addEventListener('click', function (e) {
+
+            if (e.target.closest('.page-link')) {
+                e.preventDefault();
+                const page = e.target.closest('.page-link').dataset.page;
+                fetchUsers(page);
+            }
+
+            if (e.target.closest('.change-status-btn')) {
+                const btn = e.target.closest('.change-status-btn');
+                const id = btn.dataset.id;
+                const active = btn.dataset.active;
+
+                if (!confirm('¿Seguro que quieres cambiar el estado de este usuario?')) {
+                    return;
+                }
+
+                fetch("<?= BASE_URL ?>change_user_status", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id + "&active=" + active
+                })
+                    .then(() => {
+                        fetchUsers();
+                    });
+            }
+        });
 
         form.addEventListener("submit", function (e) {
             e.preventDefault();

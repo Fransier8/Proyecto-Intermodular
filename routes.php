@@ -15,11 +15,12 @@ $routes = [
     'my_reservations' => ['controllers/reservations_controller.php', 'listMyReservations'],
     'profile' => ['controllers/users_controller.php', 'viewProfileDetails'],
     'reset_password' => ['controllers/users_controller.php', 'resetPassword'],
+    'change_user_status' => ['controllers/users_controller.php', 'changeUserActiveStatus'],
 ];
 
 
 $publicViews = ['home', 'login', 'reset_password'];
-$privateViews = ['animals', 'animal', 'rooms', 'room', 'users', 'user', 'reservations', 'reservation', 'my_animals', 'my_reservations', 'profile'];
+$privateViews = ['animals', 'animal', 'rooms', 'room', 'users', 'user', 'reservations', 'reservation', 'my_animals', 'my_reservations', 'profile', 'change_user_status'];
 
 if (!isset($routes[$view]) && !isset($_SESSION['user'])) {
     header("Location: " . BASE_URL . "home");

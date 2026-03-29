@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md bg-orange-primary p-2 border-bottom border-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="<?= BASE_URL ?>home">
-                <img src="img/logo.png" class="logo" alt="">
+                <img src="<?= BASE_URL ?>img/logo.png" class="logo" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
                 aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">

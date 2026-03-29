@@ -64,6 +64,14 @@ function getUsers($search, $order, $role, $active, $limit = null, $offset = 0)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getUserById($id)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM users WHERE id = :id");
+    $stmt->execute([':id' => $id]);
+    return $stmt->fetch();
+}
+
 function getUserByEmail($email)
 {
     $con = get_conexion();
@@ -125,6 +133,16 @@ function deleteUser($id)
     $stmt = $con->prepare("DELETE FROM users WHERE id = :id");
     $stmt->execute([
         ':id' => "$id"
+    ]);
+}
+
+function changeUserStatus($id, $active)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("UPDATE users SET active = :active WHERE id = :id");
+    $stmt->execute([
+        ':id' => $id,
+        ':active' => $active
     ]);
 }
 ?>

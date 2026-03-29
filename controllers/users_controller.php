@@ -11,7 +11,7 @@ function logIn()
         if ($user && $user['active'] && password_verify($password, $user['password'])) {
             session_regenerate_id(true);
             $_SESSION['user'] = [
-                'dni' => $user['dni'],
+                'id' => $user['id'],
                 'email' => $user['email'],
                 'role' => $user['role'],
                 'user_name' => $user['user_name']
@@ -65,6 +65,16 @@ function listUsers()
 
 function viewUserDetails()
 {
+    $id = $_GET['id'] ?? null;
+    if (!$id) {
+        header("Location: " . BASE_URL . "users");
+        exit();
+    }
+    $user = getUserById($id);
+    if (!$user) {
+        header("Location: " . BASE_URL . "users");
+        exit();
+    }
     require 'views/user.php';
 }
 
@@ -95,7 +105,7 @@ function resetPassword()
     require 'views/reset_password.php';
 }
 
-function cambiarEstadoActivoUsuario()
+function changeUserActiveStatus()
 {
     if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'administrador') {
         header("Location: " . BASE_URL . "home");
@@ -104,10 +114,14 @@ function cambiarEstadoActivoUsuario()
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = $_POST['id'] ?? null;
         $active = isset($_POST['active']) ? intval($_POST['active']) : 0;
-        if ($id) {
-            cambiarEstadoUsuario($id, $active);
+        if ($id == $_SESSION['user']['id']) {
+            echo "error";
+            exit();
         }
-        header("Location: " . BASE_URL . "users");
+        if ($id) {
+            changeUserStatus($id, $active);
+        }
+        echo "ok";
         exit();
     }
 }

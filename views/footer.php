@@ -2,7 +2,7 @@
     <section class="row justify-content-around">
         <article
             class="col-auto d-flex flex-column flex-md-row align-items-center mb-3 mb-md-0 text-center text-md-start">
-            <img src="img/logo.png" class="logo col-auto mb-1 mb-md-0" alt="Logo">
+            <img src="<?= BASE_URL ?>img/logo.png" class="logo col-auto mb-1 mb-md-0" alt="Logo">
             <h5 class="col-auto ms-0 ms-md-3">Protectora de animales de La Hoya</h5>
         </article>
         <article class="col-auto mb-3 mb-md-0">
