@@ -72,4 +72,43 @@ function viewProfileDetails()
 {
     require 'views/profile.php';
 }
+
+function resetPassword()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $email = $_POST['email'] ?? '';
+        $identification = $_POST['identification'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        $user = getUserByEmailAndIdentification($email, $identification);
+        if ($user && $user['active']) {
+            $password = password_hash($password, PASSWORD_BCRYPT);
+            updatePassword($user['id'], $password);
+            header("Location: " . BASE_URL . "login");
+            exit;
+        } else {
+            $_SESSION['errors'] = ["Email o contraseña incorrectos o user inactivo"];
+            header("Location: " . BASE_URL . "reset_password");
+            exit();
+        }
+    }
+    require 'views/reset_password.php';
+}
+
+function cambiarEstadoActivoUsuario()
+{
+    if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'administrador') {
+        header("Location: " . BASE_URL . "home");
+        exit();
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'] ?? null;
+        $active = isset($_POST['active']) ? intval($_POST['active']) : 0;
+        if ($id) {
+            cambiarEstadoUsuario($id, $active);
+        }
+        header("Location: " . BASE_URL . "users");
+        exit();
+    }
+}
 ?>

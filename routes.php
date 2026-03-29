@@ -14,10 +14,11 @@ $routes = [
     'my_animals' => ['controllers/animals_controller.php', 'listMyAnimals'],
     'my_reservations' => ['controllers/reservations_controller.php', 'listMyReservations'],
     'profile' => ['controllers/users_controller.php', 'viewProfileDetails'],
+    'reset_password' => ['controllers/users_controller.php', 'resetPassword'],
 ];
 
 
-$publicViews = ['home', 'login'];
+$publicViews = ['home', 'login', 'reset_password'];
 $privateViews = ['animals', 'animal', 'rooms', 'room', 'users', 'user', 'reservations', 'reservation', 'my_animals', 'my_reservations', 'profile'];
 
 if (!isset($routes[$view]) && !isset($_SESSION['user'])) {

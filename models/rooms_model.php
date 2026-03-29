@@ -73,4 +73,13 @@ function countRooms($search, $active)
 
     return $stmt->fetchColumn();
 }
+
+function deleteRoom($id)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("DELETE FROM rooms WHERE id = :id");
+    $stmt->execute([
+        ':id' => "$id"
+    ]);
+}
 ?>

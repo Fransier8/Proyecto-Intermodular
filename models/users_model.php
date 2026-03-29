@@ -72,6 +72,14 @@ function getUserByEmail($email)
     return $stmt->fetch();
 }
 
+function getUserByEmailAndIdentification($email, $identification)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM users WHERE email = :email AND identification = :identification");
+    $stmt->execute([':email' => $email, ':identification' => $identification]);
+    return $stmt->fetch();
+}
+
 function countUsers($search, $role, $active)
 {
     $con = get_conexion();
@@ -95,5 +103,28 @@ function countUsers($search, $role, $active)
     $stmt->execute($params);
 
     return $stmt->fetchColumn();
+}
+
+function updatePassword($id, $password)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare(
+        "UPDATE users 
+             SET password = :password
+             WHERE id = :id"
+    );
+    $stmt->execute([
+        ':id' => $id,
+        ':password' => $password
+    ]);
+}
+
+function deleteUser($id)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("DELETE FROM users WHERE id = :id");
+    $stmt->execute([
+        ':id' => "$id"
+    ]);
 }
 ?>
