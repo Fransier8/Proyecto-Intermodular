@@ -16,16 +16,20 @@
                     <h2 class="mb-3"><?= htmlspecialchars($user['user_name']) ?></h2>
                     <div class="row row-cols-1 row-cols-md-2 g-3">
                         <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Nombre:</span> <span><?= htmlspecialchars($user['name']) ?></span></p>
+                            <p class="mb-1"><span class="fw-bold">Nombre:</span>
+                                <span><?= htmlspecialchars($user['name']) ?></span></p>
                         </div>
                         <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Email:</span> <span><?= htmlspecialchars($user['email']) ?></span></p>
+                            <p class="mb-1"><span class="fw-bold">Email:</span>
+                                <span><?= htmlspecialchars($user['email']) ?></span></p>
                         </div>
                         <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Identifiacación:</span> <span><?= htmlspecialchars($user['identification']) ?></span></p>
+                            <p class="mb-1"><span class="fw-bold">Identifiacación:</span>
+                                <span><?= htmlspecialchars($user['identification']) ?></span></p>
                         </div>
                         <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Rol:</span> <span><?= htmlspecialchars($user['role']) ?></span></p>
+                            <p class="mb-1"><span class="fw-bold">Rol:</span>
+                                <span><?= htmlspecialchars($user['role']) ?></span></p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Teléfono:</span>
@@ -44,9 +48,8 @@
                         </div>
                     </div>
                     <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
-                        <button class="btn bg-orange-primary border-dark flex-fill">
-                            Modificar
-                        </button>
+                        <a href="<?= BASE_URL ?>edit_user/<?= $user['id'] ?>"
+                            class="btn bg-orange-primary border-dark border-1 flex-fill">Modificar</a>
                     </div>
                 </div>
             </article>

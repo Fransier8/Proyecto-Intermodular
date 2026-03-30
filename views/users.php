@@ -4,7 +4,12 @@
         require 'views/aside.php';
         ?>
         <section class="col p-3">
-            <h1>Usuarios</h1>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <h1 class="mb-0">Usuarios</h1>
+                <button class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Crear usuario
+                </button>
+            </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
                 <div class="col-12 col-md-3">

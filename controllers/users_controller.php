@@ -78,6 +78,21 @@ function viewUserDetails()
     require 'views/user.php';
 }
 
+function editUser()
+{
+    $id = $_GET['id'] ?? null;
+    if (!$id) {
+        header("Location: " . BASE_URL . "users");
+        exit();
+    }
+    $user = getUserById($id);
+    if (!$user) {
+        header("Location: " . BASE_URL . "users");
+        exit();
+    }
+    require 'views/edit_user.php';
+}
+
 function viewProfileDetails()
 {
     require 'views/profile.php';
