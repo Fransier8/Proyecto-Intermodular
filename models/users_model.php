@@ -101,7 +101,7 @@ function countUsers($search, $role, $active)
         $sql .= " AND role = :role";
         $params[':role'] = $role;
     }
-    
+
     if ($active != '' && $active != null) {
         $sql .= " AND active = :active";
         $params[':active'] = $active;
@@ -143,6 +143,54 @@ function changeUserStatus($id, $active)
     $stmt->execute([
         ':id' => $id,
         ':active' => $active
+    ]);
+}
+
+function insertUser($user_name, $name, $email, $password, $role, $phone, $identification, $address, $active)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare(
+        "INSERT INTO users (user_name, name, email, password, role, phone, identification, address, active) 
+         VALUES (:user_name, :name, :email, :password, :role, :phone, :identification, :address, :active)"
+    );
+    $stmt->execute([
+        ':user_name' => $user_name,
+        ':name' => $name,
+        ':email' => $email,
+        ':password' => $password,
+        ':role' => $role,
+        ':phone' => $phone,
+        ':identification' => $identification,
+        ':address' => $address,
+        ':active' => $active
+    ]);
+}
+
+function updateUser($id, $data)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare(
+        "UPDATE users
+             SET user_name = :user_name, 
+                 name = :name,
+                 email = :email,
+                 role = :role,
+                 phone = :phone,
+                 identification = :identification,
+                 address = :address,
+                 active = :active
+             WHERE id = :id"
+    );
+    $stmt->execute([
+        ':id' => $id,
+        ':user_name' => $data['user_name'],
+        ':name' => $data['name'],
+        ':email' => $data['email'],
+        ':role' => $data['role'],
+        ':phone' => $data['phone'],
+        ':identification' => $data['identification'],
+        ':address' => $data['address'],
+        ':active' => $data['active']
     ]);
 }
 ?>

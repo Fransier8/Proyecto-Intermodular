@@ -82,4 +82,61 @@ function deleteRoom($id)
         ':id' => "$id"
     ]);
 }
+
+function changeRoomStatus($id, $active)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("UPDATE rooms SET active = :active WHERE id = :id");
+    $stmt->execute([
+        ':id' => $id,
+        ':active' => $active
+    ]);
+}
+
+function insertRoom($code, $name, $description, $location, $capacity, $schedules, $photos, $active)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare(
+        "INSERT INTO rooms (code, name, description, location, capacity, schedules, photos, active) 
+         VALUES (:code, :name, :description, :location, :capacity, :schedules, :photos, :active)"
+    );
+    $stmt->execute([
+        ':code' => $code,
+        ':name' => $name,
+        ':description' => $description,
+        ':location' => $location,
+        ':capacity' => $capacity,
+        ':schedules' => $schedules,
+        ':photos' => $photos,
+        ':active' => $active
+    ]);
+}
+
+function updateRoom($id, $data)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare(
+        "UPDATE rooms
+             SET code = :code, 
+                 name = :name,
+                 description = :description,
+                 location = :location,
+                 capacity = :capacity,
+                 schedules = :schedules,
+                 photos = :photos,
+                 active = :active
+             WHERE id = :id"
+    );
+    $stmt->execute([
+        ':id' => $id,
+        ':code' => $data['code'],
+        ':name' => $data['name'],
+        ':description' => $data['description'],
+        ':location' => $data['location'],
+        ':capacity' => $data['capacity'],
+        ':schedules' => $data['schedules'],
+        ':photos' => $data['photos'],
+        ':active' => $data['active']
+    ]);
+}
 ?>
