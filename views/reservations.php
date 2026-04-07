@@ -54,7 +54,7 @@
                             <p>Especie: Perro</p>
                             <p>Raza: Dálmata</p>
                             <p>Estado: Sin adoptar</p>
-                            <a href="<?= BASE_URL ?>reservation" class="btn bg-orange-primary border-dark border-1">Más
+                            <a href="<?= BASE_URL ?>reserva" class="btn bg-orange-primary border-dark border-1">Más
                                 información</a>
                         </div>
                     </div>

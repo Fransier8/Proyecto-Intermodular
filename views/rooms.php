@@ -55,7 +55,7 @@
             params.append("ajax", "1");
             params.append("page", page);
 
-            fetch("<?= BASE_URL ?>rooms?" + params.toString())
+            fetch("<?= BASE_URL ?>salas?" + params.toString())
                 .then(res => res.text())
                 .then(html => {
                     roomsContainer.innerHTML = html;

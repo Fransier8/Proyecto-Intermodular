@@ -6,7 +6,7 @@
         <section class="col p-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>animals">Animales</a></li>
+                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>animales">Animales</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Animal</li>
                 </ol>
             </nav>

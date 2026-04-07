@@ -4,7 +4,7 @@
         <p>Nombre: <?= htmlspecialchars($user['name']) ?></p>
         <p>Email: <?= htmlspecialchars($user['email']) ?></p>
         <p>Rol: <?= htmlspecialchars($user['role']) ?></p>
-        <a href="<?= BASE_URL ?>user/<?= $user['id'] ?>" class="btn bg-orange-primary border-dark border-1">Más
+        <a href="<?= BASE_URL ?>usuario/<?= $user['id'] ?>" class="btn bg-orange-primary border-dark border-1">Más
             información</a>
         <button class="btn btn-sm change-status-btn <?= $user['active'] ? 'btn-warning' : 'btn-success' ?>"
             data-id="<?= $user['id'] ?>" data-active="<?= $user['active'] ? 0 : 1 ?>"

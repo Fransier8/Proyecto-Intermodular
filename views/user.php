@@ -6,7 +6,7 @@
         <section class="col p-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>users">Usuarios</a></li>
+                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>usuarios">Usuarios</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Usuario</li>
                 </ol>
             </nav>
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
-                        <a href="<?= BASE_URL ?>edit_user/<?= $user['id'] ?>"
+                        <a href="<?= BASE_URL ?>modificar_usuario/<?= $user['id'] ?>"
                             class="btn bg-orange-primary border-dark border-1 flex-fill">Modificar</a>
                     </div>
                 </div>

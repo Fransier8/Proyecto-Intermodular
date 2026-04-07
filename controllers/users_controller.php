@@ -17,12 +17,12 @@ function logIn()
                 'user_name' => $user['user_name']
             ];
             //unset($_SESSION['errores'], $_SESSION['datos_antiguos']);
-            header("Location: " . BASE_URL . "animals");
+            header("Location: " . BASE_URL . "animales");
             exit;
         } else {
             $_SESSION['errors'] = ["Email o contraseña incorrectos o user inactivo"];
             //$_SESSION['datos_antiguos'] = ['email' => $email];
-            header("Location: " . BASE_URL . "login");
+            header("Location: " . BASE_URL . "iniciar_sesion");
             exit();
         }
     }
@@ -36,7 +36,7 @@ function logOut()
     }
     session_unset();
     session_destroy();
-    header("Location: " . BASE_URL . "home");
+    header("Location: " . BASE_URL . "inicio");
     exit();
 }
 
@@ -50,7 +50,7 @@ function listUsers()
     $perPage = 8;
 
     $totalUsers = countUsers($search, $role, $active);
-    $totalPages = ceil($totalUsers / $perPage);
+    $totalPages = $totalUsers > 0 ? ceil($totalUsers / $perPage) : 1;
 
     $offset = ($page - 1) * $perPage;
     $users = getUsers($search, $order, $role, $active, $perPage, $offset);
@@ -67,12 +67,12 @@ function viewUserDetails()
 {
     $id = $_GET['id'] ?? null;
     if (!$id) {
-        header("Location: " . BASE_URL . "users");
+        header("Location: " . BASE_URL . "usuarios");
         exit();
     }
     $user = getUserById($id);
     if (!$user) {
-        header("Location: " . BASE_URL . "users");
+        header("Location: " . BASE_URL . "usuarios");
         exit();
     }
     require 'views/user.php';
@@ -82,12 +82,12 @@ function editUser()
 {
     $id = $_GET['id'] ?? null;
     if (!$id) {
-        header("Location: " . BASE_URL . "users");
+        header("Location: " . BASE_URL . "usuarios");
         exit();
     }
     $user = getUserById($id);
     if (!$user) {
-        header("Location: " . BASE_URL . "users");
+        header("Location: " . BASE_URL . "usuarios");
         exit();
     }
     require 'views/edit_user.php';
@@ -109,11 +109,11 @@ function resetPassword()
         if ($user && $user['active']) {
             $password = password_hash($password, PASSWORD_BCRYPT);
             updatePassword($user['id'], $password);
-            header("Location: " . BASE_URL . "login");
+            header("Location: " . BASE_URL . "iniciar_sesion");
             exit;
         } else {
             $_SESSION['errors'] = ["Email o contraseña incorrectos o user inactivo"];
-            header("Location: " . BASE_URL . "reset_password");
+            header("Location: " . BASE_URL . "restablecer_contraseña");
             exit();
         }
     }
@@ -123,7 +123,7 @@ function resetPassword()
 function changeUserActiveStatus()
 {
     if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'administrador') {
-        header("Location: " . BASE_URL . "home");
+        header("Location: " . BASE_URL . "inicio");
         exit();
     }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

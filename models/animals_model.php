@@ -4,7 +4,7 @@ require_once 'config/connect_db.php';
 function getAnimals($search, $order, $species_id, $gender, $status, $active, $limit = null, $offset = 0)
 {
     $con = get_conexion();
-    $sql = "SELECT * FROM animals a JOIN species s ON a.species_id = s.id WHERE (a.name LIKE :search OR a.breed LIKE :search)";
+    $sql = "SELECT a.*, s.name AS species FROM animals a JOIN species s ON a.species_id = s.id WHERE (a.name LIKE :search OR a.breed LIKE :search)";
 
     $params = [
         ':search' => "%$search%"

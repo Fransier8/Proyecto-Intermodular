@@ -19,7 +19,7 @@ session_start();
 
 <body>
     <?php
-    $view = $_GET['view'] ?? 'home';
+    $view = $_GET['view'] ?? 'inicio';
     if (!isset($_GET['ajax'])) {
         require 'views/header.php';
     }

@@ -10,7 +10,7 @@ function listRooms()
     $perPage = 8;
 
     $totalRooms = countRooms($search, $active);
-    $totalPages = ceil($totalRooms / $perPage);
+    $totalPages = $totalRooms > 0 ? ceil($totalRooms / $perPage) : 1;
 
     $offset = ($page - 1) * $perPage;
     $rooms = getRooms($search, $order, $active, $perPage, $offset);

@@ -71,7 +71,7 @@
             params.append("ajax", "1");
             params.append("page", page);
 
-            fetch("<?= BASE_URL ?>users?" + params.toString())
+            fetch("<?= BASE_URL ?>usuarios?" + params.toString())
                 .then(res => res.text())
                 .then(html => {
                     usersContainer.innerHTML = html;
@@ -95,7 +95,7 @@
                     return;
                 }
 
-                fetch("<?= BASE_URL ?>change_user_status", {
+                fetch("<?= BASE_URL ?>cambiar_estado_usuario", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
