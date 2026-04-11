@@ -7,13 +7,13 @@ function listRooms()
     $order = $_GET['order'] ?? '';
     $active = $_GET['active'] ?? '';
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-    $perPage = 8;
+    $per_page = 8;
 
-    $totalRooms = countRooms($search, $active);
-    $totalPages = $totalRooms > 0 ? ceil($totalRooms / $perPage) : 1;
+    $total_rooms = countRooms($search, $active);
+    $total_pages = $total_rooms > 0 ? ceil($total_rooms / $per_page) : 1;
 
-    $offset = ($page - 1) * $perPage;
-    $rooms = getRooms($search, $order, $active, $perPage, $offset);
+    $offset = ($page - 1) * $per_page;
+    $rooms = getRooms($search, $order, $active, $per_page, $offset);
 
     if (isset($_GET['ajax'])) {
         require 'views/lists/rooms_list.php';

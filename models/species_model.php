@@ -38,13 +38,27 @@ function getSpecies($search, $order, $limit = null, $offset = 0)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getSpeciesById($id)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM species WHERE id = :id");
+    $stmt->execute([':id' => $id]);
+    return $stmt->fetch();
+}
+
 function deleteSpecies($id)
 {
+    if (speciesHasAnimals($id)) {
+        return false;
+    }
+
     $con = get_conexion();
     $stmt = $con->prepare("DELETE FROM species WHERE id = :id");
     $stmt->execute([
         ':id' => "$id"
     ]);
+
+    return true;
 }
 
 function insertSpecies($name)
@@ -86,5 +100,20 @@ function countSpecies($search)
     $stmt->execute($params);
 
     return $stmt->fetchColumn();
+}
+
+function speciesHasAnimals($id)
+{
+    $con = get_conexion();
+
+    $stmt = $con->prepare("
+        SELECT COUNT(*) 
+        FROM animals 
+        WHERE species_id = :id
+    ");
+
+    $stmt->execute([':id' => $id]);
+
+    return $stmt->fetchColumn() > 0;
 }
 ?>

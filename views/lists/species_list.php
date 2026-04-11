@@ -1,6 +1,6 @@
-<article id="animals-list" class="row g-3">
-    <?php foreach ($animals as $animal):
-        require 'views/cards/animal_card.php';
+<article id="species-list" class="row g-3">
+    <?php foreach ($species as $individual_species):
+        require 'views/cards/species_card.php';
     endforeach; ?>
 </article>
 <nav class="mt-4 d-flex justify-content-center">

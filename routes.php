@@ -11,18 +11,39 @@ $routes = [
     'usuario' => ['controllers/users_controller.php', 'viewUserDetails'],
     'reservas' => ['controllers/reservations_controller.php', 'listReservations'],
     'reserva' => ['controllers/reservations_controller.php', 'viewReservationDetails'],
+    'especies' => ['controllers/species_controller.php', 'listSpecies'],
+    'especie' => ['controllers/species_controller.php', 'viewSpeciesDetails'],
     'mis_animales' => ['controllers/animals_controller.php', 'listMyAnimals'],
     'mis_reservas' => ['controllers/reservations_controller.php', 'listMyReservations'],
     'perfil' => ['controllers/users_controller.php', 'viewProfileDetails'],
     'restablecer_contraseña' => ['controllers/users_controller.php', 'resetPassword'],
     'cambiar_estado_usuario' => ['controllers/users_controller.php', 'changeUserActiveStatus'],
-    'modificar_usuario' => ['controllers/users_controller.php', 'editUser']
+    'modificar_usuario' => ['controllers/users_controller.php', 'editUser'],
+    'modificar_especie' => ['controllers/species_controller.php', 'editSpecies'],
+    'eliminar_especie' => ['controllers/species_controller.php', 'removeSpecies'],
 ];
 
 
 $publicViews = ['inicio', 'iniciar_sesion', 'restablecer_contraseña'];
-$privateViews = ['animales', 'animal', 'salas', 'sala', 'usuarios', 'usuario', 'reservas', 'reserva', 'mis_animales', 'mis_reservas', 'perfil', 'cambiar_estado_usuario',
-'modificar_usuario'];
+$privateViews = [
+    'animales',
+    'animal',
+    'salas',
+    'sala',
+    'usuarios',
+    'usuario',
+    'reservas',
+    'reserva',
+    'especies',
+    'especie',
+    'mis_animales',
+    'mis_reservas',
+    'perfil',
+    'cambiar_estado_usuario',
+    'modificar_usuario',
+    'modificar_especie',
+    'eliminar_especie'
+];
 
 if (!isset($routes[$view]) && !isset($_SESSION['user'])) {
     header("Location: " . BASE_URL . "inicio");

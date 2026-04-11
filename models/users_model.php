@@ -80,6 +80,22 @@ function getUserByEmail($email)
     return $stmt->fetch();
 }
 
+function getUserByUserName($user_name)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM users WHERE user_name = :user_name");
+    $stmt->execute([':user_name' => $user_name]);
+    return $stmt->fetch();
+}
+
+function getUserByIdentification($identification)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM users WHERE identification = :identification");
+    $stmt->execute([':identification' => $identification]);
+    return $stmt->fetch();
+}
+
 function getUserByEmailAndIdentification($email, $identification)
 {
     $con = get_conexion();

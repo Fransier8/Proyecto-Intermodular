@@ -24,7 +24,7 @@
                                 <span><?= htmlspecialchars($user['email']) ?></span></p>
                         </div>
                         <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Identifiacación:</span>
+                            <p class="mb-1"><span class="fw-bold">Identifiacación (DNI/NIE):</span>
                                 <span><?= htmlspecialchars($user['identification']) ?></span></p>
                         </div>
                         <div class="col">

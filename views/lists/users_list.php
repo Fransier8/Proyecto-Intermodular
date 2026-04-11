@@ -11,7 +11,7 @@
             </a>
         </li>
 
-        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
             <li class="page-item <?= $i == $page ? 'active' : '' ?>">
                 <a class="page-link text-black" href="#" data-page="<?= $i ?>">
                     <?= $i ?>
@@ -19,7 +19,7 @@
             </li>
         <?php endfor; ?>
 
-        <li class="page-item <?= $page >= $totalPages ? 'disabled' : '' ?>">
+        <li class="page-item <?= $page >= $total_pages ? 'disabled' : '' ?>">
             <a class="page-link text-black" href="#" aria-label="Siguiente" data-page="<?= $page + 1 ?>">
                 &raquo;
             </a>

@@ -3,6 +3,7 @@
     <a href="<?= BASE_URL ?>salas" class="btn fs-4 text-start">Salas</a>
     <a href="<?= BASE_URL ?>usuarios" class="btn fs-4 text-start">Usuarios</a>
     <a href="<?= BASE_URL ?>reservas" class="btn fs-4 text-start">Reservas</a>
+    <a href="<?= BASE_URL ?>especies" class="btn fs-4 text-start">Especies</a>
     <a href="<?= BASE_URL ?>mis_animales" class="btn fs-4 text-start">Mis animales</a>
     <a href="<?= BASE_URL ?>mis_reservas" class="btn fs-4 text-start">Mis reservas</a>
 </aside>

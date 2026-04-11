@@ -1,6 +1,12 @@
 <?php
 define('BASE_URL', '/proyecto/Proyecto-Intermodular/');
 session_start();
+$isAjax = isset($_GET['ajax']);
+$view = $_GET['view'] ?? 'inicio';
+if ($isAjax) {
+    require_once 'routes.php';
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +25,9 @@ session_start();
 
 <body>
     <?php
-    $view = $_GET['view'] ?? 'inicio';
-    if (!isset($_GET['ajax'])) {
-        require 'views/header.php';
-    }
+    require 'views/header.php';
     require_once 'routes.php';
-    if (!isset($_GET['ajax'])) {
-        require 'views/footer.php';
-    }
+    require 'views/footer.php';
     ?>
     <!-- Enlace a los archivos JavaScript de Bootstrap 5 y Popper en un solo archivo (bootstrap.bundle.min.js) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

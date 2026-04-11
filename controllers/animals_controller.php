@@ -10,13 +10,13 @@ function listAnimals()
     $status = $_GET['status'] ?? '';
     $active = $_GET['active'] ?? '';
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-    $perPage = 8;
+    $per_page = 8;
 
-    $totalAnimals = countAnimals($search, $species_id, $gender, $status, $active);
-    $totalPages = $totalAnimals > 0 ? ceil($totalAnimals / $perPage) : 1;
+    $total_animals = countAnimals($search, $species_id, $gender, $status, $active);
+    $total_pages = $total_animals > 0 ? ceil($total_animals / $per_page) : 1;
 
-    $offset = ($page - 1) * $perPage;
-    $animals = getAnimals($search, $order, $species_id, $gender, $status, $active, $perPage, $offset);
+    $offset = ($page - 1) * $per_page;
+    $animals = getAnimals($search, $order, $species_id, $gender, $status, $active, $per_page, $offset);
 
     if (isset($_GET['ajax'])) {
         require 'views/lists/animals_list.php';
