@@ -38,20 +38,86 @@ function viewSpeciesDetails()
     require 'views/individual_species.php';
 }
 
+function createSpecies()
+{
+    $errors = [];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $name = trim($_POST['name'] ?? '');
+
+        if (empty($name)) {
+            $errors[] = "El nombre es obligatorio.";
+        }
+
+        $existing_name = getSpeciesByName($name);
+        if ($existing_name) {
+            $errors[] = "El nombre ya existe";
+        }
+
+        if (!empty($errors)) {
+            $species = [
+                'name' => $name
+            ];
+
+            require 'views/create_species.php';
+            return;
+        }
+
+        $id = insertSpecies($name);
+
+        header("Location: " . BASE_URL . "especie/$id");
+        exit();
+
+    } else {
+        $species = [
+            'name' => ''
+        ];
+        require 'views/create_species.php';
+    }
+}
 
 function editSpecies()
 {
-    $id = $_GET['id'] ?? null;
-    if (!$id) {
-        header("Location: " . BASE_URL . "especies");
+    $errors = [];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id = trim($_POST['id'] ?? '');
+        $data = [
+            'name' => trim($_POST['name'] ?? '')
+        ];
+
+        if (empty($data['name'])) {
+            $errors[] = "El nombre es obligatorio.";
+        }
+
+        $existing_name = getSpeciesByName($data['name']);
+        if ($existing_name && $existing_name['id'] != $id) {
+            $errors[] = "El nombre ya existe";
+        }
+
+        if (!empty($errors)) {
+            $species = array_merge(getSpeciesById($id), $data);
+
+            require 'views/edit_species.php';
+            return;
+        }
+
+        updateSpecies($id, $data);
+
+        header("Location: " . BASE_URL . "especie/$id");
         exit();
+
+    } else {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header("Location: " . BASE_URL . "especies");
+            exit();
+        }
+        $species = getSpeciesById($id);
+        if (!$species) {
+            header("Location: " . BASE_URL . "especies");
+            exit();
+        }
+        require 'views/edit_species.php';
     }
-    $species = getSpeciesById($id);
-    if (!$species) {
-        header("Location: " . BASE_URL . "especies");
-        exit();
-    }
-    require 'views/edit_species.php';
 }
 
 function removeSpecies()

@@ -26,7 +26,7 @@
                         <option value="0">No</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-5">
                     <label class="form-label">Buscar</label>
                     <input name="search" type="text" class="form-control">
                 </div>

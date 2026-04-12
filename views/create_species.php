@@ -7,15 +7,13 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<?= BASE_URL ?>species">Especies</a></li>
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>especie/<?= $species['id'] ?>">Especie</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Modificar especie</li>
+                    <li class="breadcrumb-item active" aria-current="page">Crear especie</li>
                 </ol>
             </nav>
             <h1>Especie</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <form action="<?= BASE_URL ?>modificar_especie" method="post" class="row g-4">
-                        <input type="hidden" name="id" value="<?= $species['id'] ?>">
+                    <form action="<?= BASE_URL ?>crear_especie" method="post" class="row g-4">
                         <div class="col-12 col-md-12 fs-5">
                             <div class="row row-cols-1 g-3">
                                 <div class="col">
@@ -27,8 +25,8 @@
 
                             <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
                                 <button type="submit"
-                                    class="btn bg-orange-primary border-dark border-1 flex-fill">Guardar</button>
-                                <a href="<?= BASE_URL ?>especie/<?= $species['id'] ?>"
+                                    class="btn bg-orange-primary border-dark border-1 flex-fill">Crear</button>
+                                <a href="<?= BASE_URL ?>especies"
                                     class="btn bg-orange-primary border-dark border-1 flex-fill">Cancelar</a>
                             </div>
                         </div>

@@ -7,15 +7,13 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<?= BASE_URL ?>usuarios">Usuarios</a></li>
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>usuario/<?= $user['id'] ?>">Usuario</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Modificar usuario</li>
+                    <li class="breadcrumb-item active" aria-current="page">Crear usuario</li>
                 </ol>
             </nav>
             <h1>Usuario</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <form action="<?= BASE_URL ?>modificar_usuario" method="post" class="row g-4">
-                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                    <form action="<?= BASE_URL ?>crear_usuario" method="post" class="row g-4">
                         <div class="col-12 col-md-12 fs-5">
                             <div class="row row-cols-1 row-cols-md-2 g-3">
                                 <div class="col">
@@ -52,7 +50,7 @@
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Rol:</label>
-                                    <select name="role" class="form-select" <?= $user['id'] == $_SESSION['user']['id'] ? 'disabled' : '' ?>>
+                                    <select name="role" class="form-select">
                                         <option value="cliente" <?= $user['role'] == 'cliente' ? 'selected' : '' ?>>Cliente
                                         </option>
                                         <option value="monitor" <?= $user['role'] == 'monitor' ? 'selected' : '' ?>>
@@ -76,7 +74,7 @@
                                 <div class="col">
                                     <label class="form-label fw-bold">Contraseña:</label>
                                     <div class="input-group">
-                                        <input type="password" name="password" class="form-control" maxlength="300">
+                                        <input type="password" name="password" class="form-control" required maxlength="300">
                                         <button type="button" class="btn bg-orange-primary btn-outline-secondary"
                                             onclick="togglePasswordVisibility(this)">
                                             <i class="bi bi-eye text-dark"></i>
@@ -87,7 +85,7 @@
                                 <div class="col">
                                     <label class="form-label fw-bold">Verificar contraseña:</label>
                                     <div class="input-group">
-                                        <input type="password" name="verify_password" class="form-control" maxlength="300">
+                                        <input type="password" name="verify_password" class="form-control" required maxlength="300">
                                         <button type="button" class="btn bg-orange-primary btn-outline-secondary"
                                             onclick="togglePasswordVisibility(this)">
                                             <i class="bi bi-eye text-dark"></i>
@@ -98,8 +96,8 @@
 
                             <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
                                 <button type="submit"
-                                    class="btn bg-orange-primary border-dark border-1 flex-fill">Guardar</button>
-                                <a href="<?= BASE_URL ?>usuario/<?= $user['id'] ?>"
+                                    class="btn bg-orange-primary border-dark border-1 flex-fill">Crear</button>
+                                <a href="<?= BASE_URL ?>usuarios"
                                     class="btn bg-orange-primary border-dark border-1 flex-fill">Cancelar</a>
                             </div>
                         </div>
@@ -178,13 +176,11 @@
             errors.push("El teléfono debe tener 9 dígitos.");
         }
 
-        if (password) {
-            if (password.length < 4) {
-                errors.push("La contraseña debe tener al menos 4 caracteres.");
-            }
-            if (password != verifyPassword) {
-                errors.push("Las contraseñas deben coincidir.");
-            }
+        if (password.length < 4) {
+            errors.push("La contraseña debe tener al menos 4 caracteres.");
+        }
+        if (password != verifyPassword) {
+            errors.push("Las contraseñas deben coincidir.");
         }
 
         const errorBox = document.getElementById("errorBox");

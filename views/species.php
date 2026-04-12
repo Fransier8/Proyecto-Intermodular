@@ -6,9 +6,9 @@
         <section class="col p-3">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h1 class="mb-0">Especies</h1>
-                <button class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                <a href="<?= BASE_URL ?>crear_especie" class="btn bg-orange-primary rounded-pill btn-lg px-4">
                     Crear especie
-                </button>
+                </a>
             </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">

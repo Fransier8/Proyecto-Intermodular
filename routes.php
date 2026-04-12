@@ -19,7 +19,9 @@ $routes = [
     'restablecer_contraseña' => ['controllers/users_controller.php', 'resetPassword'],
     'cambiar_estado_usuario' => ['controllers/users_controller.php', 'changeUserActiveStatus'],
     'modificar_usuario' => ['controllers/users_controller.php', 'editUser'],
+    'crear_usuario' => ['controllers/users_controller.php', 'createUser'],
     'modificar_especie' => ['controllers/species_controller.php', 'editSpecies'],
+    'crear_especie' => ['controllers/species_controller.php', 'createSpecies'],
     'eliminar_especie' => ['controllers/species_controller.php', 'removeSpecies'],
 ];
 
@@ -40,7 +42,9 @@ $privateViews = [
     'mis_reservas',
     'perfil',
     'cambiar_estado_usuario',
+    'crear_usuario',
     'modificar_usuario',
+    'crear_especie',
     'modificar_especie',
     'eliminar_especie'
 ];

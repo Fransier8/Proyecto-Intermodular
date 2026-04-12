@@ -180,6 +180,7 @@ function insertUser($user_name, $name, $email, $password, $role, $phone, $identi
         ':address' => $address,
         ':active' => $active
     ]);
+    return $con->lastInsertId();
 }
 
 function updateUser($id, $data)

@@ -46,6 +46,14 @@ function getSpeciesById($id)
     return $stmt->fetch();
 }
 
+function getSpeciesByName($name)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM species WHERE name = :name");
+    $stmt->execute([':name' => $name]);
+    return $stmt->fetch();
+}
+
 function deleteSpecies($id)
 {
     if (speciesHasAnimals($id)) {
@@ -71,6 +79,7 @@ function insertSpecies($name)
     $stmt->execute([
         ':name' => $name
     ]);
+    return $con->lastInsertId();
 }
 
 function updateSpecies($id, $data)

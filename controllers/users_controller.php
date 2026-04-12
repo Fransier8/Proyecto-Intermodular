@@ -78,6 +78,124 @@ function viewUserDetails()
     require 'views/user.php';
 }
 
+function createUser()
+{
+    $errors = [];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $user_name = trim($_POST['user_name'] ?? '');
+        $name = trim($_POST['name'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $identification = strtoupper(trim($_POST['identification'] ?? ''));
+        $phone = trim($_POST['phone'] ?? '');
+        $address = trim($_POST['address'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+        $verify_password = trim($_POST['verify_password'] ?? '');
+        $role = $_POST['role'] ?? '';
+        $active = isset($_POST['active']) ? 1 : 0;
+
+        if (empty($user_name)) {
+            $errors[] = "El nombre de usuario es obligatorio.";
+        }
+
+        $existing_user_name = getUserByUserName($user_name);
+        if ($existing_user_name) {
+            $errors[] = "El nombre de usuario ya existe";
+        }
+
+        if (empty($name)) {
+            $errors[] = "El nombre es obligatorio.";
+        }
+
+        if (empty($email)) {
+            $errors[] = "El email es obligatorio.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "El email no es válido.";
+        }
+
+        $existing_email = getUserByEmail($email);
+        if ($existing_email) {
+            $errors[] = "El email ya existe";
+        }
+
+        if (empty($identification)) {
+            $errors[] = "La identificación es obligatoria.";
+        } else {
+            $dni_pattern = '/^\d{8}[A-Z]$/';
+            $nie_pattern = '/^[XYZ]\d{7}[A-Z]$/';
+
+            if (
+                !preg_match($dni_pattern, $identification) &&
+                !preg_match($nie_pattern, $identification)
+            ) {
+                $errors[] = "DNI o NIE inválido.";
+            } else {
+                if (preg_match($dni_pattern, $identification)) {
+                    $letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+                    $numero = substr($identification, 0, 8);
+                    $letra = substr($identification, 8, 1);
+
+                    if ($letras[$numero % 23] !== $letra) {
+                        $errors[] = "La letra del DNI no es correcta.";
+                    }
+                }
+            }
+        }
+
+        $existing_identification = getUserByIdentification($identification);
+        if ($existing_identification) {
+            $errors[] = "La idnetificación ya existe";
+        }
+
+        if (!empty($phone) && !preg_match('/^[0-9]{9}$/', $phone)) {
+            $errors[] = "El teléfono debe tener 9 dígitos.";
+        }
+
+        if (strlen($password) < 4) {
+            $errors[] = "La contraseña debe tener al menos 4 caracteres.";
+        }
+
+        if ($password != $verify_password) {
+            $errors[] = "Las contraseñas no coinciden.";
+        }
+
+        if (!empty($errors)) {
+            $user = [
+                'user_name' => $user_name,
+                'name' => $name,
+                'email' => $email,
+                'identification' => $identification,
+                'phone' => $phone,
+                'address' => $address,
+                'role' => $role,
+                'active' => $active
+            ];
+
+            require 'views/create_user.php';
+            return;
+        }
+
+        password_hash($password, PASSWORD_BCRYPT);
+
+        $id = insertUser($user_name, $name, $email, $password, $role, $phone, $identification, $address, $active);
+
+        header("Location: " . BASE_URL . "usuario/$id");
+        exit();
+
+    } else {
+        $user = [
+            'user_name' => '',
+            'name' => '',
+            'email' => '',
+            'identification' => '',
+            'phone' => '',
+            'address' => '',
+            'role' => 'cliente',
+            'active' => 1
+        ];
+        require 'views/create_user.php';
+    }
+}
+
 function editUser()
 {
     $errors = [];
@@ -123,16 +241,16 @@ function editUser()
         if (empty($data['identification'])) {
             $errors[] = "La identificación es obligatoria.";
         } else {
-            $dniPattern = '/^\d{8}[A-Z]$/';
-            $niePattern = '/^[XYZ]\d{7}[A-Z]$/';
+            $dni_pattern = '/^\d{8}[A-Z]$/';
+            $nie_pattern = '/^[XYZ]\d{7}[A-Z]$/';
 
             if (
-                !preg_match($dniPattern, $data['identification']) &&
-                !preg_match($niePattern, $data['identification'])
+                !preg_match($dni_pattern, $data['identification']) &&
+                !preg_match($nie_pattern, $data['identification'])
             ) {
                 $errors[] = "DNI o NIE inválido.";
             } else {
-                if (preg_match($dniPattern, $data['identification'])) {
+                if (preg_match($dni_pattern, $data['identification'])) {
                     $letras = "TRWAGMYFPDXBNJZSQVHLCKE";
                     $numero = substr($data['identification'], 0, 8);
                     $letra = substr($data['identification'], 8, 1);
