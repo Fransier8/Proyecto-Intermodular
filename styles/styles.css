@@ -75,3 +75,7 @@
     border-color: #000 !important;
     color: black !important;
 }
+
+aside {
+    width: 200px !important;
+}

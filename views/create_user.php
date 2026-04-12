@@ -10,7 +10,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Crear usuario</li>
                 </ol>
             </nav>
-            <h1>Usuario</h1>
+            <h1>Crear usuario</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
                     <form action="<?= BASE_URL ?>crear_usuario" method="post" class="row g-4">
@@ -51,7 +51,7 @@
                                 <div class="col">
                                     <label class="form-label fw-bold">Rol:</label>
                                     <select name="role" class="form-select">
-                                        <option value="cliente" <?= $user['role'] == 'cliente' ? 'selected' : '' ?>>Cliente
+                                        <option value="usuario" <?= $user['role'] == 'usuario' ? 'selected' : '' ?>>Usuario
                                         </option>
                                         <option value="monitor" <?= $user['role'] == 'monitor' ? 'selected' : '' ?>>
                                             Monitor</option>

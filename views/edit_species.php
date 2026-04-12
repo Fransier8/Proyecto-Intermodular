@@ -11,7 +11,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Modificar especie</li>
                 </ol>
             </nav>
-            <h1>Especie</h1>
+            <h1>Modificar especie</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
                     <form action="<?= BASE_URL ?>modificar_especie" method="post" class="row g-4">

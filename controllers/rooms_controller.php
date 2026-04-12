@@ -5,7 +5,11 @@ function listRooms()
 {
     $search = $_GET['search'] ?? '';
     $order = $_GET['order'] ?? '';
-    $active = $_GET['active'] ?? '';
+    if ($_SESSION['user']['role'] == "administrador") {
+        $active = $_GET['active'] ?? '';
+    } else {
+        $active = 1;
+    }
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $per_page = 8;
 
@@ -19,7 +23,11 @@ function listRooms()
         require 'views/lists/rooms_list.php';
         exit;
     }
-    require 'views/rooms.php';
+    if ($_SESSION['user']['role'] == "administrador") {
+        require 'views/rooms.php';
+    } else {
+        require 'views/public_rooms.php';
+    }
 }
 
 function viewRoomDetails()

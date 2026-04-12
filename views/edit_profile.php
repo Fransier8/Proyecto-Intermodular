@@ -6,15 +6,14 @@
         <section class="col p-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>usuarios">Usuarios</a></li>
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>usuario/<?= $user['id'] ?>">Usuario</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Modificar usuario</li>
+                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>perfil">Perfil</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Modificar perfil</li>
                 </ol>
             </nav>
-            <h1>Modificar usuario</h1>
+            <h1>Modificar perfil</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <form action="<?= BASE_URL ?>modificar_usuario" method="post" class="row g-4">
+                    <form action="<?= BASE_URL ?>modificar_perfil" method="post" class="row g-4">
                         <input type="hidden" name="id" value="<?= $user['id'] ?>">
                         <div class="col-12 col-md-12 fs-5">
                             <div class="row row-cols-1 row-cols-md-2 g-3">
@@ -99,7 +98,7 @@
                             <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
                                 <button type="submit"
                                     class="btn bg-orange-primary border-dark border-1 flex-fill">Guardar</button>
-                                <a href="<?= BASE_URL ?>usuario/<?= $user['id'] ?>"
+                                <a href="<?= BASE_URL ?>perfil"
                                     class="btn bg-orange-primary border-dark border-1 flex-fill">Cancelar</a>
                             </div>
                         </div>

@@ -8,7 +8,11 @@ function listAnimals()
     $species_id = $_GET['species_id'] ?? '';
     $gender = $_GET['gender'] ?? '';
     $status = $_GET['status'] ?? '';
-    $active = $_GET['active'] ?? '';
+    if ($_SESSION['user']['role'] == "administrador") {
+        $active = $_GET['active'] ?? '';
+    } else {
+        $active = 1;
+    }
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $per_page = 8;
 
@@ -22,7 +26,11 @@ function listAnimals()
         require 'views/lists/animals_list.php';
         exit;
     }
-    require 'views/animals.php';
+    if ($_SESSION['user']['role'] == "administrador") {
+        require 'views/animals.php';
+    } else {
+        require 'views/public_animals.php';
+    }
 }
 
 function viewAnimalDetails()
