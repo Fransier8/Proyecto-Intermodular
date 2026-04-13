@@ -4,37 +4,42 @@ require_once 'config/connect_db.php';
 function getRooms($search, $order, $active, $limit = null, $offset = 0)
 {
     $con = get_conexion();
-    $sql = "SELECT * FROM rooms WHERE (code LIKE :search OR name LIKE :search)";
+    $sql = "SELECT r.*,
+               (SELECT photo 
+                FROM room_photos rp 
+                WHERE rp.room_id = r.id 
+                ORDER BY rp.id ASC 
+                LIMIT 1) AS photo FROM rooms r WHERE (r.code LIKE :search OR r.name LIKE :search)";
 
     $params = [
         ':search' => "%$search%"
     ];
 
     if ($active != '' && $active != null) {
-        $sql .= " AND active = :active";
+        $sql .= " AND r.active = :active";
         $params[':active'] = $active;
     }
     switch ($order) {
         case 'code_asc':
-            $sql .= " ORDER BY code ASC";
+            $sql .= " ORDER BY r.code ASC";
             break;
         case 'code_desc':
-            $sql .= " ORDER BY code DESC";
+            $sql .= " ORDER BY r.code DESC";
             break;
         case 'name_asc':
-            $sql .= " ORDER BY name ASC";
+            $sql .= " ORDER BY r.name ASC";
             break;
         case 'name_desc':
-            $sql .= " ORDER BY name DESC";
+            $sql .= " ORDER BY r.name DESC";
             break;
         case 'capacity_asc':
-            $sql .= " ORDER BY capacity ASC";
+            $sql .= " ORDER BY r.capacity ASC";
             break;
         case 'capacity_desc':
-            $sql .= " ORDER BY capacity DESC";
+            $sql .= " ORDER BY r.capacity DESC";
             break;
         default:
-            $sql .= " ORDER BY code ASC";
+            $sql .= " ORDER BY r.code ASC";
             break;
     }
     if ($limit != null) {
@@ -52,6 +57,22 @@ function getRooms($search, $order, $active, $limit = null, $offset = 0)
     }
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getRoomById($id)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM rooms WHERE id = :id");
+    $stmt->execute([':id' => $id]);
+    return $stmt->fetch();
+}
+
+function getRoomByCode($code)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM rooms WHERE code = :code");
+    $stmt->execute([':code' => $code]);
+    return $stmt->fetch();
 }
 
 function countRooms($search, $active)
@@ -93,12 +114,12 @@ function changeRoomStatus($id, $active)
     ]);
 }
 
-function insertRoom($code, $name, $description, $location, $capacity, $schedules, $photos, $active)
+function insertRoom($code, $name, $description, $location, $capacity, $active)
 {
     $con = get_conexion();
     $stmt = $con->prepare(
-        "INSERT INTO rooms (code, name, description, location, capacity, schedules, photos, active) 
-         VALUES (:code, :name, :description, :location, :capacity, :schedules, :photos, :active)"
+        "INSERT INTO rooms (code, name, description, location, capacity, active) 
+         VALUES (:code, :name, :description, :location, :capacity, :active)"
     );
     $stmt->execute([
         ':code' => $code,
@@ -106,8 +127,6 @@ function insertRoom($code, $name, $description, $location, $capacity, $schedules
         ':description' => $description,
         ':location' => $location,
         ':capacity' => $capacity,
-        ':schedules' => $schedules,
-        ':photos' => $photos,
         ':active' => $active
     ]);
 }
@@ -122,8 +141,6 @@ function updateRoom($id, $data)
                  description = :description,
                  location = :location,
                  capacity = :capacity,
-                 schedules = :schedules,
-                 photos = :photos,
                  active = :active
              WHERE id = :id"
     );
@@ -134,9 +151,8 @@ function updateRoom($id, $data)
         ':description' => $data['description'],
         ':location' => $data['location'],
         ':capacity' => $data['capacity'],
-        ':schedules' => $data['schedules'],
-        ':photos' => $data['photos'],
         ':active' => $data['active']
     ]);
 }
+
 ?>
