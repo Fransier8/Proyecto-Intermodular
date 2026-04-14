@@ -129,6 +129,7 @@ function insertRoom($code, $name, $description, $location, $capacity, $active)
         ':capacity' => $capacity,
         ':active' => $active
     ]);
+    return $con->lastInsertId();
 }
 
 function updateRoom($id, $data)

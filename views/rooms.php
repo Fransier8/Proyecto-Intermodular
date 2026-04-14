@@ -4,7 +4,12 @@
         require 'views/aside.php';
         ?>
         <section class="col p-3">
-            <h1>Salas</h1>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <h1 class="mb-0">Salas</h1>
+                <a href="<?= BASE_URL ?>crear_sala" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Crear sala
+                </a>
+            </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
                 <div class="col-12 col-md-3">
@@ -28,7 +33,7 @@
                 </div>
                 <div class="col-12 col-md-5">
                     <label class="form-label">Buscar</label>
-                    <input name="search" type="text" class="form-control">
+                    <input name="search" type="text" class="form-control" placeholder="Buscar sala">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">
@@ -69,6 +74,36 @@
                     });
                 });
         }
+
+        roomsContainer.addEventListener('click', function (e) {
+
+            if (e.target.closest('.page-link')) {
+                e.preventDefault();
+                const page = e.target.closest('.page-link').dataset.page;
+                fetchRooms(page);
+            }
+
+            if (e.target.closest('.change-status-btn')) {
+                const btn = e.target.closest('.change-status-btn');
+                const id = btn.dataset.id;
+                const active = btn.dataset.active;
+
+                if (!confirm('¿Seguro que quieres cambiar el estado de esta sala?')) {
+                    return;
+                }
+
+                fetch("<?= BASE_URL ?>cambiar_estado_sala", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id + "&active=" + active
+                })
+                    .then(() => {
+                        fetchRooms();
+                    });
+            }
+        });
 
         form.addEventListener("submit", function (e) {
             e.preventDefault();

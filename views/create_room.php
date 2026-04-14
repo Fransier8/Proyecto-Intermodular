@@ -7,15 +7,13 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<?= BASE_URL ?>salas">Salas</a></li>
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>sala/<?= $room['id'] ?>">Sala</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Modificar sala</li>
+                    <li class="breadcrumb-item active" aria-current="page">Crear sala</li>
                 </ol>
             </nav>
-            <h1>Modificar sala</h1>
+            <h1>Crear sala</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <form action="<?= BASE_URL ?>modificar_sala" method="post" class="row g-4" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="<?= $room['id'] ?>">
+                    <form action="<?= BASE_URL ?>crear_sala" method="post" class="row g-4" enctype="multipart/form-data">
                         <div class="col-12 col-md-12 fs-5">
                             <div class="row row-cols-1 row-cols-md-2 g-3">
                                 <div class="col">
@@ -95,8 +93,8 @@
 
                             <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
                                 <button type="submit"
-                                    class="btn bg-orange-primary border-dark border-1 flex-fill">Guardar</button>
-                                <a href="<?= BASE_URL ?>sala/<?= $room['id'] ?>"
+                                    class="btn bg-orange-primary border-dark border-1 flex-fill">Crear</button>
+                                <a href="<?= BASE_URL ?>salas"
                                     class="btn bg-orange-primary border-dark border-1 flex-fill">Cancelar</a>
                             </div>
                         </div>

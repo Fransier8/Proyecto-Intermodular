@@ -50,6 +50,162 @@ function viewRoomDetails()
     require 'views/room.php';
 }
 
+function createRoom()
+{
+    $errors = [];
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $code = trim($_POST['code'] ?? '');
+        $name = trim($_POST['name'] ?? '');
+        $capacity = trim($_POST['capacity'] ?? '');
+        $location = trim($_POST['location'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $schedules = $_POST['schedules'] ?? [];
+        $photos = $_FILES['photos'] ?? [];
+        $active = isset($_POST['active']) ? 1 : 0;
+
+        if (empty($code)) {
+            $errors[] = "El código es obligatorio.";
+        }
+
+        $existing_code = getRoomByCode($code);
+        if ($existing_code) {
+            $errors[] = "El código ya existe";
+        }
+
+        if (empty($name)) {
+            $errors[] = "El nombre es obligatorio.";
+        }
+
+        if (!is_numeric($capacity) || (int) $capacity <= 0) {
+            $errors[] = "La capacidad debe ser un número mayor que 0.";
+        }
+
+        if (empty($schedules) || !is_array($schedules)) {
+            $errors[] = "Debes añadir al menos un horario.";
+        } else {
+            foreach ($schedules as $s) {
+                if (empty($s['start_time']) || empty($s['end_time']))
+                    continue;
+
+                if (strtotime($s['start_time']) >= strtotime($s['end_time'])) {
+                    $errors[] = "La hora de inicio debe ser menor que la de fin.";
+                    break;
+                }
+            }
+        }
+
+        $used = [];
+
+        if (!empty($schedules) && is_array($schedules)) {
+            foreach ($schedules as $s) {
+                $day = $s['day_of_week'] ?? null;
+                if (!$day || empty($s['start_time']) || empty($s['end_time'])) {
+                    continue;
+                }
+                $start = toMinutes($s['start_time']);
+                $end = toMinutes($s['end_time']);
+
+                foreach ($used[$day] ?? [] as $u) {
+                    if ($start < $u['end'] && $u['start'] < $end) {
+                        $errors[] = "Horarios solapados en $day.";
+                        break 2;
+                    }
+                }
+
+                $used[$day][] = [
+                    'start' => $start,
+                    'end' => $end
+                ];
+            }
+        }
+
+        if (!empty($photos['name'])) {
+            $new = is_array($photos['name'])
+                ? count(array_filter($photos['name'], fn($n) => !empty($n)))
+                : 0;
+
+            if ($new > 5) {
+                $errors[] = "Máximo 5 imágenes en total.";
+            }
+        }
+
+        $allowed = ['image/jpeg', 'image/png', 'image/webp'];
+
+
+        if (!empty($photos['tmp_name']) && is_array($photos['tmp_name'])) {
+            foreach ($photos['tmp_name'] as $i => $tmp) {
+
+                if (!is_uploaded_file($tmp))
+                    continue;
+
+                if ($photos['error'][$i] != UPLOAD_ERR_OK) {
+                    $errors[] = "Error subiendo imágenes.";
+                    continue;
+                }
+
+                $type = mime_content_type($tmp);
+
+                if (!in_array($type, $allowed)) {
+                    $errors[] = "Formato de imagen no válido (solo JPG, PNG, WEBP).";
+                }
+            }
+        }
+
+        if (!empty($errors)) {
+            $room = [
+                'code' => $code,
+                'name' => $name,
+                'capacity' => $capacity,
+                'location' => $location,
+                'description' => $description,
+                'active' => $active
+            ];
+
+            require 'views/create_room.php';
+            return;
+        }
+
+        $id = insertRoom($code, $name, $description, $location, $capacity, $active);
+
+        $existing_by_id = [];
+        $sent_ids = [];
+
+        foreach ($schedules as $s) {
+
+            if (empty($s['day_of_week']) || empty($s['start_time']) || empty($s['end_time'])) {
+                continue;
+            }
+
+            $schedule_id = $s['id'] ?? null;
+
+            insertRoomSchedule(
+                $id,
+                $s['day_of_week'],
+                $s['start_time'],
+                $s['end_time']
+            );
+        }
+
+        saveRoomImages($id, $code, $photos);
+
+        header("Location: " . BASE_URL . "sala/$id");
+        exit();
+
+    } else {
+        $room = [
+            'code' => '',
+            'name' => '',
+            'capacity' => '',
+            'location' => '',
+            'description' => '',
+            'active' => 1
+        ];
+        $schedules = [];
+        $photos = [];
+        require 'views/create_room.php';
+    }
+}
+
 function editRoom()
 {
     $errors = [];
@@ -195,7 +351,7 @@ function editRoom()
             $existing_by_id[$e['id']] = $e;
         }
 
-        $sentIds = [];
+        $sent_ids = [];
 
         foreach ($_POST['schedules'] as $s) {
 
@@ -203,17 +359,17 @@ function editRoom()
                 continue;
             }
 
-            $scheduleId = $s['id'] ?? null;
+            $schedule_id = $s['id'] ?? null;
 
-            if (!empty($scheduleId) && isset($existing_by_id[$scheduleId])) {
+            if (!empty($schedule_id) && isset($existing_by_id[$schedule_id])) {
 
-                updateRoomSchedule($scheduleId, [
+                updateRoomSchedule($schedule_id, [
                     'day_of_week' => $s['day_of_week'],
                     'start_time' => $s['start_time'],
                     'end_time' => $s['end_time']
                 ]);
 
-                $sentIds[] = $scheduleId;
+                $sent_ids[] = $schedule_id;
 
             } else {
 
@@ -227,7 +383,7 @@ function editRoom()
         }
 
         foreach ($existing as $e) {
-            if (!in_array($e['id'], $sentIds)) {
+            if (!in_array($e['id'], $sent_ids)) {
                 deleteRoomSchedule($e['id']);
             }
         }
@@ -354,5 +510,22 @@ function optimizeImage($tmp_path, $output_path)
     imagedestroy($image);
 
     return $output_path;
+}
+
+function changeRoomActiveStatus()
+{
+    if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'administrador') {
+        header("Location: " . BASE_URL . "inicio");
+        exit();
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'] ?? null;
+        $active = isset($_POST['active']) ? intval($_POST['active']) : 0;
+        if ($id) {
+            changeRoomStatus($id, $active);
+        }
+        echo "ok";
+        exit();
+    }
 }
 ?>

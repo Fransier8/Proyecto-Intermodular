@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-12 col-md-3">
                     <label class="form-label">Buscar</label>
-                    <input name="search" type="text" class="form-control">
+                    <input name="search" type="text" class="form-control" placeholder="Buscar usuario">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">

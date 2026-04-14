@@ -2,7 +2,7 @@
     <div class="bg-orange-primary rounded card p-3 h-100">
         <h4 class="card-title"><?= htmlspecialchars($room['code']) ?></h4>
         <img class="card-img-top mb-3 room-img" alt="Sala" loading="lazy" src="<?=
-        !empty($room['photo'])
+            !empty($room['photo'])
             ? BASE_URL . "uploads/rooms/" . $room['photo']
             : BASE_URL . "img/placeholder.webp";
         ?>">
@@ -11,5 +11,10 @@
         <p>Capacidad: <?= htmlspecialchars($room['capacity']) ?></p>
         <a href="<?= BASE_URL ?>sala/<?= $room['id'] ?>" class="btn bg-orange-primary border-dark border-1">Más
             información</a>
+        <button class="btn btn-sm change-status-btn <?= $room['active'] ? 'btn-warning' : 'btn-success' ?>"
+            data-id="<?= $room['id'] ?>" data-active="<?= $room['active'] ? 0 : 1 ?>">
+            <i class="bi <?= $room['active'] ? 'bi-person-x' : 'bi-person-check' ?>"></i>
+            <?= $room['active'] ? 'Desactivar' : 'Activar' ?>
+        </button>
     </div>
 </div>

@@ -18,7 +18,7 @@
                             <div class="row row-cols-1 g-3">
                                 <div class="col">
                                     <label class="form-label fw-bold">Nombre:</label>
-                                    <input type="text" name="name" class="form-control" required maxlength="300"
+                                    <input type="text" name="name" class="form-control" required maxlength="300" placeholder="Escribe el nombre"
                                         value="<?= htmlspecialchars($species['name']) ?>">
                                 </div>
                             </div>
