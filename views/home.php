@@ -1,4 +1,4 @@
-<main class="p-md-5 bg-orange-300 p-2 border-top border-dark">
+<main class="flex-fill p-md-5 bg-orange-300 p-2 border-top border-dark">
     <h2 class="text-center mb-2 mb-md-5 fw-bold">Funciones</h2>
     <div id="carousel" class="carousel slide">
         <div class="carousel-indicators">

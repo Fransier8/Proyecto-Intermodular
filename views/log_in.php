@@ -1,4 +1,4 @@
-<main class="d-flex text-center bg-orange-300 flex-column p-md-5 p-2">
+<main class="flex-fill d-flex text-center bg-orange-300 flex-column p-md-5 p-2">
     <h1 class="display-3 fw-bold">Iniciar sesión</h1>
     <form class="d-flex flex-column justify-content-center align-items-center" action="<?= BASE_URL ?>iniciar_sesion"
         method="post">

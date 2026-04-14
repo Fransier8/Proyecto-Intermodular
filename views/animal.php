@@ -1,5 +1,5 @@
-<main class="container-fluid bg-orange-300">
-    <section class="row">
+<main class="flex-fill container-fluid bg-orange-300 d-flex flex-column">
+    <section class="row flex-fill">
         <?php
         require 'views/aside.php';
         ?>

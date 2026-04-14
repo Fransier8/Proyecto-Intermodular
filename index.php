@@ -23,7 +23,7 @@ if ($isAjax) {
     <title>Protectora de animales</title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php
     require 'views/header.php';
     require_once 'routes.php';
