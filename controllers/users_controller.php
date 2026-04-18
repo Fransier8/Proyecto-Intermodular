@@ -150,6 +150,10 @@ function createUser()
             $errors[] = "El teléfono debe tener 9 dígitos.";
         }
 
+        if ($role != "administrador" && $role != "monitor" && $role != "usuario") {
+            $errors[] = "Selecciona un rol.";
+        }
+
         if (strlen($password) < 4) {
             $errors[] = "La contraseña debe tener al menos 4 caracteres.";
         }
@@ -264,11 +268,15 @@ function editUser()
 
         $existing_identification = getUserByIdentification($data['identification']);
         if ($existing_identification && $existing_identification['id'] != $id) {
-            $errors[] = "La idnetificación ya existe";
+            $errors[] = "La identificación ya existe";
         }
 
         if (!empty($data['phone']) && !preg_match('/^[0-9]{9}$/', $data['phone'])) {
             $errors[] = "El teléfono debe tener 9 dígitos.";
+        }
+
+        if ($data['role'] != "administrador" && $data['role'] != "monitor" && $data['role'] != "usuario") {
+            $errors[] = "Selecciona un rol.";
         }
 
         if (!empty($data['password'])) {

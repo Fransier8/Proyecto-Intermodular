@@ -4,7 +4,12 @@
         require 'views/aside.php';
         ?>
         <section class="col p-3">
-            <h1>Animales</h1>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <h1 class="mb-0">Animales</h1>
+                <a href="<?= BASE_URL ?>crear_animal" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Crear animal
+                </a>
+            </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
                 <div class="col-12 col-md-3">
@@ -77,6 +82,36 @@
                     });
                 });
         }
+
+        animalsContainer.addEventListener('click', function (e) {
+
+            if (e.target.closest('.page-link')) {
+                e.preventDefault();
+                const page = e.target.closest('.page-link').dataset.page;
+                fetchAnimals(page);
+            }
+
+            if (e.target.closest('.change-status-btn')) {
+                const btn = e.target.closest('.change-status-btn');
+                const id = btn.dataset.id;
+                const active = btn.dataset.active;
+
+                if (!confirm('¿Seguro que quieres cambiar el estado de este animal?')) {
+                    return;
+                }
+
+                fetch("<?= BASE_URL ?>cambiar_estado_animal", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id + "&active=" + active
+                })
+                    .then(() => {
+                        fetchAnimals();
+                    });
+            }
+        });
 
         form.addEventListener("submit", function (e) {
             e.preventDefault();

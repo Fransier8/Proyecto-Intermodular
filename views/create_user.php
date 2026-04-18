@@ -18,7 +18,8 @@
                             <div class="row row-cols-1 row-cols-md-2 g-3">
                                 <div class="col">
                                     <label class="form-label fw-bold">Nombre de usuario:</label>
-                                    <input type="text" name="user_name" class="form-control" required maxlength="300" placeholder="Escribe el nombre de usuario"
+                                    <input type="text" name="user_name" class="form-control" required maxlength="300"
+                                        placeholder="Escribe el nombre de usuario"
                                         value="<?= htmlspecialchars($user['user_name']) ?>">
                                 </div>
 
@@ -32,19 +33,20 @@
                                 </div>
                                 <div class="col">
                                     <label class="form-label fw-bold">Nombre:</label>
-                                    <input type="text" name="name" class="form-control" required maxlength="300" placeholder="Escribe el nombre"
-                                        value="<?= htmlspecialchars($user['name']) ?>">
+                                    <input type="text" name="name" class="form-control" required maxlength="300"
+                                        placeholder="Escribe el nombre" value="<?= htmlspecialchars($user['name']) ?>">
                                 </div>
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Email:</label>
-                                    <input type="email" name="email" class="form-control" required maxlength="300" placeholder="Escribe el email"
-                                        value="<?= htmlspecialchars($user['email']) ?>">
+                                    <input type="email" name="email" class="form-control" required maxlength="300"
+                                        placeholder="Escribe el email" value="<?= htmlspecialchars($user['email']) ?>">
                                 </div>
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Identificación (DNI/NIE):</label>
-                                    <input type="text" name="identification" class="form-control" required maxlength="20" placeholder="Escribe la identificación"
+                                    <input type="text" name="identification" class="form-control" required
+                                        maxlength="20" placeholder="Escribe la identificación"
                                         value="<?= htmlspecialchars($user['identification']) ?>">
                                 </div>
 
@@ -61,20 +63,23 @@
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Teléfono (opcional):</label>
-                                    <input type="tel" name="phone" class="form-control" maxlength="20" placeholder="Escribe el teléfono"
+                                    <input type="tel" name="phone" class="form-control" maxlength="20"
+                                        placeholder="Escribe el teléfono"
                                         value="<?= htmlspecialchars($user['phone']) ?>">
                                 </div>
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Dirección (opcional):</label>
-                                    <input type="text" name="address" class="form-control" maxlength="500" placeholder="Escribe la dirección"
+                                    <input type="text" name="address" class="form-control" maxlength="500"
+                                        placeholder="Escribe la dirección"
                                         value="<?= htmlspecialchars($user['address']) ?>">
                                 </div>
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Contraseña:</label>
                                     <div class="input-group">
-                                        <input type="password" name="password" class="form-control" required maxlength="300" placeholder="Escribe la contraseña">
+                                        <input type="password" name="password" class="form-control" required
+                                            maxlength="300" placeholder="Escribe la contraseña">
                                         <button type="button" class="btn bg-orange-primary btn-outline-secondary"
                                             onclick="togglePasswordVisibility(this)">
                                             <i class="bi bi-eye text-dark"></i>
@@ -85,7 +90,8 @@
                                 <div class="col">
                                     <label class="form-label fw-bold">Verificar contraseña:</label>
                                     <div class="input-group">
-                                        <input type="password" name="verify_password" class="form-control" required maxlength="300" placeholder="Escribe la contraseña otra vez">
+                                        <input type="password" name="verify_password" class="form-control" required
+                                            maxlength="300" placeholder="Escribe la contraseña otra vez">
                                         <button type="button" class="btn bg-orange-primary btn-outline-secondary"
                                             onclick="togglePasswordVisibility(this)">
                                             <i class="bi bi-eye text-dark"></i>
@@ -128,6 +134,7 @@
         const email = form.querySelector('[name="email"]').value.trim();
         const identification = form.querySelector('[name="identification"]').value.trim().toUpperCase();
         const phone = form.querySelector('[name="phone"]').value.trim();
+        const role = form.querySelector('[name="role"]').value.trim();
         const password = form.querySelector('[name="password"]').value.trim();
         const verifyPassword = form.querySelector('[name="verify_password"]').value.trim();
         let errors = [];
@@ -174,6 +181,10 @@
 
         if (phone && !phonePattern.test(phone)) {
             errors.push("El teléfono debe tener 9 dígitos.");
+        }
+
+        if (role != "administrador" && role != "monitor" && role != "usuario") {
+            errors.push("Selecciona un rol.");
         }
 
         if (password.length < 4) {

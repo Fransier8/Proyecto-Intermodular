@@ -4,7 +4,7 @@ require_once 'config/connect_db.php';
 function getAnimals($search, $order, $species_id, $gender, $status, $active, $limit = null, $offset = 0)
 {
     $con = get_conexion();
-    $sql = "SELECT a.*, s.name AS species FROM animals a JOIN species s ON a.species_id = s.id WHERE (a.name LIKE :search OR a.breed LIKE :search)";
+    $sql = "SELECT a.*, s.name AS species, u.user_name AS user FROM animals a JOIN species s ON a.species_id = s.id LEFT JOIN users u ON u.id = a.user_id WHERE (a.name LIKE :search OR a.breed LIKE :search)";
 
     $params = [
         ':search' => "%$search%"
@@ -70,6 +70,22 @@ function getAnimals($search, $order, $species_id, $gender, $status, $active, $li
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getAnimalById($id)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT a.*, s.name AS species, u.user_name AS user FROM animals a JOIN species s ON a.species_id = s.id LEFT JOIN users u ON u.id = a.user_id WHERE a.id = :id");
+    $stmt->execute([':id' => $id]);
+    return $stmt->fetch();
+}
+
+function getAnimalByName($name)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT a.*, s.name AS species, u.user_name AS user FROM animals a JOIN species s ON a.species_id = s.id LEFT JOIN users u ON u.id = a.user_id WHERE a.name = :name");
+    $stmt->execute([':name' => $name]);
+    return $stmt->fetch();
+}
+
 function deleteAnimal($id)
 {
     $con = get_conexion();
@@ -118,6 +134,7 @@ function insertAnimal($name, $description, $species_id, $breed, $status, $gender
         ':user_id' => $user_id,
         ':active' => $active
     ]);
+    return $con->lastInsertId();
 }
 
 function updateAnimal($id, $data)
