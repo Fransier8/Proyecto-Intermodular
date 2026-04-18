@@ -37,11 +37,11 @@ function getAnimals($search, $order, $species_id, $gender, $status, $active, $li
         case 'name_desc':
             $sql .= " ORDER BY a.name DESC";
             break;
-        case 'species_id_asc':
-            $sql .= " ORDER BY s.name ASC";
+        case 'breed_asc':
+            $sql .= " ORDER BY breed ASC";
             break;
-        case 'species_id_desc':
-            $sql .= " ORDER BY s.name DESC";
+        case 'breed_desc':
+            $sql .= " ORDER BY breed DESC";
             break;
         case 'birth_day_asc':
             $sql .= " ORDER BY a.birth_day ASC";

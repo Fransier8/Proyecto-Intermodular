@@ -195,7 +195,6 @@ function editAnimal()
             'status' => trim($_POST['status'] ?? ''),
             'gender' => trim($_POST['gender'] ?? ''),
             'birth_day' => !empty($_POST['birth_day']) ? $_POST['birth_day'] : null,
-            'photo' => $_FILES['photo'] ?? null,
             'user_id' => trim($_POST['user_id'] ?? ''),
             'active' => isset($_POST['active']) ? 1 : 0
         ];
@@ -232,10 +231,21 @@ function editAnimal()
             }
         }
 
+        $animal_original = getAnimalById($id);
+        $data['user_id'] = $animal_original['user_id'];
+        $photo_name = $animal_original['photo'];
 
-        $animal = getAnimalById($id);
-        $data['user_id'] = $animal['user_id'];
-        $photo_name = $animal['photo'];
+        $preview = $animal_original['photo'];
+
+        if (!empty($errors)) {
+            $animal = array_merge(getAnimalById($id), $data);
+            $species = getSpecies("", "", 1000, 0);
+
+            $animal['photo'] = $animal_original['photo'];
+
+            require 'views/edit_animal.php';
+            return;
+        }
 
         if (!empty($_FILES['photo']['tmp_name']) && is_uploaded_file($_FILES['photo']['tmp_name'])) {
 
@@ -263,19 +273,6 @@ function editAnimal()
         }
 
         $data['photo'] = $photo_name;
-        $preview = $animal['photo'];
-
-        if (!empty($errors)) {
-            $animal = array_merge(getAnimalById($id), $data);
-            $species = getSpecies("", "", 1000, 0);
-
-            if ($preview == null) {
-                $animal['photo'] = null;
-            }
-
-            require 'views/edit_animal.php';
-            return;
-        }
 
         updateAnimal($id, $data);
 

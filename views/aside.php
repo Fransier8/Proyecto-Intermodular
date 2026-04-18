@@ -5,6 +5,7 @@
         <a href="<?= BASE_URL ?>usuarios" class="btn fs-4 text-start">Usuarios</a>
         <a href="<?= BASE_URL ?>reservas" class="btn fs-4 text-start">Reservas</a>
         <a href="<?= BASE_URL ?>especies" class="btn fs-4 text-start">Especies</a>
+        <a href="<?= BASE_URL ?>informes" class="btn fs-4 text-start">Informes</a>
     <?php else: ?>
         <?php if ($_SESSION['user']['role'] == "usuario"): ?>
             <a href="<?= BASE_URL ?>mis_animales" class="btn fs-4 text-start">Mis animales</a>

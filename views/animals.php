@@ -14,34 +14,46 @@
             <form class="row g-2 align-items-end">
                 <div class="col-12 col-md-3">
                     <label class="form-label">Ordenar por</label>
-                    <select class="form-select" name="ordenar">
-                        <option value="jovenes">Más jóvenes</option>
-                        <option value="viejos">Más viejos</option>
-                        <option value="nombre_asc">Nombre A–Z</option>
-                        <option value="nombre_desc">Nombre Z–A</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-2">
-                    <label class="form-label">Especie</label>
-                    <select class="form-select" name="especie">
-                        <option value="">Todas</option>
-                        <option value="perro">Perro</option>
-                        <option value="gato">Gato</option>
-                        <option value="conejo">Conejo</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-2">
-                    <label class="form-label">Estado</label>
-                    <select class="form-select" name="estado">
-                        <option value="">Todos</option>
-                        <option value="sin_adoptar">Sin adoptar</option>
-                        <option value="adoptado">Adoptado</option>
-                        <option value="apadrinado">Apadrinado</option>
+                    <select class="form-select" name="order">
+                        <option value="name_asc">Nombre A–Z</option>
+                        <option value="name_desc">Nombre Z–A</option>
+                        <option value="breed_asc">Raza A–Z</option>
+                        <option value="breed_desc">Raza Z–A</option>
+                        <option value="birth_day_asc">Edad ascendente</option>
+                        <option value="birth_day_desc">Edad descendente</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-3">
+                    <label class="form-label">Especie</label>
+                    <select class="form-select" name="species_id">
+                        <option value="">Todas</option>
+                        <?php foreach ($species as $s): ?>
+                            <option value="<?= $s['id'] ?>">
+                                <?= htmlspecialchars($s['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Estado</label>
+                    <select class="form-select" name="status">
+                        <option value="">Todos</option>
+                        <option value="sin_adoptar">Sin adoptar</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="adoptado">Adoptado</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Género</label>
+                    <select class="form-select" name="gender">
+                        <option value="">Todos</option>
+                        <option value="macho">Macho</option>
+                        <option value="hembra">Hembra</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-10">
                     <label class="form-label">Buscar</label>
-                    <input name="buscar" type="text" class="form-control">
+                    <input name="search" type="text" class="form-control" placeholder="Buscar por nombre y raza">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">
@@ -72,14 +84,6 @@
                 .then(res => res.text())
                 .then(html => {
                     animalsContainer.innerHTML = html;
-
-                    animalsContainer.addEventListener('click', function (e) {
-                        if (e.target.classList.contains('page-link')) {
-                            e.preventDefault();
-                            const page = e.target.dataset.page;
-                            fetchAnimals(page);
-                        }
-                    });
                 });
         }
 

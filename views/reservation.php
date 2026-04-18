@@ -6,8 +6,8 @@
         <section class="col p-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>animales">Animales</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Animal</li>
+                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>reservas">Reservas</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Reserva</li>
                 </ol>
             </nav>
             <h1>Reserva</h1>

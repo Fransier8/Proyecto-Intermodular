@@ -2,6 +2,7 @@
 $routes = [
     'inicio' => ['views/home.php', null],
     'iniciar_sesion' => ['controllers/users_controller.php', 'logIn'],
+    'registrarse' => ['controllers/users_controller.php', 'signUp'],
     'cerrar_sesion' => ['controllers/users_controller.php', 'logOut'],
     'animales' => ['controllers/animals_controller.php', 'listAnimals'],
     'animal' => ['controllers/animals_controller.php', 'viewAnimalDetails'],
@@ -30,10 +31,12 @@ $routes = [
     'modificar_especie' => ['controllers/species_controller.php', 'editSpecies'],
     'crear_especie' => ['controllers/species_controller.php', 'createSpecies'],
     'eliminar_especie' => ['controllers/species_controller.php', 'removeSpecies'],
+    'informes' => ['controllers/reports_controller.php', 'viewReports'],
+    'crear_informe' => ['controllers/reports_controller.php', 'downloadAnimalsPdf'],
 ];
 
 
-$publicViews = ['inicio', 'iniciar_sesion', 'restablecer_contraseña'];
+$publicViews = ['inicio', 'iniciar_sesion', 'registrarse', 'restablecer_contraseña'];
 $userViews = ['animales', 'animal', 'salas', 'sala', 'reserva', 'mis_animales', 'mis_reservas', 'perfil', 'modificar_perfil', 'cerrar_sesion'];
 $monitorViews = [
     'animales',
@@ -72,7 +75,9 @@ $administratorViews = [
     'eliminar_especie',
     'perfil',
     'modificar_perfil',
-    'cerrar_sesion'
+    'cerrar_sesion',
+    'informes',
+    'crear_informe'
 ];
 
 if (!in_array($view, $publicViews) && !isset($_SESSION['user'])) {

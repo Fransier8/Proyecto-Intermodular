@@ -1,0 +1,17 @@
+{
+    "name": "fran/proyecto-intermodular",
+    "autoload": {
+        "psr-4": {
+            "Fran\\ProyectoIntermodular\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fransier8",
+            "email": "fransier358@gmail.com"
+        }
+    ],
+    "require": {
+        "dompdf/dompdf": "^3.1"
+    }
+}

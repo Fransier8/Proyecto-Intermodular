@@ -24,7 +24,7 @@
                         <li class="nav-item"><a href="#footer" class="text-black btn">Contacto</a></li>
                         <li class="nav-item"><a href="<?= BASE_URL ?>iniciar_sesion" class="text-black btn">Iniciar
                                 sesión</a></li>
-                        <li class="nav-item"><a href="<?= BASE_URL ?>iniciar_sesion" class="text-black btn">Registrarse</a></li>
+                        <li class="nav-item"><a href="<?= BASE_URL ?>registrarse" class="text-black btn">Registrarse</a></li>
                     <?php endif; ?>
                 </ul>
             </div>

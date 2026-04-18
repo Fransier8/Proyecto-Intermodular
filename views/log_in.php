@@ -4,10 +4,10 @@
         method="post">
         <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-3">
             <label class="h4 mt-1">Correo electrónico</label>
-            <input name="email" type="email" class="form-control">
+            <input name="email" type="email" class="form-control" placeholder="Escribe el email">
             <label class="h4 mt-3">Contraseña</label>
             <div class="input-group">
-                <input id="password" name="password" type="password" class="form-control">
+                <input id="password" name="password" type="password" class="form-control" placeholder="Escribe la contraseña">
                 <button type="button" class="btn btn-outline-secondary bg-white" onclick="togglePasswordVisibility()">
                     <i id="eyeIcon" class="bi bi-eye text-dark"></i>
                 </button>
