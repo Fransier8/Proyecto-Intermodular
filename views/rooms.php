@@ -64,14 +64,6 @@
                 .then(res => res.text())
                 .then(html => {
                     roomsContainer.innerHTML = html;
-
-                    roomsContainer.addEventListener('click', function (e) {
-                        if (e.target.classList.contains('page-link')) {
-                            e.preventDefault();
-                            const page = e.target.dataset.page;
-                            fetchRooms(page);
-                        }
-                    });
                 });
         }
 

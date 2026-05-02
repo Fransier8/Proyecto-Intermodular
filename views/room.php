@@ -74,10 +74,16 @@
                             </div>
                         </div>
                     </div>
+                    <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                     <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
                         <a href="<?= BASE_URL ?>modificar_sala/<?= $room['id'] ?>"
                             class="btn bg-orange-primary border-dark border-1 flex-fill">Modificar</a>
                     </div>
+                    <?php elseif ($_SESSION['user']['role'] == "usuario"): ?>
+                    <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+                        <a class="btn bg-orange-primary border-dark border-1 flex-fill">Reservar</a>
+                    </div>
+                    <?php endif ?>
                 </div>
             </article>
         </section>

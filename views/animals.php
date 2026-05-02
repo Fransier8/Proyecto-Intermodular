@@ -13,17 +13,6 @@
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
                 <div class="col-12 col-md-3">
-                    <label class="form-label">Ordenar por</label>
-                    <select class="form-select" name="order">
-                        <option value="name_asc">Nombre A–Z</option>
-                        <option value="name_desc">Nombre Z–A</option>
-                        <option value="breed_asc">Raza A–Z</option>
-                        <option value="breed_desc">Raza Z–A</option>
-                        <option value="birth_day_asc">Edad ascendente</option>
-                        <option value="birth_day_desc">Edad descendente</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-3">
                     <label class="form-label">Especie</label>
                     <select class="form-select" name="species_id">
                         <option value="">Todas</option>
@@ -38,7 +27,7 @@
                     <label class="form-label">Estado</label>
                     <select class="form-select" name="status">
                         <option value="">Todos</option>
-                        <option value="sin_adoptar">Sin adoptar</option>
+                        <option value="sin adoptar">Sin adoptar</option>
                         <option value="reservado">Reservado</option>
                         <option value="adoptado">Adoptado</option>
                     </select>
@@ -51,7 +40,26 @@
                         <option value="hembra">Hembra</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-10">
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Activo</label>
+                    <select class="form-select" name="active">
+                        <option value="">Todos</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Ordenar por</label>
+                    <select class="form-select" name="order">
+                        <option value="name_asc">Nombre A–Z</option>
+                        <option value="name_desc">Nombre Z–A</option>
+                        <option value="breed_asc">Raza A–Z</option>
+                        <option value="breed_desc">Raza Z–A</option>
+                        <option value="birth_day_asc">Edad ascendente</option>
+                        <option value="birth_day_desc">Edad descendente</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-7">
                     <label class="form-label">Buscar</label>
                     <input name="search" type="text" class="form-control" placeholder="Buscar por nombre y raza">
                 </div>

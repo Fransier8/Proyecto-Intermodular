@@ -51,16 +51,16 @@
                 .then(res => res.text())
                 .then(html => {
                     roomsContainer.innerHTML = html;
-
-                    roomsContainer.addEventListener('click', function (e) {
-                        if (e.target.classList.contains('page-link')) {
-                            e.preventDefault();
-                            const page = e.target.dataset.page;
-                            fetchRooms(page);
-                        }
-                    });
                 });
         }
+
+        roomsContainer.addEventListener('click', function (e) {
+            if (e.target.closest('.page-link')) {
+                e.preventDefault();
+                const page = e.target.closest('.page-link').dataset.page;
+                fetchRooms(page);
+            }
+        });
 
         form.addEventListener("submit", function (e) {
             e.preventDefault();

@@ -40,7 +40,7 @@ function viewRoomDetails()
         exit();
     }
     $room = getRoomById($id);
-    if (!$room) {
+    if (!$room || ($_SESSION['user']['role'] != "administrador" && !$room['active'])) {
         header("Location: " . BASE_URL . "salas");
         exit();
     }

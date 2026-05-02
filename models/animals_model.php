@@ -1,7 +1,7 @@
 <?php
 require_once 'config/connect_db.php';
 
-function getAnimals($search, $order, $species_id, $gender, $status, $active, $limit = null, $offset = 0)
+function getAnimals($search, $order, $species_id, $gender, $status, $active, $limit = null, $offset = 0, $is_admin)
 {
     $con = get_conexion();
     $sql = "SELECT a.*, s.name AS species, u.user_name AS user FROM animals a JOIN species s ON a.species_id = s.id LEFT JOIN users u ON u.id = a.user_id WHERE (a.name LIKE :search OR a.breed LIKE :search)";
@@ -23,6 +23,10 @@ function getAnimals($search, $order, $species_id, $gender, $status, $active, $li
     if (!empty($status)) {
         $sql .= " AND a.status = :status";
         $params[':status'] = $status;
+    }
+
+    if (!$is_admin) {
+        $sql .= " AND a.status != 'adoptado'";
     }
 
     if ($active != '' && $active != null) {
@@ -169,7 +173,7 @@ function updateAnimal($id, $data)
     ]);
 }
 
-function countAnimals($search, $species_id, $gender, $status, $active)
+function countAnimals($search, $species_id, $gender, $status, $active, $is_admin)
 {
     $con = get_conexion();
 
@@ -191,6 +195,10 @@ function countAnimals($search, $species_id, $gender, $status, $active)
     if (!empty($status)) {
         $sql .= " AND status = :status";
         $params[':status'] = $status;
+    }
+
+    if (!$is_admin) {
+        $sql .= " AND status != 'adoptado'";
     }
 
     if ($active != '' && $active != null) {

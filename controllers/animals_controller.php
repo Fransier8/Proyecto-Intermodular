@@ -9,7 +9,8 @@ function listAnimals()
     $species_id = $_GET['species_id'] ?? '';
     $gender = $_GET['gender'] ?? '';
     $status = $_GET['status'] ?? '';
-    if ($_SESSION['user']['role'] == "administrador") {
+    $is_admin = $_SESSION['user']['role'] == "administrador";
+    if ($is_admin) {
         $active = $_GET['active'] ?? '';
     } else {
         $active = 1;
@@ -17,11 +18,11 @@ function listAnimals()
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $per_page = 8;
 
-    $total_animals = countAnimals($search, $species_id, $gender, $status, $active);
+    $total_animals = countAnimals($search, $species_id, $gender, $status, $active, $is_admin);
     $total_pages = $total_animals > 0 ? ceil($total_animals / $per_page) : 1;
 
     $offset = ($page - 1) * $per_page;
-    $animals = getAnimals($search, $order, $species_id, $gender, $status, $active, $per_page, $offset);
+    $animals = getAnimals($search, $order, $species_id, $gender, $status, $active, $per_page, $offset, $is_admin);
 
     $species = getSpecies("", "", 1000, 0);
 
@@ -44,7 +45,7 @@ function viewAnimalDetails()
         exit();
     }
     $animal = getAnimalById($id);
-    if (!$animal) {
+    if (!$animal || ($_SESSION['user']['role'] != "administrador" && (!$animal['active'] || $animal['status'] == "adoptado"))) {
         header("Location: " . BASE_URL . "animales");
         exit();
     }

@@ -11,10 +11,12 @@
         <p>Capacidad: <?= htmlspecialchars($room['capacity']) ?></p>
         <a href="<?= BASE_URL ?>sala/<?= $room['id'] ?>" class="btn bg-orange-primary border-dark border-1">Más
             información</a>
-        <button class="btn btn-sm change-status-btn <?= $room['active'] ? 'btn-warning' : 'btn-success' ?>"
-            data-id="<?= $room['id'] ?>" data-active="<?= $room['active'] ? 0 : 1 ?>">
-            <i class="bi <?= $room['active'] ? 'bi-person-x' : 'bi-person-check' ?>"></i>
-            <?= $room['active'] ? 'Desactivar' : 'Activar' ?>
-        </button>
+        <?php if ($_SESSION['user']['role'] == "administrador"): ?>
+            <button class="btn btn-sm change-status-btn <?= $room['active'] ? 'btn-warning' : 'btn-success' ?>"
+                data-id="<?= $room['id'] ?>" data-active="<?= $room['active'] ? 0 : 1 ?>">
+                <i class="bi <?= $room['active'] ? 'bi-person-x' : 'bi-person-check' ?>"></i>
+                <?= $room['active'] ? 'Desactivar' : 'Activar' ?>
+            </button>
+        <?php endif ?>
     </div>
 </div>
