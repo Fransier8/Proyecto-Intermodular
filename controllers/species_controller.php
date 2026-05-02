@@ -5,7 +5,6 @@ function listSpecies()
 {
     $search = $_GET['search'] ?? '';
     $order = $_GET['order'] ?? '';
-    $role = $_GET['role'] ?? '';
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $per_page = 8;
 

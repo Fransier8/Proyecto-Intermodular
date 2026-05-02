@@ -13,15 +13,15 @@
             <h1>Usuario</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <h2 class="mb-3"><?= htmlspecialchars($user['user_name']) ?></h2>
+                    <h2 class="mb-3 text-break"><?= htmlspecialchars($user['user_name']) ?></h2>
                     <div class="row row-cols-1 row-cols-md-2 g-3">
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Nombre:</span>
-                                <span><?= htmlspecialchars($user['name']) ?></span></p>
+                                <span class="text-break"><?= htmlspecialchars($user['name']) ?></span></p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Email:</span>
-                                <span><?= htmlspecialchars($user['email']) ?></span></p>
+                                <span class="text-break"><?= htmlspecialchars($user['email']) ?></span></p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Identifiacación (DNI/NIE):</span>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Dirección:</span>
-                                <span><?= htmlspecialchars($user['address']) ?></span>
+                                <span class="text-break"><?= htmlspecialchars($user['address']) ?></span>
                             </p>
                         </div>
                         <div class="col">

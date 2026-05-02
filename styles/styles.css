@@ -16,7 +16,7 @@
     --bs-heading-font-family: 'Poppins', sans-serif;
 }
 
-.btn:hover {
+.btn:not(.btn-danger):not(.btn-success):not(.btn-warning):hover {
     background-color: var(--orange-500);
 }
 

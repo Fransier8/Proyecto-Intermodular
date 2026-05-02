@@ -31,13 +31,14 @@ $routes = [
     'modificar_especie' => ['controllers/species_controller.php', 'editSpecies'],
     'crear_especie' => ['controllers/species_controller.php', 'createSpecies'],
     'eliminar_especie' => ['controllers/species_controller.php', 'removeSpecies'],
+    'solicitudes_de_adopcion' => ['controllers/adoption_applications_controller.php', 'listAdoptionApplications'],
     'informes' => ['controllers/reports_controller.php', 'viewReports'],
     'crear_informe' => ['controllers/reports_controller.php', 'downloadAnimalsPdf'],
 ];
 
 
 $publicViews = ['inicio', 'iniciar_sesion', 'registrarse', 'restablecer_contraseña'];
-$userViews = ['animales', 'animal', 'salas', 'sala', 'reserva', 'mis_animales', 'mis_reservas', 'perfil', 'modificar_perfil', 'cerrar_sesion'];
+$userViews = ['animales', 'animal', 'salas', 'sala', 'reserva', 'mis_animales', 'mis_reservas', 'perfil', 'modificar_perfil', 'cerrar_sesion', 'solicitudes_de_adopcion'];
 $monitorViews = [
     'animales',
     'animal',
@@ -76,6 +77,7 @@ $administratorViews = [
     'perfil',
     'modificar_perfil',
     'cerrar_sesion',
+    'solicitudes_de_adopcion',
     'informes',
     'crear_informe'
 ];

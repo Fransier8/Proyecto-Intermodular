@@ -13,7 +13,7 @@
             <h1>Animal</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <h2 class="mb-3"><?= htmlspecialchars($animal['name']) ?></h2>
+                    <h2 class="mb-3 text-break"><?= htmlspecialchars($animal['name']) ?></h2>
                     <div class="row row-cols-1 row-cols-md-2 g-3">
                         <?php if (!empty($animal['photo'])): ?>
                             <div class="col-12 col-md-4">
@@ -23,17 +23,17 @@
                         <?php endif; ?>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Descripción:</span>
-                                <span><?= htmlspecialchars($animal['description']) ?></span>
+                                <span class="text-break"><?= htmlspecialchars($animal['description']) ?></span>
                             </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Especie:</span>
-                                <span><?= htmlspecialchars($animal['species']) ?></span>
+                                <span class="text-break"><?= htmlspecialchars($animal['species']) ?></span>
                             </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Raza:</span>
-                                <span><?= htmlspecialchars($animal['breed']) ?></span>
+                                <span class="text-break"><?= htmlspecialchars($animal['breed']) ?></span>
                             </p>
                         </div>
                         <div class="col">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Dueño:</span>
-                                <span><?= htmlspecialchars($animal['user']) ?></span>
+                                <span class="text-break"><?= htmlspecialchars($animal['user']) ?></span>
                             </p>
                         </div>
                         <div class="col">

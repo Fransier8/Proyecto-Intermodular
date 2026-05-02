@@ -13,11 +13,11 @@
             <h1>Sala</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <h2 class="mb-3"><?= htmlspecialchars($room['code']) ?></h2>
+                    <h2 class="mb-3 text-break"><?= htmlspecialchars($room['code']) ?></h2>
                     <div class="row row-cols-1 row-cols-md-2 g-3">
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Nombre:</span>
-                                <span><?= htmlspecialchars($room['name']) ?></span>
+                                <span class="text-break"><?= htmlspecialchars($room['name']) ?></span>
                             </p>
                         </div>
                         <div class="col">
@@ -30,7 +30,7 @@
 
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Ubicación:</span>
-                                <span><?= htmlspecialchars($room['location']) ?></span>
+                                <span class="text-break"><?= htmlspecialchars($room['location']) ?></span>
                             </p>
                         </div>
 
@@ -42,7 +42,7 @@
 
                         <div class="col-md-12">
                             <p class="mb-1 text-break"><span class="fw-bold">Descripción:</span>
-                                <span>
+                                <span class="text-break">
                                     <?= htmlspecialchars($room['description']) ?>
                                 </span>
                             </p>
@@ -75,14 +75,14 @@
                         </div>
                     </div>
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
-                    <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
-                        <a href="<?= BASE_URL ?>modificar_sala/<?= $room['id'] ?>"
-                            class="btn bg-orange-primary border-dark border-1 flex-fill">Modificar</a>
-                    </div>
+                        <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+                            <a href="<?= BASE_URL ?>modificar_sala/<?= $room['id'] ?>"
+                                class="btn bg-orange-primary border-dark border-1 flex-fill">Modificar</a>
+                        </div>
                     <?php elseif ($_SESSION['user']['role'] == "usuario"): ?>
-                    <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
-                        <a class="btn bg-orange-primary border-dark border-1 flex-fill">Reservar</a>
-                    </div>
+                        <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+                            <a class="btn bg-orange-primary border-dark border-1 flex-fill">Reservar</a>
+                        </div>
                     <?php endif ?>
                 </div>
             </article>
