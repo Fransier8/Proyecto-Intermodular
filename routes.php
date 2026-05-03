@@ -32,13 +32,29 @@ $routes = [
     'crear_especie' => ['controllers/species_controller.php', 'createSpecies'],
     'eliminar_especie' => ['controllers/species_controller.php', 'removeSpecies'],
     'solicitudes_de_adopcion' => ['controllers/adoption_applications_controller.php', 'listAdoptionApplications'],
+    'apadrinamientos' => ['controllers/sponsorships_controller.php', 'listSponsorships'],
+    'apadrinar_animal' => ['controllers/sponsorships_controller.php', 'createSponsorship'],
     'informes' => ['controllers/reports_controller.php', 'viewReports'],
     'crear_informe' => ['controllers/reports_controller.php', 'downloadAnimalsPdf'],
 ];
 
 
 $publicViews = ['inicio', 'iniciar_sesion', 'registrarse', 'restablecer_contraseña'];
-$userViews = ['animales', 'animal', 'salas', 'sala', 'reserva', 'mis_animales', 'mis_reservas', 'perfil', 'modificar_perfil', 'cerrar_sesion', 'solicitudes_de_adopcion'];
+$userViews = [
+    'animales',
+    'animal',
+    'salas',
+    'sala',
+    'reserva',
+    'mis_animales',
+    'mis_reservas',
+    'perfil',
+    'modificar_perfil',
+    'cerrar_sesion',
+    'solicitudes_de_adopcion',
+    'apadrinar_animal',
+    'apadrinamientos'
+];
 $monitorViews = [
     'animales',
     'animal',
@@ -78,6 +94,7 @@ $administratorViews = [
     'modificar_perfil',
     'cerrar_sesion',
     'solicitudes_de_adopcion',
+    'apadrinamientos',
     'informes',
     'crear_informe'
 ];

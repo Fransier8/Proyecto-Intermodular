@@ -75,9 +75,17 @@
                             <button class="btn bg-orange-primary border-dark flex-fill">
                                 Visitar
                             </button>
-                            <button class="btn bg-orange-primary border-dark flex-fill">
-                                Apadrinar
-                            </button>
+                            <?php if ($animal['status'] === 'sin adoptar'): ?>
+                                <a href="<?= BASE_URL ?>apadrinar_animal/<?= $animal['id'] ?>"
+                                    class="btn bg-orange-primary border-dark flex-fill">
+                                    Apadrinar
+                                </a>
+                                </a>
+                            <?php else: ?>
+                                <button class="btn btn-secondary flex-fill" disabled>
+                                    No disponible
+                                </button>
+                            <?php endif; ?>
                         </div>
                     <?php endif ?>
                 </div>
