@@ -1,3 +1,9 @@
+<?php if (!empty($_SESSION['success'])): ?>
+    <script>
+        alert("<?= $_SESSION['success'] ?>");
+    </script>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
 <main class="flex-fill container-fluid bg-orange-300 d-flex flex-column">
     <section class="row flex-fill">
         <?php
@@ -13,14 +19,16 @@
                     <label class="form-label">Ordenar por</label>
                     <select class="form-select" name="order">
                         <option value="date_asc">Fecha ascendente</option>
-                        <option value="date_desc">Fecha descendente</option>
+                        <option value="date_desc" selected>Fecha descendente</option>
                         <option value="amount_asc">Importe ascendente</option>
                         <option value="amount_desc">Importe descendente</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-7">
                     <label class="form-label">Buscar</label>
-                    <input name="search" type="text" class="form-control" placeholder="Buscar por usuario o animal">
+                    <input name="search" type="text" class="form-control" placeholder="<?= $_SESSION['user']['role'] == 'administrador'
+                        ? 'Buscar por usuario o animal'
+                        : 'Buscar por animal' ?>">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">

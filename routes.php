@@ -34,6 +34,8 @@ $routes = [
     'solicitudes_de_adopcion' => ['controllers/adoption_applications_controller.php', 'listAdoptionApplications'],
     'apadrinamientos' => ['controllers/sponsorships_controller.php', 'listSponsorships'],
     'apadrinar_animal' => ['controllers/sponsorships_controller.php', 'createSponsorship'],
+    'pago_exitoso' => ['controllers/sponsorships_controller.php', 'paymentSuccess'],
+    'pago_cancelado' => ['controllers/sponsorships_controller.php', 'paymentCancel'],
     'informes' => ['controllers/reports_controller.php', 'viewReports'],
     'crear_informe' => ['controllers/reports_controller.php', 'downloadAnimalsPdf'],
 ];
@@ -53,7 +55,9 @@ $userViews = [
     'cerrar_sesion',
     'solicitudes_de_adopcion',
     'apadrinar_animal',
-    'apadrinamientos'
+    'apadrinamientos',
+    'pago_exitoso',
+    'pago_cancelado'
 ];
 $monitorViews = [
     'animales',

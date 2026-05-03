@@ -75,7 +75,7 @@
         e.preventDefault()
 
         const amount = form.querySelector('[name="amount"]').value.trim();
-        const message = form.querySelector('[name="message]').value.trim();
+        const message = form.querySelector('[name="message"]').value.trim();
 
         let errors = [];
 

@@ -93,3 +93,7 @@ aside {
     object-fit: cover;
     border-radius: 8px;
 }
+
+.bg-orange-primary th {
+    background-color: var(--orange-400);
+}
