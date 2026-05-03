@@ -89,7 +89,8 @@ function paymentSuccess()
 {
     require_once 'vendor/autoload.php';
 
-    \Stripe\Stripe::setApiKey('sk_test_51SoRVj43VBWrx2WutrgMUi2FQyNjt8pmOCAmnMNks0rxofYKpNodPjsd9nneHVEU7RX6r9YAk3U48nbqAzZreUa100znI7vxT2');
+    $config = require __DIR__ . '/../config/stripe.php';
+    \Stripe\Stripe::setApiKey($config['secret_key']);
 
     $session_id = $_GET['id'] ?? null;
 
