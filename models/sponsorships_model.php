@@ -132,4 +132,22 @@ function countSponsorships($search)
     return $stmt->fetchColumn();
 }
 
+function countSponsorshipsByUserId($search, $user_id)
+{
+    $con = get_conexion();
+
+    $sql = "SELECT COUNT(*) FROM sponsorships s JOIN users u ON s.user_id = u.id JOIN animals a ON a.id = s.animal_id WHERE s.user_id = :user_id AND
+    (a.name LIKE :search OR a.breed LIKE :search)";
+
+    $params = [
+        ':search' => "%$search%",
+        ':user_id' => $user_id
+    ];
+
+    $stmt = $con->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchColumn();
+}
+
 ?>

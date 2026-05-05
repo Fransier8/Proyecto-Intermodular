@@ -211,4 +211,120 @@ function countAnimals($search, $species_id, $gender, $status, $active, $is_admin
 
     return $stmt->fetchColumn();
 }
+
+function getMyAnimals($search, $order, $species_id, $gender, $status, $user_id, $limit = null, $offset = 0)
+{
+    $con = get_conexion();
+    $sql = "SELECT a.*, s.name AS species, u.user_name AS user FROM animals a JOIN species s ON a.species_id = s.id LEFT JOIN users u ON u.id = a.user_id WHERE 
+    a.active = 1 AND a.user_id = :user_id AND (a.name LIKE :search OR a.breed LIKE :search)";
+
+    $params = [
+        ':search' => "%$search%",
+        ':user_id' => $user_id
+    ];
+
+    if (!empty($species_id)) {
+        $sql .= " AND a.species_id = :species_id";
+        $params[':species_id'] = $species_id;
+    }
+
+    if (!empty($gender)) {
+        $sql .= " AND a.gender = :gender";
+        $params[':gender'] = $gender;
+    }
+
+    if (!empty($status)) {
+        $sql .= " AND a.status = :status";
+        $params[':status'] = $status;
+    }
+
+    switch ($order) {
+        case 'name_asc':
+            $sql .= " ORDER BY a.name ASC";
+            break;
+        case 'name_desc':
+            $sql .= " ORDER BY a.name DESC";
+            break;
+        case 'breed_asc':
+            $sql .= " ORDER BY breed ASC";
+            break;
+        case 'breed_desc':
+            $sql .= " ORDER BY breed DESC";
+            break;
+        case 'birth_day_asc':
+            $sql .= " ORDER BY a.birth_day ASC";
+            break;
+        case 'birth_day_desc':
+            $sql .= " ORDER BY a.birth_day DESC";
+            break;
+        default:
+            $sql .= " ORDER BY a.name ASC";
+            break;
+    }
+    if ($limit != null) {
+        $sql .= " LIMIT :offset, :limit";
+        $params[':offset'] = (int) $offset;
+        $params[':limit'] = (int) $limit;
+    }
+    $stmt = $con->prepare($sql);
+    foreach ($params as $key => $value) {
+        if ($key === ':offset' || $key === ':limit') {
+            $stmt->bindValue($key, $value, PDO::PARAM_INT);
+        } else {
+            $stmt->bindValue($key, $value);
+        }
+    }
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function countMyAnimals($search, $species_id, $gender, $status, $user_id)
+{
+    $con = get_conexion();
+
+    $sql = "SELECT COUNT(*) FROM animals
+            WHERE active = 1 AND user_id = :user_id AND (name LIKE :search OR breed LIKE :search)";
+
+    $params = [
+        ':search' => "%$search%",
+        ':user_id' => $user_id
+    ];
+
+    if (!empty($species_id)) {
+        $sql .= " AND species_id = :species_id";
+        $params[':species_id'] = $species_id;
+    }
+
+    if (!empty($gender)) {
+        $sql .= " AND gender = :gender";
+        $params[':gender'] = $gender;
+    }
+
+    if (!empty($status)) {
+        $sql .= " AND status = :status";
+        $params[':status'] = $status;
+    }
+
+    $stmt = $con->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchColumn();
+}
+
+function updateAnimalAdoptionStatus($id, $data)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare(
+        "UPDATE animals
+             SET status = :status,
+                 user_id = :user_id
+             WHERE id = :id"
+    );
+    $stmt->execute([
+        ':id' => $id,
+        ':status' => $data['status'],
+        ':user_id' => $data['user_id']
+    ]);
+}
+
 ?>

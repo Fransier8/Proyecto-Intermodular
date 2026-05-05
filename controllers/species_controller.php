@@ -121,9 +121,9 @@ function editSpecies()
 
 function removeSpecies()
 {
-    $isAjax = isset($_GET['ajax']);
+    $is_ajax = isset($_GET['ajax']);
     if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'administrador') {
-        if ($isAjax) {
+        if ($is_ajax) {
             echo json_encode([
                 'success' => false,
                 'message' => 'No autorizado'

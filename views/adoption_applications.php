@@ -13,14 +13,16 @@
                     <label class="form-label">Ordenar por</label>
                     <select class="form-select" name="order">
                         <option value="application_date_asc">Fecha de solicitud ascendente</option>
-                        <option value="application_date_desc">Fecha de solicitud descendente</option>
+                        <option value="application_date_desc" selected>Fecha de solicitud descendente</option>
                         <option value="modification_date_asc">Fecha de modificación ascendente</option>
                         <option value="modification_date_desc">Fecha de modificación descendente</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-7">
                     <label class="form-label">Buscar</label>
-                    <input name="search" type="text" class="form-control" placeholder="Buscar por nombre">
+                    <input name="search" type="text" class="form-control" placeholder="<?= $_SESSION['user']['role'] == 'administrador'
+                        ? 'Buscar por usuario o animal'
+                        : 'Buscar por animal' ?>">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">

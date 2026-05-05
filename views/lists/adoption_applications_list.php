@@ -1,7 +1,7 @@
 <article id="adoption-applications-list" class="row g-3">
-    <?php foreach ($adoption_applications as $adoption_application):
-        require 'views/cards/adoption_application_card.php';
-    endforeach; ?>
+    <?php
+    require 'views/tables/adoption_applications_table.php';
+    ?>
 </article>
 <nav class="mt-4 d-flex justify-content-center">
     <ul class="pagination">

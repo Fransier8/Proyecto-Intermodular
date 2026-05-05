@@ -30,6 +30,7 @@ function listAnimals()
         require 'views/lists/animals_list.php';
         exit;
     }
+    $_SESSION['from_animals'] = 'animales';
     if ($_SESSION['user']['role'] == "administrador") {
         require 'views/animals.php';
     } else {
@@ -45,10 +46,11 @@ function viewAnimalDetails()
         exit();
     }
     $animal = getAnimalById($id);
-    if (!$animal || ($_SESSION['user']['role'] != "administrador" && (!$animal['active'] || $animal['status'] == "adoptado"))) {
+    if (!$animal || ($_SESSION['user']['role'] != "administrador" && (!$animal['active'] || ($animal['status'] == "adoptado" && $animal['user_id'] != $_SESSION['user']['id'])))) {
         header("Location: " . BASE_URL . "animales");
         exit();
     }
+    $from = $_SESSION['from_animals'] ?? 'animales';
     require 'views/animal.php';
 }
 
@@ -298,6 +300,28 @@ function editAnimal()
 
 function listMyAnimals()
 {
+    $search = $_GET['search'] ?? '';
+    $order = $_GET['order'] ?? '';
+    $species_id = $_GET['species_id'] ?? '';
+    $gender = $_GET['gender'] ?? '';
+    $status = $_GET['status'] ?? '';
+    $user_id = $_SESSION['user']['id'] ?? '';
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $per_page = 8;
+
+    $total_animals = countMyAnimals($search, $species_id, $gender, $status, $user_id);
+    $total_pages = $total_animals > 0 ? ceil($total_animals / $per_page) : 1;
+
+    $offset = ($page - 1) * $per_page;
+    $animals = getMyAnimals($search, $order, $species_id, $gender, $status, $user_id, $per_page, $offset);
+
+    $species = getSpecies("", "", 1000, 0);
+
+    if (isset($_GET['ajax'])) {
+        require 'views/lists/animals_list.php';
+        exit;
+    }
+    $_SESSION['from_animals'] = 'mis_animales';
     require 'views/my_animals.php';
 }
 
@@ -340,5 +364,39 @@ function optimizeImage($tmp_path, $output_path)
     imagedestroy($image);
 
     return $output_path;
+}
+
+function removeAnimalUser()
+{
+    if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'administrador') {
+        header("Location: " . BASE_URL . "inicio");
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $id = $_POST['id'] ?? null;
+
+        if (!$id) {
+            header("Location: " . BASE_URL . "animales");
+            exit();
+        }
+
+        $animal = getAnimalById($id);
+
+        if (!$animal) {
+            header("Location: " . BASE_URL . "animales");
+            exit();
+        }
+
+        $data = [
+            'status' => 'sin adoptar',
+            'user_id' => null
+        ];
+
+        updateAnimalAdoptionStatus($id, $data);
+
+        header("Location: " . BASE_URL . "animal/" . $id);
+        exit();
+    }
 }
 ?>

@@ -10,7 +10,12 @@ function listSponsorships()
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $per_page = 8;
 
-    $total_sponsorships = countSponsorships($search);
+    if ($_SESSION['user']['role'] == 'administrador') {
+        $total_sponsorships = countSponsorships($search);
+    } else {
+        $total_sponsorships = countSponsorshipsByUserId($search, $_SESSION['user']['id']);
+    }
+    
     $total_pages = $total_sponsorships > 0 ? ceil($total_sponsorships / $per_page) : 1;
 
     $offset = ($page - 1) * $per_page;

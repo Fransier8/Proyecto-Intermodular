@@ -1,9 +1,9 @@
 <?php
 define('BASE_URL', '/proyecto/Proyecto-Intermodular/');
 session_start();
-$isAjax = isset($_GET['ajax']);
+$is_ajax = isset($_GET['ajax']);
 $view = $_GET['view'] ?? 'inicio';
-if ($isAjax) {
+if ($is_ajax) {
     require_once 'routes.php';
     exit;
 }

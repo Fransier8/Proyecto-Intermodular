@@ -6,7 +6,11 @@
         <section class="col p-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>animales">Animales</a></li>
+                    <?php if ($from == 'mis_animales'): ?>
+                        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>mis_animales">Mis animales</a></li>
+                    <?php else: ?>
+                        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>animales">Animales</a></li>
+                    <?php endif; ?>
                     <li class="breadcrumb-item active" aria-current="page">Animal</li>
                 </ol>
             </nav>
@@ -61,6 +65,20 @@
                                 <span><?= $animal['active'] ? 'Sí' : 'No' ?></span>
                             </p>
                         </div>
+                        <?php if ($_SESSION['user']['role'] == "administrador" && $animal['user_id']): ?>
+                            <div class="col">
+                                <form action="<?= BASE_URL ?>quitar_usuario_animal" method="post"
+                                    onsubmit="return confirm('¿Seguro que quieres quitar el usuario de este animal?');">
+
+                                    <input type="hidden" name="id" value="<?= $animal['id'] ?>">
+
+                                    <button type="submit" class="btn btn-danger flex-fill">
+                                        <i class="bi bi-arrow-counterclockwise"></i>
+                                        Quitar usuario
+                                    </button>
+                                </form>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                         <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
@@ -69,17 +87,23 @@
                         </div>
                     <?php elseif ($_SESSION['user']['role'] == "usuario"): ?>
                         <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
-                            <button class="btn bg-orange-primary border-dark flex-fill">
-                                Adoptar
-                            </button>
+                            <?php if ($animal['status'] == 'sin adoptar'): ?>
+                                <a href="<?= BASE_URL ?>adoptar_animal/<?= $animal['id'] ?>"
+                                    class="btn bg-orange-primary border-dark flex-fill">
+                                    Adoptar
+                                </a>
+                            <?php else: ?>
+                                <button class="btn btn-secondary flex-fill" disabled>
+                                    No disponible
+                                </button>
+                            <?php endif; ?>
                             <button class="btn bg-orange-primary border-dark flex-fill">
                                 Visitar
                             </button>
-                            <?php if ($animal['status'] === 'sin adoptar'): ?>
+                            <?php if ($animal['status'] == 'sin adoptar'): ?>
                                 <a href="<?= BASE_URL ?>apadrinar_animal/<?= $animal['id'] ?>"
                                     class="btn bg-orange-primary border-dark flex-fill">
                                     Apadrinar
-                                </a>
                                 </a>
                             <?php else: ?>
                                 <button class="btn btn-secondary flex-fill" disabled>
