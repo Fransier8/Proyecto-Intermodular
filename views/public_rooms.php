@@ -1,9 +1,9 @@
-<main class="flex-fill container-fluid bg-orange-300 d-flex flex-column">
+<main class="flex-fill container-fluid bg-orange-300 d-flex flex-column overflow-hidden">
     <section class="row flex-fill">
         <?php
         require 'views/aside.php';
         ?>
-        <section class="col p-3">
+        <section class="col p-3 overflow-auto">
             <h1>Salas</h1>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">

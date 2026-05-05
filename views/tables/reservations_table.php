@@ -6,42 +6,53 @@
                     <th>Usuario</th>
                 <?php endif; ?>
                 <th>Animal</th>
-                <th>Mensaje</th>
+                <th>Sala</th>
+                <th>Monitor</th>
+                <th>Motivo</th>
+                <th>Acompañantes</th>
+                <th>Hora</th>
+                <th>Fecha</th>
                 <th>Estado</th>
-                <th>Fecha de solicitud</th>
-                <th>Fecha de modificación</th>
                 <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                     <th>Acciones</th>
                 <?php endif; ?>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($adoption_applications as $adoption_application): ?>
+            <?php foreach ($reservations as $reservation): ?>
                 <tr>
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                         <td>
-                            <?= htmlspecialchars($adoption_application['user_user_name']) ?>
+                            <?= htmlspecialchars($reservation['user_user_name']) ?>
                         </td>
                     <?php endif; ?>
                     <td>
-                        <?= htmlspecialchars($adoption_application['animal_name']) ?>
+                        <?= htmlspecialchars($reservation['animal_name']) ?>
                     </td>
-                    <td><?= htmlspecialchars($adoption_application['message']) ?></td>
-                    <td><?= htmlspecialchars($adoption_application['status']) ?></td>
-                    <td><?= htmlspecialchars($adoption_application['application_date']) ?></td>
-                    <td><?= htmlspecialchars($adoption_application['modification_date']) ?></td>
+                    <td>
+                        <?= htmlspecialchars($reservation['room_code']) ?>
+                    </td>
+                    <td>
+                        <?= htmlspecialchars($reservation['monitor_user_name']) ?>
+                    </td>
+                    <td><?= htmlspecialchars($reservation['reason']) ?></td>
+                    <td><?= htmlspecialchars($reservation['companions']) ?></td>
+                    <td><?= htmlspecialchars($reservation['start_time'] . ' - ' . $reservation['end_time']) ?>
+                    </td>
+                    <td><?= htmlspecialchars($reservation['date']) ?></td>
+                    <td><?= htmlspecialchars($reservation['status']) ?></td>
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                         <td>
                             <div class="d-flex gap-2">
-                                <?php if ($adoption_application['status'] == "pendiente" || $adoption_application['status'] == "reservado"): ?>
-                                    <a href="<?= BASE_URL ?>modificar_solicitud_de_adopcion/<?= $adoption_application['id'] ?>"
+                                <?php if ($reservation['status'] == "pendiente" || $reservation['status'] == "reservado"): ?>
+                                    <a href="<?= BASE_URL ?>modificar_reserva/<?= $reservation['id'] ?>"
                                         class="btn btn-sm bg-orange-primary d-flex align-items-center gap-1">
                                         <i class="bi bi-pencil"></i>
                                         <span>Modificar</span>
                                     </a>
                                 <?php endif; ?>
                                 <button class="btn btn-sm delete-btn btn-danger d-flex align-items-center gap-1"
-                                    data-id="<?= $adoption_application['id'] ?>">
+                                    data-id="<?= $reservation['id'] ?>">
                                     <i class="bi bi-trash3"></i>
                                     <span>Eliminar</span>
                                 </button>

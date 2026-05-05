@@ -12,6 +12,8 @@
         <?php endif; ?>
         <a href="<?= BASE_URL ?>mis_reservas" class="btn fs-4 text-start">Mis reservas</a>
     <?php endif; ?>
-    <a href="<?= BASE_URL ?>solicitudes_de_adopcion" class="btn fs-4 text-start">Adopciones</a>
-    <a href="<?= BASE_URL ?>apadrinamientos" class="btn fs-4 text-start">Apadrinamientos</a>
+    <?php if ($_SESSION['user']['role'] != "monitor"): ?>
+        <a href="<?= BASE_URL ?>solicitudes_de_adopcion" class="btn fs-4 text-start">Adopciones</a>
+        <a href="<?= BASE_URL ?>apadrinamientos" class="btn fs-4 text-start">Apadrinamientos</a>
+    <?php endif; ?>
 </aside>

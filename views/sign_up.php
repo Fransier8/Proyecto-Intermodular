@@ -1,4 +1,4 @@
-<main class="flex-fill container-fluid bg-orange-300 d-flex flex-column">
+<main class="flex-fill container-fluid bg-orange-300 d-flex flex-column overflow-hidden">
     <h1>Registrarse</h1>
     <article class="row g-4">
         <div class="col-12 col-md-12 fs-5">

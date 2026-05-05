@@ -4,7 +4,7 @@ require_once 'config/connect_db.php';
 function getReservations($search, $order, /*$user_id, $animal_id, $room_id, $monitor_id,*/ $status, $limit = null, $offset = 0)
 {
     $con = get_conexion();
-    $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
+    $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
     JOIN rooms ro ON r.room_id = ro.id WHERE (reason LIKE :search)";
 
     $params = [

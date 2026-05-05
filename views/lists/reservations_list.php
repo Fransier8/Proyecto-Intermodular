@@ -1,7 +1,7 @@
 <article id="reservations-list" class="row g-3">
-    <?php foreach ($reservations as $reservation):
-        require 'views/cards/reservation_card.php';
-    endforeach; ?>
+    <?php
+    require 'views/tables/reservations_table.php';
+    ?>
 </article>
 <nav class="mt-4 d-flex justify-content-center">
     <ul class="pagination">

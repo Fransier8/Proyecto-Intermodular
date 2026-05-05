@@ -1,9 +1,9 @@
-<main class="flex-fill container-fluid bg-orange-300 d-flex flex-column">
+<main class="flex-fill container-fluid bg-orange-300 d-flex flex-column overflow-hidden">
     <section class="row flex-fill">
         <?php
         require 'views/aside.php';
         ?>
-        <section class="col p-3">
+        <section class="col p-3 overflow-auto">
             <h1>Perfil</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
