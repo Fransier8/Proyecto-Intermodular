@@ -1,7 +1,9 @@
 <?php
 require_once 'models/reservations_model.php';
+require_once 'models/users_model.php';
 require_once 'models/animals_model.php';
 require_once 'models/species_model.php';
+require_once 'models/rooms_model.php';
 
 function listReservations()
 {
@@ -86,10 +88,35 @@ function createReservation()
 
     } else {
         $reservation = [
-            'reason' => ''
+            'reason' => '',
+            'companions' => ''
         ];
+        $users = $users ?? [];
+        $animals = $animals ?? [];
+        $rooms = $rooms ?? [];
+        $page = $page ?? 1;
+        $total_pages = $total_pages ?? 1;
         require 'views/create_reservation.php';
     }
+}
+
+function listReservationUsers()
+{
+    $search = $_GET['search'] ?? '';
+    $order = $_GET['order'] ?? '';
+    $role = 'usuario';
+    $active = 1;
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $per_page = 8;
+
+    $total_users = countUsers($search, $role, $active);
+    $total_pages = $total_users > 0 ? ceil($total_users / $per_page) : 1;
+
+    $offset = ($page - 1) * $per_page;
+    $users = getUsers($search, $order, $role, $active, $per_page, $offset);
+
+    require 'views/lists/users_reservation_list.php';
+    exit;
 }
 
 function listReservationAnimals()
@@ -110,6 +137,43 @@ function listReservationAnimals()
     $animals = getAnimals($search, $order, $species_id, $gender, $status, $active, $per_page, $offset, true);
 
     require 'views/lists/animals_reservation_list.php';
+    exit;
+}
+
+function listReservationRooms()
+{
+    $search = $_GET['search'] ?? '';
+    $order = $_GET['order'] ?? '';
+    $active = 1;
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $per_page = 8;
+
+    $total_rooms = countRooms($search, $active);
+    $total_pages = $total_rooms > 0 ? ceil($total_rooms / $per_page) : 1;
+
+    $offset = ($page - 1) * $per_page;
+    $rooms = getRooms($search, $order, $active, $per_page, $offset);
+
+    require 'views/lists/rooms_reservation_list.php';
+    exit;
+}
+
+function listReservationMonitors()
+{
+    $search = $_GET['search'] ?? '';
+    $order = $_GET['order'] ?? '';
+    $role = 'monitor';
+    $active = 1;
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $per_page = 8;
+
+    $total_users = countUsers($search, $role, $active);
+    $total_pages = $total_users > 0 ? ceil($total_users / $per_page) : 1;
+
+    $offset = ($page - 1) * $per_page;
+    $users = getUsers($search, $order, $role, $active, $per_page, $offset);
+
+    require 'views/lists/users_reservation_list.php';
     exit;
 }
 ?>

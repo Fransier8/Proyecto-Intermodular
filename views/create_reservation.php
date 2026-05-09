@@ -18,9 +18,49 @@
                             <div class="row row-cols-1 g-3">
                                 <div class="col">
                                     <label class="form-label fw-bold">Motivo:</label>
-                                    <input type="text" name="reason" class="form-control" required maxlength="3000"
+                                    <textarea type="text" name="reason" class="form-control" required maxlength="3000"
                                         placeholder="Escribe el motivo"
-                                        value="<?= htmlspecialchars($reservation['reason']) ?>">
+                                        value="<?= htmlspecialchars($reservation['reason']) ?>"></textarea>
+                                </div>
+
+                                <div class="col">
+                                    <label class="form-label fw-bold">Acompañantes:</label>
+                                    <input type="number" name="companions" class="form-control" required maxlength="11"
+                                        placeholder="Escribe los acompañantes" min="0"
+                                        value="<?= htmlspecialchars($reservation['companions']) ?>">
+                                </div>
+
+                                <input type="hidden" name="user-id" id="user-id">
+
+                                <div class="col-12">
+
+                                    <label class="form-label fw-bold">Usuario:</label>
+
+                                    <div class="row g-2 align-items-end mb-3">
+
+                                        <div class="col-12 col-md-3">
+                                            <label class="form-label">Ordenar por</label>
+                                            <select class="form-select" id="user-order" name="user-order">
+                                                <option value="user_name_asc">Nombre de usuario A–Z</option>
+                                                <option value="user_name_desc">Nombre de usuario Z–A</option>
+                                                <option value="name_asc">Nombre A–Z</option>
+                                                <option value="name_desc">Nombre Z–A</option>
+                                                <option value="email_asc">Email A–Z</option>
+                                                <option value="email_desc">Email Z–A</option>
+                                                <option value="identification_asc">Identificación ascendente</option>
+                                                <option value="identification_desc">Identificación descendente</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <label class="form-label">Buscar</label>
+                                            <input id="user-search" name="user-search" type="text" class="form-control"
+                                                placeholder="Buscar usuario">
+                                        </div>
+
+                                    </div>
+                                    <section id="users-container" class="mt-3">
+                                        <?php require 'views/lists/users_reservation_list.php'; ?>
+                                    </section>
                                 </div>
 
                                 <input type="hidden" name="animal-id" id="animal-id">
@@ -30,6 +70,18 @@
                                     <label class="form-label fw-bold">Animal:</label>
 
                                     <div class="row g-2 align-items-end mb-3">
+
+                                        <div class="col-12 col-md-3">
+                                            <label class="form-label">Ordenar por</label>
+                                            <select class="form-select" id="order" name="order">
+                                                <option value="name_asc">Nombre A–Z</option>
+                                                <option value="name_desc">Nombre Z–A</option>
+                                                <option value="breed_asc">Raza A–Z</option>
+                                                <option value="breed_desc">Raza Z–A</option>
+                                                <option value="birth_day_asc">Edad ascendente</option>
+                                                <option value="birth_day_desc">Edad descendente</option>
+                                            </select>
+                                        </div>
 
                                         <div class="col-12 col-md-3">
                                             <label class="form-label">Especie</label>
@@ -54,21 +106,9 @@
                                         </div>
 
                                         <div class="col-12 col-md-3">
-                                            <label class="form-label">Ordenar por</label>
-                                            <select class="form-select" id="order" name="order">
-                                                <option value="name_asc">Nombre A–Z</option>
-                                                <option value="name_desc">Nombre Z–A</option>
-                                                <option value="breed_asc">Raza A–Z</option>
-                                                <option value="breed_desc">Raza Z–A</option>
-                                                <option value="birth_day_asc">Edad ascendente</option>
-                                                <option value="birth_day_desc">Edad descendente</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-12 col-md-3">
                                             <label class="form-label">Buscar</label>
-                                            <input type="text" id="animal-search" class="form-control"
-                                                placeholder="Buscar por nombre y raza">
+                                            <input type="text" id="animal-search" name="animal-search"
+                                                class="form-control" placeholder="Buscar por nombre y raza">
                                         </div>
 
                                     </div>
@@ -76,6 +116,71 @@
                                         <?php require 'views/lists/animals_reservation_list.php'; ?>
                                     </section>
                                 </div>
+
+                                <input type="hidden" name="room-id" id="room-id">
+
+                                <div class="col-12">
+
+                                    <label class="form-label fw-bold">Sala:</label>
+
+                                    <div class="row g-2 align-items-end mb-3">
+
+                                        <div class="col-12 col-md-3">
+                                            <label class="form-label">Ordenar por</label>
+                                            <select class="form-select" id="room-order" name="room-order">
+                                                <option value="code_asc">Código A–Z</option>
+                                                <option value="code_desc">Código Z–A</option>
+                                                <option value="name_asc">Nombre A–Z</option>
+                                                <option value="name_desc">Nombre Z–A</option>
+                                                <option value="capacity_asc">Capacidad ascendente</option>
+                                                <option value="capacity_desc">Capacidad descendente</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <label class="form-label">Buscar</label>
+                                            <input id="room-search" name="room-search" type="text" class="form-control"
+                                                placeholder="Buscar sala">
+                                        </div>
+
+                                    </div>
+                                    <section id="rooms-container" class="mt-3">
+                                        <?php require 'views/lists/rooms_reservation_list.php'; ?>
+                                    </section>
+                                </div>
+
+                                <input type="hidden" name="monitor-id" id="monitor-id">
+
+                                <div class="col-12">
+
+                                    <label class="form-label fw-bold">Monitor:</label>
+
+                                    <div class="row g-2 align-items-end mb-3">
+
+                                        <div class="col-12 col-md-3">
+                                            <label class="form-label">Ordenar por</label>
+                                            <select class="form-select" id="monitor-order" name="monitor-order">
+                                                <option value="user_name_asc">Nombre de usuario A–Z</option>
+                                                <option value="user_name_desc">Nombre de usuario Z–A</option>
+                                                <option value="name_asc">Nombre A–Z</option>
+                                                <option value="name_desc">Nombre Z–A</option>
+                                                <option value="email_asc">Email A–Z</option>
+                                                <option value="email_desc">Email Z–A</option>
+                                                <option value="identification_asc">Identificación ascendente</option>
+                                                <option value="identification_desc">Identificación descendente</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <label class="form-label">Buscar</label>
+                                            <input id="monitor-search" name="monitor-search" type="text"
+                                                class="form-control" placeholder="Buscar usuario">
+                                        </div>
+
+                                    </div>
+                                    <section id="monitors-container" class="mt-3">
+                                        <?php require 'views/lists/monitors_reservation_list.php'; ?>
+                                    </section>
+                                </div>
+
                             </div>
 
                             <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
@@ -103,6 +208,90 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
+
+        const usersContainer = document.getElementById("users-container");
+
+        const userSearchInput = document.getElementById("user-search");
+        const userOrderSelect = document.getElementById("user-order");
+
+        let selectedUserId = null;
+
+        function fetchUsers(page = 1) {
+
+            let params = new URLSearchParams();
+
+            params.append("ajax", "1");
+            params.append("page", page);
+            params.append("search", userSearchInput.value);
+            params.append("order", userOrderSelect.value);
+
+            fetch("<?= BASE_URL ?>usuarios_reserva?" + params.toString())
+                .then(res => res.text())
+                .then(html => {
+
+                    usersContainer.innerHTML = html;
+
+                    if (selectedUserId) {
+                        const selectedBtn = usersContainer.querySelector(
+                            `.select-user-btn[data-id="${selectedUserId}"]`
+                        );
+
+                        if (selectedBtn) {
+                            selectedBtn.classList.remove("bg-orange-primary");
+                            selectedBtn.classList.add("btn-success");
+                            selectedBtn.textContent = "Seleccionado";
+                        }
+                    }
+                });
+        }
+
+        userSearchInput.addEventListener("input", () => fetchUsers());
+
+        userOrderSelect.addEventListener("change", () => fetchUsers());
+
+        usersContainer.addEventListener("click", function (e) {
+
+            if (e.target.closest(".page-link")) {
+
+                e.preventDefault();
+
+                const page = e.target.closest(".page-link").dataset.page;
+
+                fetchUsers(page);
+            }
+
+            if (e.target.closest(".select-user-btn")) {
+
+                const btn = e.target.closest(".select-user-btn");
+
+                selectedUserId = btn.dataset.id;
+
+                document.getElementById("user-id").value = selectedUserId;
+
+                document.querySelectorAll(".select-user-btn").forEach(button => {
+                    button.textContent = "Seleccionar";
+                });
+
+                const previousBtn = usersContainer.querySelector(".btn-success");
+
+                if (previousBtn) {
+                    previousBtn.classList.remove("btn-success");
+                    previousBtn.classList.add("bg-orange-primary");
+                    previousBtn.textContent = "Seleccionar";
+                }
+
+                selectedUserId = btn.dataset.id;
+                document.getElementById("user-id").value = selectedUserId;
+
+                btn.classList.remove("bg-orange-primary");
+                btn.classList.add("btn-success");
+                btn.textContent = "Seleccionado";
+
+                btn.classList.add("btn-success");
+            }
+        });
+
+        fetchUsers();
 
         const animalsContainer = document.getElementById("animals-container");
 
@@ -195,6 +384,175 @@
         });
 
         fetchAnimals();
+
+        const roomsContainer = document.getElementById("rooms-container");
+
+        const roomSearchInput = document.getElementById("room-search");
+        const roomOrderSelect = document.getElementById("room-order");
+
+        let selectedRoomId = null;
+
+        function fetchRooms(page = 1) {
+
+            let params = new URLSearchParams();
+
+            params.append("ajax", "1");
+            params.append("page", page);
+            params.append("search", roomSearchInput.value);
+            params.append("order", roomOrderSelect.value);
+
+            fetch("<?= BASE_URL ?>salas_reserva?" + params.toString())
+                .then(res => res.text())
+                .then(html => {
+
+                    roomsContainer.innerHTML = html;
+
+                    if (selectedRoomId) {
+                        const selectedBtn = roomsContainer.querySelector(
+                            `.select-room-btn[data-id="${selectedRoomId}"]`
+                        );
+
+                        if (selectedBtn) {
+                            selectedBtn.classList.remove("bg-orange-primary");
+                            selectedBtn.classList.add("btn-success");
+                            selectedBtn.textContent = "Seleccionado";
+                        }
+                    }
+                });
+        }
+
+        roomSearchInput.addEventListener("input", () => fetchRooms());
+
+        roomOrderSelect.addEventListener("change", () => fetchRooms());
+
+        roomsContainer.addEventListener("click", function (e) {
+
+            if (e.target.closest(".page-link")) {
+
+                e.preventDefault();
+
+                const page = e.target.closest(".page-link").dataset.page;
+
+                fetchRooms(page);
+            }
+
+            if (e.target.closest(".select-room-btn")) {
+
+                const btn = e.target.closest(".select-room-btn");
+
+                selectedRoomId = btn.dataset.id;
+
+                document.getElementById("room-id").value = selectedRoomId;
+
+                document.querySelectorAll(".select-room-btn").forEach(button => {
+                    button.textContent = "Seleccionar";
+                });
+
+                const previousBtn = roomsContainer.querySelector(".btn-success");
+
+                if (previousBtn) {
+                    previousBtn.classList.remove("btn-success");
+                    previousBtn.classList.add("bg-orange-primary");
+                    previousBtn.textContent = "Seleccionar";
+                }
+
+                selectedRoomId = btn.dataset.id;
+                document.getElementById("room-id").value = selectedRoomId;
+
+                btn.classList.remove("bg-orange-primary");
+                btn.classList.add("btn-success");
+                btn.textContent = "Seleccionado";
+
+                btn.classList.add("btn-success");
+            }
+        });
+
+        fetchRooms();
+
+        const monitorsContainer = document.getElementById("monitors-container");
+
+        const monitorSearchInput = document.getElementById("monitor-search");
+        const monitorOrderSelect = document.getElementById("monitor-order");
+
+        let selectedMonitorId = null;
+
+        function fetchMonitors(page = 1) {
+
+            let params = new URLSearchParams();
+
+            params.append("ajax", "1");
+            params.append("page", page);
+            params.append("search", monitorSearchInput.value);
+            params.append("order", monitorOrderSelect.value);
+
+            fetch("<?= BASE_URL ?>monitores_reserva?" + params.toString())
+                .then(res => res.text())
+                .then(html => {
+
+                    monitorsContainer.innerHTML = html;
+
+                    if (selectedMonitorId) {
+                        const selectedBtn = monitorsContainer.querySelector(
+                            `.select-monitor-btn[data-id="${selectedMonitorId}"]`
+                        );
+
+                        if (selectedBtn) {
+                            selectedBtn.classList.remove("bg-orange-primary");
+                            selectedBtn.classList.add("btn-success");
+                            selectedBtn.textContent = "Seleccionado";
+                        }
+                    }
+                });
+        }
+
+        monitorSearchInput.addEventListener("input", () => fetchMonitors());
+
+        monitorOrderSelect.addEventListener("change", () => fetchMonitors());
+
+        monitorsContainer.addEventListener("click", function (e) {
+
+            if (e.target.closest(".page-link")) {
+
+                e.preventDefault();
+
+                const page = e.target.closest(".page-link").dataset.page;
+
+                fetchMonitors(page);
+            }
+
+            if (e.target.closest(".select-monitor-btn")) {
+
+                const btn = e.target.closest(".select-monitor-btn");
+
+                selectedMonitorId = btn.dataset.id;
+
+                document.getElementById("monitor-id").value = selectedMonitorId;
+
+                document.querySelectorAll(".select-monitor-btn").forEach(button => {
+                    button.textContent = "Seleccionar";
+                });
+
+                const previousBtn = monitorsContainer.querySelector(".btn-success");
+
+                if (previousBtn) {
+                    previousBtn.classList.remove("btn-success");
+                    previousBtn.classList.add("bg-orange-primary");
+                    previousBtn.textContent = "Seleccionar";
+                }
+
+                selectedMonitorId = btn.dataset.id;
+                document.getElementById("monitor-id").value = selectedMonitorId;
+
+                btn.classList.remove("bg-orange-primary");
+                btn.classList.add("btn-success");
+                btn.textContent = "Seleccionado";
+
+                btn.classList.add("btn-success");
+            }
+        });
+
+        fetchMonitors();
+
     });
 
     const form = document.querySelector("form");

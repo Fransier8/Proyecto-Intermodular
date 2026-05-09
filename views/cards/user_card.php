@@ -3,6 +3,7 @@
         <h4 class="card-title"><?= htmlspecialchars($user['user_name']) ?></h4>
         <p>Nombre: <?= htmlspecialchars($user['name']) ?></p>
         <p>Email: <?= htmlspecialchars($user['email']) ?></p>
+        <p>Identificación: <?= htmlspecialchars($user['identification']) ?></p>
         <p>Rol: <?= htmlspecialchars($user['role']) ?></p>
         <div class="mt-auto d-flex flex-column gap-2">
             <a href="<?= BASE_URL ?>usuario/<?= $user['id'] ?>" class="btn bg-orange-primary border-dark border-1">Más
