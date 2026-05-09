@@ -18,7 +18,17 @@
                         <option value="modification_date_desc">Fecha de modificación descendente</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-7">
+                <div class="col-12 col-md-2">
+                    <label class="form-label">Estado</label>
+                    <select class="form-select" name="status">
+                        <option value="">Todos</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="denegada">Denegada</option>
+                        <option value="aceptada">Aceptada</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-5">
                     <label class="form-label">Buscar</label>
                     <input name="search" type="text" class="form-control" placeholder="<?= $_SESSION['user']['role'] == 'administrador'
                         ? 'Buscar por usuario o animal'

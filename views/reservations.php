@@ -6,42 +6,36 @@
         <section class="col p-3 overflow-auto">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h1 class="mb-0">Reservas</h1>
+                <a href="<?= BASE_URL ?>crear_reserva" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Crear reserva
+                </a>
             </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
                 <div class="col-12 col-md-3">
                     <label class="form-label">Ordenar por</label>
                     <select class="form-select" name="order">
-                        <option value="user_name_asc">Nombre de usuario A–Z</option>
-                        <option value="user_name_desc">Nombre de usuario Z–A</option>
-                        <option value="name_asc">Nombre A–Z</option>
-                        <option value="name_desc">Nombre Z–A</option>
-                        <option value="email_asc">Email A–Z</option>
-                        <option value="email_desc">Email Z–A</option>
-                        <option value="identification_asc">Identificación ascendente</option>
-                        <option value="identification_desc">Identificación descendente</option>
+                        <option value="date_asc">Fecha acendente</option>
+                        <option value="date_desc" selected>Fecha descendente</option>
+                        <option value="companions_asc">Acompañantes acendente</option>
+                        <option value="companions_desc">Acompañantes descendente</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-2">
-                    <label class="form-label">Rol</label>
-                    <select class="form-select" name="role">
+                    <label class="form-label">Estado</label>
+                    <select class="form-select" name="status">
                         <option value="">Todos</option>
-                        <option value="administrador">Administrador</option>
-                        <option value="monitor">Monitor</option>
-                        <option value="usuario">Usuario</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="cancelada">Cancelada</option>
+                        <option value="denegada">Denegada</option>
+                        <option value="confirmada">Confirmada</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-2">
-                    <label class="form-label">Activo</label>
-                    <select class="form-select" name="active">
-                        <option value="">Todos</option>
-                        <option value="1">Sí</option>
-                        <option value="0">No</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-5">
                     <label class="form-label">Buscar</label>
-                    <input name="search" type="text" class="form-control" placeholder="Buscar usuario">
+                    <input name="search" type="text" class="form-control" placeholder="<?= $_SESSION['user']['role'] == 'administrador'
+                        ? 'Buscar por usuario, animal, sala o monitor'
+                        : 'Buscar por animal, sala o monitor' ?>">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">

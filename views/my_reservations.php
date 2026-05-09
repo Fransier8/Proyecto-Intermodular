@@ -4,39 +4,35 @@
         require 'views/aside.php';
         ?>
         <section class="col p-3 overflow-auto">
-            <h1>Mis reservas</h1>
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <h1 class="mb-0">Mis reservas</h1>
+            </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
                 <div class="col-12 col-md-3">
                     <label class="form-label">Ordenar por</label>
-                    <select class="form-select" name="ordenar">
-                        <option value="jovenes">Más jóvenes</option>
-                        <option value="viejos">Más viejos</option>
-                        <option value="nombre_asc">Nombre A–Z</option>
-                        <option value="nombre_desc">Nombre Z–A</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-2">
-                    <label class="form-label">Especie</label>
-                    <select class="form-select" name="especie">
-                        <option value="">Todas</option>
-                        <option value="perro">Perro</option>
-                        <option value="gato">Gato</option>
-                        <option value="conejo">Conejo</option>
+                    <select class="form-select" name="order">
+                        <option value="date_asc">Fecha acendente</option>
+                        <option value="date_desc" selected>Fecha descendente</option>
+                        <option value="companions_asc">Acompañantes acendente</option>
+                        <option value="companions_desc">Acompañantes descendente</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-2">
                     <label class="form-label">Estado</label>
-                    <select class="form-select" name="estado">
+                    <select class="form-select" name="status">
                         <option value="">Todos</option>
-                        <option value="sin_adoptar">Sin adoptar</option>
-                        <option value="adoptado">Adoptado</option>
-                        <option value="apadrinado">Apadrinado</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="cancelada">Cancelada</option>
+                        <option value="denegada">Denegada</option>
+                        <option value="confirmada">Confirmada</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-5">
                     <label class="form-label">Buscar</label>
-                    <input name="buscar" type="text" class="form-control">
+                    <input name="search" type="text" class="form-control" placeholder="<?= $_SESSION['user']['role'] == 'administrador'
+                        ? 'Buscar por usuario, animal, sala o monitor'
+                        : 'Buscar por animal, sala o monitor' ?>">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">
@@ -44,45 +40,46 @@
                     </button>
                 </div>
             </form>
-            <section class="container-fluid mt-4">
-                <article class="row g-3">
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                        <div class="bg-orange-primary rounded card p-3">
-                            <h4 class="card-title">Perrito</h4>
-                            <img class="card-img-top mb-3" alt="Perrito" loading="lazy"
-                                src="https://www.purina.es/sites/default/files/styles/ttt_image_510/public/2024-02/sitesdefaultfilesstylessquare_medium_440x440public2022-07Dalmatian1.jpg?itok=B_1aRoJh">
-                            <p>Especie: Perro</p>
-                            <p>Raza: Dálmata</p>
-                            <p>Estado: Sin adoptar</p>
-                            <a href="<?= BASE_URL ?>reserva" class="btn bg-orange-primary border-dark border-1">Más
-                                información</a>
-                        </div>
-                    </div>
-                </article>
-                <nav class="mt-4 d-flex justify-content-center">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link text-black" href="#" aria-label="Anterior">
-                                &laquo;
-                            </a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link bg-orange-primary border-dark text-black" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link text-black" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link text-black" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link text-black" href="#" aria-label="Siguiente">
-                                &raquo;
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+            <section id="reservations-container" class="container-fluid mt-4">
+                <?php
+                require 'views/lists/reservations_list.php';
+                ?>
             </section>
         </section>
     </section>
 </main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const reservationsContainer = document.getElementById("reservations-container");
+
+        function fetchReservations(page = 1) {
+            let formData = new FormData(form);
+            let params = new URLSearchParams(formData);
+            params.append("ajax", "1");
+            params.append("page", page);
+
+            fetch("<?= BASE_URL ?>mis_reservas?" + params.toString())
+                .then(res => res.text())
+                .then(html => {
+                    reservationsContainer.innerHTML = html;
+                });
+        }
+
+        reservationsContainer.addEventListener('click', function (e) {
+
+            if (e.target.closest('.page-link')) {
+                e.preventDefault();
+                const page = e.target.closest('.page-link').dataset.page;
+                fetchReservations(page);
+            }
+        });
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            fetchReservations(1);
+        });
+
+        fetchReservations();
+    });
+</script>

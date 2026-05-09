@@ -44,7 +44,7 @@
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                         <td>
                             <div class="d-flex gap-2">
-                                <?php if ($reservation['status'] == "pendiente" || $reservation['status'] == "reservado"): ?>
+                                <?php if ($reservation['status'] == "pendiente"): ?>
                                     <a href="<?= BASE_URL ?>modificar_reserva/<?= $reservation['id'] ?>"
                                         class="btn btn-sm bg-orange-primary d-flex align-items-center gap-1">
                                         <i class="bi bi-pencil"></i>
