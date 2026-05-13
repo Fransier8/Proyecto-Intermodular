@@ -74,7 +74,7 @@ function createReservation()
             $errors[] = "El motivo es obligatorio.";
         }
 
-        if (!is_numeric($companions) || (int) $companions <= 0) {
+        if (!is_numeric($companions) || (int) $companions < 0) {
             $errors[] = "Los acompañantes deben ser 0 o más.";
         }
 
@@ -135,6 +135,15 @@ function createReservation()
             return;
         }
 
+        $_SESSION['reservation'] = [
+            'reason' => $reason,
+            'companions' => $companions,
+            'status' => $status,
+            'user_id' => $user_id,
+            'animal_id' => $animal_id,
+            'room_id' => $room_id,
+            'monitor_id' => $monitor_id,
+        ];
 
         header("Location: " . BASE_URL . "seleccionar_fecha_reserva");
         exit;
@@ -162,66 +171,56 @@ function selectReservationDate()
 {
     $errors = [];
 
-    $species = getSpecies("", "", 1000, 0);
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $reason = trim($_POST['reason'] ?? '');
-        $companions = trim($_POST['companions'] ?? '');
-        $status = trim($_POST['status'] ?? '');
-        $user_id = trim($_POST['user-id'] ?? '');
-        $animal_id = trim($_POST['animal-id'] ?? '');
-        $room_id = trim($_POST['room-id'] ?? '');
-        $monitor_id = trim($_POST['monitor-id'] ?? '');
 
-        if (empty($reason)) {
-            $errors[] = "El motivo es obligatorio.";
+
+        $interval = (int) ($_POST['interval'] ?? 5);
+        $start = $_POST['reservation-start'];
+        $allowed_intervals = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
+
+        if (!in_array($interval, $allowed_intervals)) {
+            $errors[] = "Intervalo inválido.";
         }
 
-        if (!is_numeric($companions) || (int) $companions <= 0) {
-            $errors[] = "Los acompañantes deben ser 0 o más.";
-        }
+        $parts = explode(':', $start);
 
-        if ($status != "pendiente" && $status != "aceptada") {
-            $errors[] = "Estado incorrecto.";
+        $minutes = (int) $parts[1];
+
+        if ($minutes % $interval != 0) {
+            $errors[] = "La hora no coincide con el intervalo seleccionado.";
         }
 
         if (!empty($errors)) {
-            $reservation = [
-                'reason' => $reason,
-                'companions' => $companions,
-                'status' => $status,
-                'user_id' => $user_id,
-                'animal_id' => $animal_id,
-                'room_id' => $room_id,
-                'monitor_id' => $monitor_id,
-            ];
-            $users = $users ?? [];
-            $animals = $animals ?? [];
-            $rooms = $rooms ?? [];
-            $page = $page ?? 1;
-            $total_pages = $total_pages ?? 1;
+            $reservation = $_SESSION['reservation'] ?? null;
 
-            require 'views/create_reservation.php';
+            if (!$reservation) {
+                header("Location: " . BASE_URL . "crear_reserva");
+                exit;
+            }
+
+            $room = getRoomById($reservation['room_id']);
+            $schedules = getRoomSchedulesByRoomId($reservation['room_id']);
+            $reservations = getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($reservation['user_id'], $reservation['animal_id'], $reservation['room_id'], $reservation['monitor_id']);
+
+
+            require 'views/select_reservation_date.php';
             return;
         }
 
 
 
     } else {
-        $reservation = [
-            'reason' => '',
-            'companions' => '',
-            'status' => 'pendiente',
-            'user_id' => '',
-            'animal_id' => '',
-            'room_id' => '',
-            'monitor_id' => '',
-        ];
-        $users = $users ?? [];
-        $animals = $animals ?? [];
-        $rooms = $rooms ?? [];
-        $page = $page ?? 1;
-        $total_pages = $total_pages ?? 1;
+        $reservation = $_SESSION['reservation'] ?? null;
+
+        if (!$reservation) {
+            header("Location: " . BASE_URL . "crear_reserva");
+            exit;
+        }
+
+        $room = getRoomById($reservation['room_id']);
+        $schedules = getRoomSchedulesByRoomId($reservation['room_id']);
+        $reservations = getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($reservation['user_id'], $reservation['animal_id'], $reservation['room_id'], $reservation['monitor_id']);
+
         require 'views/select_reservation_date.php';
     }
 }
@@ -303,14 +302,14 @@ function listReservationMonitors()
     exit;
 }
 
-function generateSlots($start, $end, $interval = 60)
+function generateSlots($start, $end, $interval = 60, $step = 5)
 {
     $slots = [];
 
     $current = strtotime($start);
     $end_time = strtotime($end);
 
-    while ($current < $end_time) {
+    while ($current + ($interval * 60) <= $end_time) {
 
         $next = $current + ($interval * 60);
 
@@ -319,7 +318,7 @@ function generateSlots($start, $end, $interval = 60)
             "end" => date("H:i", $next)
         ];
 
-        $current = $next;
+        $current += ($step * 60);
     }
 
     return $slots;
@@ -327,11 +326,18 @@ function generateSlots($start, $end, $interval = 60)
 
 function calendarAvailability()
 {
+    $user_id = $_GET['user_id'];
+    $animal_id = $_GET['animal_id'];
     $room_id = $_GET['room_id'];
+    $monitor_id = $_GET['monitor_id'];
 
     $schedules = getRoomSchedulesByRoomId($room_id);
-    //$reservations = getReservationsByRoomId($room_id);
-    $reservations = [];
+    $reservations = getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId(
+        $user_id,
+        $animal_id,
+        $room_id,
+        $monitor_id
+    );
 
 
     $result = [];
@@ -347,7 +353,19 @@ function calendarAvailability()
         $date = new DateTime("$year-$month-01");
         $date->modify("+$i day");
 
-        $day_name = strtolower($date->format("l"));
+        $days_map = [
+            'monday' => 'lunes',
+            'tuesday' => 'martes',
+            'wednesday' => 'miercoles',
+            'thursday' => 'jueves',
+            'friday' => 'viernes',
+            'saturday' => 'sabado',
+            'sunday' => 'domingo'
+        ];
+
+        $english_day = strtolower($date->format("l"));
+
+        $day_name = $days_map[$english_day];
 
         $day_schedules = array_filter($schedules, fn($s) => $s['day_of_week'] == $day_name);
 
@@ -355,7 +373,16 @@ function calendarAvailability()
 
         foreach ($day_schedules as $schedule) {
 
-            $generated = generateSlots($schedule['start_time'], $schedule['end_time'], 60);
+            $interval = $_GET['interval'] ?? 30;
+
+            $step = isset($_GET['step']) ? (int) $_GET['step'] : 5;
+
+            $generated = generateSlots(
+                $schedule['start_time'],
+                $schedule['end_time'],
+                (int) $interval,
+                $step
+            );
 
             foreach ($generated as $slot) {
 
@@ -364,11 +391,21 @@ function calendarAvailability()
 
                 $busy = false;
 
+                $buffer = 5 * 60;
+
                 foreach ($reservations as $r) {
-                    if (
-                        $start_date_time < $r['end_datetime'] &&
-                        $end_date_time > $r['start_datetime']
-                    ) {
+
+                    if (isset($r['date']) && $r['date'] !== $date->format("Y-m-d")) {
+                        continue;
+                    }
+
+                    $r_start = strtotime($date->format("Y-m-d") . " " . $r['start_time']) - $buffer;
+                    $r_end = strtotime($date->format("Y-m-d") . " " . $r['end_time']) + $buffer;
+
+                    $slot_start = strtotime($start_date_time);
+                    $slot_end = strtotime($end_date_time);
+
+                    if ($slot_start < $r_end && $slot_end > $r_start) {
                         $busy = true;
                         break;
                     }

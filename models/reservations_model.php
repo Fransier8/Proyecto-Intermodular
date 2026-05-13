@@ -218,4 +218,28 @@ function countReservationsByUserId($search, $status, $user_id)
 
     return $stmt->fetchColumn();
 }
+
+function getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($user_id, $animal_id, $room_id, $monitor_id)
+{
+    $con = get_conexion();
+    $sql = "SELECT * FROM reservations WHERE user_id = :user_id OR animal_id = :animal_id OR room_id = :room_id";
+
+    $params = [
+        ':user_id' => $user_id,
+        ':animal_id' => $animal_id,
+        ':room_id' => $room_id,
+    ];
+
+    if (!empty($monitor_id)) {
+        $sql .= " OR monitor_id = :monitor_id";
+        $params[':monitor_id'] = $monitor_id;
+    }
+
+
+    $sql .= " ORDER BY date ASC, start_time ASC, end_time ASC";
+
+    $stmt = $con->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll();
+}
 ?>

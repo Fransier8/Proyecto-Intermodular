@@ -87,6 +87,17 @@ function createRoom()
                 if (empty($s['start_time']) || empty($s['end_time']))
                     continue;
 
+                $start_parts = explode(':', $s['start_time']);
+                $end_parts = explode(':', $s['end_time']);
+
+                $start_minutes = (int) $start_parts[1];
+                $end_minutes = (int) $end_parts[1];
+
+                if ($start_minutes % 5 !== 0 || $end_minutes % 5 !== 0) {
+                    $errors[] = "Los minutos deben ser múltiplos de 5 (deben acabar en 0 o 5).";
+                    break;
+                }
+
                 if (strtotime($s['start_time']) >= strtotime($s['end_time'])) {
                     $errors[] = "La hora de inicio debe ser menor que la de fin.";
                     break;
@@ -246,6 +257,17 @@ function editRoom()
             foreach ($_POST['schedules'] as $s) {
                 if (empty($s['start_time']) || empty($s['end_time']))
                     continue;
+
+                $start_parts = explode(':', $s['start_time']);
+                $end_parts = explode(':', $s['end_time']);
+
+                $start_minutes = (int) $start_parts[1];
+                $end_minutes = (int) $end_parts[1];
+
+                if ($start_minutes % 5 !== 0 || $end_minutes % 5 !== 0) {
+                    $errors[] = "Los minutos deben ser múltiplos de 5 (deben acabar en 0 o 5).";
+                    break;
+                }
 
                 if (strtotime($s['start_time']) >= strtotime($s['end_time'])) {
                     $errors[] = "La hora de inicio debe ser menor que la de fin.";
