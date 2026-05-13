@@ -97,3 +97,57 @@ aside {
 .bg-orange-primary th {
     background-color: var(--orange-400);
 }
+
+/* Calendar */
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar-header {
+    background: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.calendar-cell {
+    min-height: 140px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    background: white;
+}
+
+.calendar-cell.empty {
+    background: transparent;
+    border: none;
+}
+
+.calendar-day-number {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+    .calendar-grid {
+        gap: 2px;
+        font-size: 12px;
+    }
+
+    .calendar-cell {
+        padding: 4px;
+    }
+
+    .calendar-day-number {
+        font-size: 12px;
+    }
+
+    .calendar-cell button {
+        font-size: 10px;
+        padding: 2px;
+    }
+}

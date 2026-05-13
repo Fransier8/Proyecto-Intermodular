@@ -20,7 +20,7 @@
                                     <label class="form-label fw-bold">Motivo:</label>
                                     <textarea type="text" name="reason" class="form-control" required maxlength="3000"
                                         placeholder="Escribe el motivo"
-                                        value="<?= htmlspecialchars($reservation['reason']) ?>"></textarea>
+                                        ><?= htmlspecialchars($reservation['reason']) ?></textarea>
                                 </div>
 
                                 <div class="col">
@@ -30,7 +30,18 @@
                                         value="<?= htmlspecialchars($reservation['companions']) ?>">
                                 </div>
 
-                                <input type="hidden" name="user-id" id="user-id">
+                                <div class="col">
+                                    <label class="form-label fw-bold">Estado:</label>
+                                    <select name="status" class="form-select" required>
+                                        <option value="pendiente" <?= $reservation['status'] == 'pendiente' ? 'selected' : '' ?>>Pendiente
+                                        </option>
+                                        <option value="aceptada" <?= $reservation['status'] == 'aceptada' ? 'selected' : '' ?>>
+                                            Aceptada</option>
+                                    </select>
+                                </div>
+
+                                <input type="hidden" name="user-id" id="user-id"
+                                    value="<?= htmlspecialchars($reservation['user_id'] ?? '') ?>">
 
                                 <div class="col-12">
 
@@ -63,7 +74,8 @@
                                     </section>
                                 </div>
 
-                                <input type="hidden" name="animal-id" id="animal-id">
+                                <input type="hidden" name="animal-id" id="animal-id"
+                                    value="<?= htmlspecialchars($reservation['animal_id'] ?? '') ?>">
 
                                 <div class="col-12">
 
@@ -117,7 +129,8 @@
                                     </section>
                                 </div>
 
-                                <input type="hidden" name="room-id" id="room-id">
+                                <input type="hidden" name="room-id" id="room-id"
+                                    value="<?= htmlspecialchars($reservation['room_id'] ?? '') ?>">
 
                                 <div class="col-12">
 
@@ -148,7 +161,8 @@
                                     </section>
                                 </div>
 
-                                <input type="hidden" name="monitor-id" id="monitor-id">
+                                <input type="hidden" name="monitor-id" id="monitor-id"
+                                    value="<?= htmlspecialchars($reservation['monitor_id'] ?? '') ?>">
 
                                 <div class="col-12">
 
@@ -185,7 +199,8 @@
 
                             <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
                                 <button type="submit"
-                                    class="btn bg-orange-primary border-dark border-1 flex-fill">Crear</button>
+                                    class="btn bg-orange-primary border-dark border-1 flex-fill">Seleccionar fecha y
+                                    hora</button>
                                 <a href="<?= BASE_URL ?>reservas"
                                     class="btn bg-orange-primary border-dark border-1 flex-fill">Cancelar</a>
                             </div>
@@ -214,7 +229,7 @@
         const userSearchInput = document.getElementById("user-search");
         const userOrderSelect = document.getElementById("user-order");
 
-        let selectedUserId = null;
+        let selectedUserId = "<?= $reservation['user_id'] ?? '' ?>";
 
         function fetchUsers(page = 1) {
 
@@ -300,7 +315,7 @@
         const genderSelect = document.getElementById("gender");
         const orderSelect = document.getElementById("order");
 
-        let selectedAnimalId = null;
+        let selectedAnimalId = "<?= $reservation['animal_id'] ?? '' ?>";
 
         function fetchAnimals(page = 1) {
 
@@ -390,7 +405,7 @@
         const roomSearchInput = document.getElementById("room-search");
         const roomOrderSelect = document.getElementById("room-order");
 
-        let selectedRoomId = null;
+        let selectedRoomId = "<?= $reservation['room_id'] ?? '' ?>";
 
         function fetchRooms(page = 1) {
 
@@ -474,7 +489,7 @@
         const monitorSearchInput = document.getElementById("monitor-search");
         const monitorOrderSelect = document.getElementById("monitor-order");
 
-        let selectedMonitorId = null;
+        let selectedMonitorId = "<?= $reservation['monitor_id'] ?? '' ?>";
 
         function fetchMonitors(page = 1) {
 
@@ -561,10 +576,41 @@
         e.preventDefault()
 
         const reason = form.querySelector('[name="reason"]').value.trim();
+        const companions = form.querySelector('[name="companions"]').value.trim();
+        const status = form.querySelector('[name="status"]').value.trim();
+        const userId = document.getElementById("user-id").value.trim();
+        const animalId = document.getElementById("animal-id").value.trim();
+        const roomId = document.getElementById("room-id").value.trim();
+        const monitorId = document.getElementById("monitor-id").value.trim();
+
         let errors = [];
 
         if (!reason) {
             errors.push("El motivo es obligatorio.");
+        }
+
+        if (status != "pendiente" && status != "aceptada") {
+            errors.push("Estado incorrecto.");
+        }
+
+        if (companions == "" || companions === null || isNaN(companions) || companions < 0) {
+            errors.push("Los acompañantes deben ser 0 o más.");
+        }
+
+        if (!userId) {
+            errors.push("Debes seleccionar un usuario.");
+        }
+
+        if (!animalId) {
+            errors.push("Debes seleccionar un animal.");
+        }
+
+        if (!roomId) {
+            errors.push("Debes seleccionar una sala.");
+        }
+
+        if (status == "aceptada" && !monitorId) {
+            errors.push("Debes seleccionar un monitor.");
         }
 
         const errorBox = document.getElementById("errorBox");

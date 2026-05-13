@@ -28,7 +28,7 @@
                         <option value="pendiente">Pendiente</option>
                         <option value="cancelada">Cancelada</option>
                         <option value="denegada">Denegada</option>
-                        <option value="confirmada">Confirmada</option>
+                        <option value="aceptada">Aceptada</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-5">

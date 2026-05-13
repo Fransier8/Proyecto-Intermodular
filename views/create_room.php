@@ -13,13 +13,14 @@
             <h1>Crear sala</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <form action="<?= BASE_URL ?>crear_sala" method="post" class="row g-4" enctype="multipart/form-data">
+                    <form action="<?= BASE_URL ?>crear_sala" method="post" class="row g-4"
+                        enctype="multipart/form-data">
                         <div class="col-12 col-md-12 fs-5">
                             <div class="row row-cols-1 row-cols-md-2 g-3">
                                 <div class="col">
                                     <label class="form-label fw-bold">Código:</label>
-                                    <input type="text" name="code" class="form-control" required maxlength="20" placeholder="Escribe el código"
-                                        value="<?= htmlspecialchars($room['code']) ?>">
+                                    <input type="text" name="code" class="form-control" required maxlength="20"
+                                        placeholder="Escribe el código" value="<?= htmlspecialchars($room['code']) ?>">
                                 </div>
 
                                 <div class="col">
@@ -32,25 +33,28 @@
                                 </div>
                                 <div class="col">
                                     <label class="form-label fw-bold">Nombre:</label>
-                                    <input type="text" name="name" class="form-control" required maxlength="300" placeholder="Escribe el nombre"
-                                        value="<?= htmlspecialchars($room['name']) ?>">
+                                    <input type="text" name="name" class="form-control" required maxlength="300"
+                                        placeholder="Escribe el nombre" value="<?= htmlspecialchars($room['name']) ?>">
                                 </div>
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Capacidad:</label>
-                                    <input type="number" name="capacity" class="form-control" required maxlength="11" placeholder="Escribe la capacidad"
-                                        min="1" value="<?= htmlspecialchars($room['capacity']) ?>">
+                                    <input type="number" name="capacity" class="form-control" required maxlength="11"
+                                        placeholder="Escribe la capacidad" min="1"
+                                        value="<?= htmlspecialchars($room['capacity']) ?>">
                                 </div>
 
                                 <div class="col-md-12">
                                     <label class="form-label fw-bold">Descripción (opcional):</label>
-                                    <textarea name="description" class="form-control" placeholder="Escribe la descripción"
+                                    <textarea name="description" class="form-control"
+                                        placeholder="Escribe la descripción"
                                         maxlength="2000"><?= htmlspecialchars($room['description']) ?></textarea>
                                 </div>
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Ubicación (opcional):</label>
-                                    <input type="text" name="location" class="form-control" maxlength="500" placeholder="Escribe la ubicación"
+                                    <input type="text" name="location" class="form-control" maxlength="500"
+                                        placeholder="Escribe la ubicación"
                                         value="<?= htmlspecialchars($room['location']) ?>">
                                 </div>
 

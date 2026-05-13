@@ -6,7 +6,7 @@
         <section class="col p-3 overflow-auto">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>species">Especies</a></li>
+                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>especies">Especies</a></li>
                     <li class="breadcrumb-item"><a href="<?= BASE_URL ?>especie/<?= $species['id'] ?>">Especie</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Modificar especie</li>
                 </ol>
