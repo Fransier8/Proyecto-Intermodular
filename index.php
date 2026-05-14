@@ -7,6 +7,7 @@ if ($is_ajax) {
     require_once 'routes.php';
     exit;
 }
+date_default_timezone_set('Europe/Madrid');
 ?>
 
 <!DOCTYPE html>

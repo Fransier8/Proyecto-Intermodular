@@ -77,8 +77,8 @@
                 fetchReservations(page);
             }
 
-            if (e.target.closest('.change-status-btn')) {
-                const btn = e.target.closest('.change-status-btn');
+            if (e.target.closest('.delete-btn')) {
+                const btn = e.target.closest('.delete-btn');
                 const id = btn.dataset.id;
                 const active = btn.dataset.active;
 

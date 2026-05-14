@@ -14,7 +14,7 @@
             <h1>Seleccionar fecha de la reserva</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <form action="<?= BASE_URL ?>crear_reserva" method="post" class="row g-4">
+                    <form action="<?= BASE_URL ?>seleccionar_fecha_reserva" method="post" class="row g-4">
                         <div class="col-12 col-md-12 fs-5">
                             <div class="row row-cols-1 g-3">
                                 <div class="col">
@@ -47,13 +47,6 @@
                                         <option value="50">50 minutos</option>
                                         <option value="55">55 minutos</option>
                                         <option value="60" selected>60 minutos</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label fw-bold">Vista</label>
-                                    <select id="view-mode" class="form-select">
-                                        <option value="all" selected>Mostrar horarios</option>
-                                        <option value="calendar">Mostrar calendario</option>
                                     </select>
                                 </div>
                                 <input type="hidden" name="user-id" id="user-id"
@@ -103,8 +96,8 @@
         const roomId = document.getElementById("room-id").value;
         const monitorId = document.getElementById("monitor-id").value;
         const intervalSelect = document.getElementById("interval-select");
-        const viewMode = document.getElementById("view-mode");
         let globalData = [];
+        let selectedDate = null;
         let selectedButton = null;
         let selectedReservation = null;
         let openDay = null;
@@ -135,10 +128,7 @@
             loadCalendar();
         });
 
-        viewMode.addEventListener("change", loadCalendar);
-
         function renderCalendar(data) {
-            const mode = viewMode.value;
             calendarContainer.innerHTML = "";
 
             // CONTROLES
@@ -238,73 +228,91 @@
 
                 cell.appendChild(number);
 
-                if (mode === "all" && dayData) {
+                if (dayData) {
 
-                
-                    dayData.slots.forEach(slot => {
+                    cell.style.cursor = "pointer";
 
-                        const btn = document.createElement("button");
+                    cell.addEventListener("click", function (e) {
+                        if (e.target.closest("button")) return;
 
-                        btn.type = "button";
-
-                        btn.className =
-                            "btn btn-sm w-100 mt-1 " +
-                            (slot.status === "free"
-                                ? "btn-success"
-                                : "btn-danger");
-
-                        btn.textContent = slot.start;
-
-                        btn.disabled = slot.status !== "free";
-
-                        if (
-                            selectedReservation &&
-                            selectedReservation.date === dateString &&
-                            selectedReservation.start === slot.start
-                        ) {
-                            btn.classList.remove("btn-success");
-                            btn.classList.add("btn-warning");
-
-                            cell.classList.add("calendar-selected");
-
-                            selectedButton = btn;
+                        // cerrar anterior abierto
+                        if (openDay && openDay !== cell) {
+                            const old = openDay.querySelector(".slots-container");
+                            if (old) old.remove();
                         }
 
-                        if (slot.status === "free") {
+                        const existing = cell.querySelector(".slots-container");
 
-                            btn.addEventListener("click", function () {
+                        if (existing) {
+                            existing.remove();
+                            openDay = null;
+                            return;
+                        }
 
-                                // quitar selección anterior
-                                if (selectedButton) {
-                                    selectedButton.classList.remove("btn-warning");
-                                    selectedButton.classList.add("btn-success");
-                                }
+                        const container = document.createElement("div");
+                        container.className = "slots-container mt-2";
 
-                                document.querySelectorAll(".calendar-cell")
-                                    .forEach(c => c.classList.remove("calendar-selected"));
+                        dayData.slots.forEach(slot => {
 
-                                cell.classList.add("calendar-selected");
+                            const isSelectedSlot =
+                                selectedReservation &&
+                                selectedReservation.date === dateString &&
+                                selectedReservation.start === slot.start &&
+                                selectedReservation.end === slot.end;
 
-                                // nueva selección
-                                selectedButton = btn;
+                            const btn = document.createElement("button");
+                            btn.type = "button";
 
+                            btn.className =
+                                "btn btn-sm w-100 mt-1 " +
+                                (slot.status === "free" ? "btn-success" : "btn-danger");
+
+                            if (isSelectedSlot) {
                                 btn.classList.remove("btn-success");
                                 btn.classList.add("btn-warning");
+                            }
 
-                                selectedReservation = {
-                                    date: dateString,
-                                    start: slot.start,
-                                    end: slot.end
-                                };
+                            btn.textContent = slot.start;
+                            btn.disabled = slot.status !== "free";
 
-                                // guardar en hidden inputs
-                                document.getElementById("reservation-date").value = dateString;
-                                document.getElementById("reservation-start").value = slot.start;
-                                document.getElementById("reservation-end").value = slot.end;
-                            });
-                        }
+                            if (slot.status === "free") {
+                                btn.addEventListener("click", (e) => {
+                                    e.stopPropagation();
 
-                        cell.appendChild(btn);
+                                    const containerButtons = container.querySelectorAll("button");
+                                    containerButtons.forEach(b => {
+                                        if (!b.disabled) b.classList.remove("btn-warning");
+                                        if (!b.disabled) b.classList.add("btn-success");
+                                    });
+
+                                    selectedReservation = {
+                                        date: dateString,
+                                        start: slot.start,
+                                        end: slot.end,
+                                        slotKey: slot.start + "-" + slot.end
+                                    };
+
+                                    selectedDate = dateString;
+
+                                    document.querySelectorAll(".calendar-cell")
+                                        .forEach(c => c.classList.remove("calendar-selected"));
+
+                                    cell.classList.add("calendar-selected");
+
+                                    document.getElementById("reservation-date").value = dateString;
+                                    document.getElementById("reservation-start").value = slot.start;
+                                    document.getElementById("reservation-end").value = slot.end;
+
+                                    btn.classList.remove("btn-success");
+                                    btn.classList.add("btn-warning");
+                                });
+                            }
+
+                            container.appendChild(btn);
+                        });
+
+                        cell.appendChild(container);
+                        openDay = cell;
                     });
                 }
 
@@ -312,6 +320,19 @@
             }
 
             calendarContainer.appendChild(grid);
+            if (selectedDate) {
+                document.querySelectorAll(".calendar-cell").forEach(cell => {
+                    const dayNumber = cell.querySelector(".calendar-day-number")?.textContent;
+                    if (!dayNumber) return;
+
+                    const fullDate =
+                        `${year}-${String(month + 1).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
+
+                    if (fullDate === selectedDate) {
+                        cell.classList.add("calendar-selected");
+                    }
+                });
+            }
         }
 
         const form = document.querySelector("form");

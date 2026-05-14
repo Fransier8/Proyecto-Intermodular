@@ -11,19 +11,23 @@
                     <div class="row row-cols-1 row-cols-md-2 g-3">
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Nombre:</span>
-                                <span class="text-break"><?= htmlspecialchars($user['name']) ?></span></p>
+                                <span class="text-break"><?= htmlspecialchars($user['name']) ?></span>
+                            </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Email:</span>
-                                <span class="text-break"><?= htmlspecialchars($user['email']) ?></span></p>
+                                <span class="text-break"><?= htmlspecialchars($user['email']) ?></span>
+                            </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Identifiacación (DNI/NIE):</span>
-                                <span><?= htmlspecialchars($user['identification']) ?></span></p>
+                                <span><?= htmlspecialchars($user['identification']) ?></span>
+                            </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Rol:</span>
-                                <span><?= htmlspecialchars($user['role']) ?></span></p>
+                                <span><?= htmlspecialchars($user['role']) ?></span>
+                            </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Teléfono:</span>
@@ -40,6 +44,18 @@
                                 <span><?= $user['active'] ? 'Sí' : 'No' ?></span>
                             </p>
                         </div>
+                        <?php if ($_SESSION['user']['role'] != "administrador"): ?>
+                            <div class="col">
+                                <form action="<?= BASE_URL ?>desactivar_cuenta" method="post"
+                                    onsubmit="return confirm('¿Seguro que quieres desactivar tu cuenta?');">
+
+                                    <button type="submit" class="btn btn-danger flex-fill">
+                                        <i class="bi bi-arrow-counterclockwise"></i>
+                                        Desactivar cuenta
+                                    </button>
+                                </form>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
                         <a href="<?= BASE_URL ?>modificar_perfil/<?= $user['id'] ?>"

@@ -171,32 +171,41 @@ function selectReservationDate()
 {
     $errors = [];
 
+    $reservation = $_SESSION['reservation'] ?? null;
+
+    if (!$reservation) {
+        header("Location: " . BASE_URL . "crear_reserva");
+        exit;
+    }
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+        $date = trim($_POST['reservation-date'] ?? '');
+        $start_time = trim($_POST['reservation-start'] ?? '');
+        $end_time = trim($_POST['reservation-end'] ?? '');
 
         $interval = (int) ($_POST['interval'] ?? 5);
-        $start = $_POST['reservation-start'];
         $allowed_intervals = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
 
         if (!in_array($interval, $allowed_intervals)) {
             $errors[] = "Intervalo inválido.";
         }
 
-        $parts = explode(':', $start);
+        if (empty($date) || empty($start_time) || empty($end_time)) {
+            $errors[] = "Debes seleccionar una fecha y hora.";
+        }
 
-        $minutes = (int) $parts[1];
+        if ($start_time) {
+            $parts = explode(':', $start_time);
 
-        if ($minutes % $interval != 0) {
-            $errors[] = "La hora no coincide con el intervalo seleccionado.";
+            $minutes = (int) $parts[1];
+
+            if ($minutes % $interval != 0) {
+                $errors[] = "La hora no coincide con el intervalo seleccionado.";
+            }
         }
 
         if (!empty($errors)) {
-            $reservation = $_SESSION['reservation'] ?? null;
-
-            if (!$reservation) {
-                header("Location: " . BASE_URL . "crear_reserva");
-                exit;
-            }
 
             $room = getRoomById($reservation['room_id']);
             $schedules = getRoomSchedulesByRoomId($reservation['room_id']);
@@ -207,15 +216,15 @@ function selectReservationDate()
             return;
         }
 
+        insertReservation($reservation['user_id'], $reservation['animal_id'], $reservation['room_id'], $reservation['monitor_id'], $date, $start_time, $end_time,
+        $reservation['companions'], $reservation['reason'], $reservation['status']);
 
+        unset($_SESSION['reservation']);
+
+        header("Location: " . BASE_URL . "reservas");
+        exit;
 
     } else {
-        $reservation = $_SESSION['reservation'] ?? null;
-
-        if (!$reservation) {
-            header("Location: " . BASE_URL . "crear_reserva");
-            exit;
-        }
 
         $room = getRoomById($reservation['room_id']);
         $schedules = getRoomSchedulesByRoomId($reservation['room_id']);
@@ -428,5 +437,48 @@ function calendarAvailability()
     header("Content-Type: application/json");
     echo json_encode($result);
     exit;
+}
+
+function removeReservation()
+{
+    $is_ajax = isset($_GET['ajax']);
+    if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'administrador') {
+        if ($is_ajax) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No autorizado'
+            ]);
+        } else {
+            header("Location: " . BASE_URL . "inicio");
+        }
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'] ?? null;
+
+        if (!$id) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'ID inválido'
+            ]);
+            exit();
+        }
+
+        $result = deleteReservation($id);
+
+        if ($result) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Eliminada correctamente'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No puedes eliminar esta reserva'
+            ]);
+        }
+        exit();
+    }
 }
 ?>

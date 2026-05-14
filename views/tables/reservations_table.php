@@ -1,3 +1,7 @@
+<?php
+$current_date = new DateTime();
+$current_date->setTime(0, 0, 0);
+?>
 <div class="table-responsive p-0">
     <table class="table table-striped table-hover align-middle">
         <thead class="bg-orange-primary border-dark">
@@ -51,11 +55,13 @@
                                         <span>Modificar</span>
                                     </a>
                                 <?php endif; ?>
-                                <button class="btn btn-sm delete-btn btn-danger d-flex align-items-center gap-1"
-                                    data-id="<?= $reservation['id'] ?>">
-                                    <i class="bi bi-trash3"></i>
-                                    <span>Eliminar</span>
-                                </button>
+                                <?php if (new DateTime($reservation['date']) > $current_date): ?>
+                                    <button class="btn btn-sm delete-btn btn-danger d-flex align-items-center gap-1"
+                                        data-id="<?= $reservation['id'] ?>">
+                                        <i class="bi bi-trash3"></i>
+                                        <span>Eliminar</span>
+                                    </button>
+                                <?php endif; ?>
                             </div>
                         </td>
                     <?php endif; ?>

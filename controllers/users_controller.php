@@ -618,4 +618,20 @@ function changeUserActiveStatus()
         exit();
     }
 }
+
+function deactivateAccount()
+{
+    if (empty($_SESSION['user']) || $_SESSION['user']['role'] == 'administrador') {
+        header("Location: " . BASE_URL . "profile");
+        exit();
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        changeUserStatus($_SESSION['user']['id'], 0);
+        echo "ok";
+        session_unset();
+        session_destroy();
+        header("Location: " . BASE_URL . "inicio");
+        exit();
+    }
+}
 ?>

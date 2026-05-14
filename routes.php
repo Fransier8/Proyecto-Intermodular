@@ -38,6 +38,7 @@ $routes = [
     'monitores_reserva' => ['controllers/reservations_controller.php', 'listReservationMonitors'],
     'seleccionar_fecha_reserva' => ['controllers/reservations_controller.php', 'selectReservationDate'],
     'disponibilidad_calendario' => ['controllers/reservations_controller.php', 'calendarAvailability'],
+    'eliminar_reserva' => ['controllers/reservations_controller.php', 'removeReservation'],
     'solicitudes_de_adopcion' => ['controllers/adoption_applications_controller.php', 'listAdoptionApplications'],
     'adoptar_animal' => ['controllers/adoption_applications_controller.php', 'createAdoptionApplication'],
     'modificar_solicitud_de_adopcion' => ['controllers/adoption_applications_controller.php', 'editAdoptionApplication'],
@@ -49,6 +50,7 @@ $routes = [
     'pago_cancelado' => ['controllers/sponsorships_controller.php', 'paymentCancel'],
     'informes' => ['controllers/reports_controller.php', 'viewReports'],
     'crear_informe' => ['controllers/reports_controller.php', 'downloadAnimalsPdf'],
+    'desactivar_cuenta' => ['controllers/users_controller.php', 'deactivateAccount']
 ];
 
 
@@ -69,7 +71,8 @@ $userViews = [
     'apadrinar_animal',
     'apadrinamientos',
     'pago_exitoso',
-    'pago_cancelado'
+    'pago_cancelado',
+    'desactivar_cuenta'
 ];
 $monitorViews = [
     'animales',
@@ -81,7 +84,8 @@ $monitorViews = [
     'mis_reservas',
     'perfil',
     'modificar_perfil',
-    'cerrar_sesion'
+    'cerrar_sesion',
+    'desactivar_cuenta'
 ];
 $administratorViews = [
     'animales',
@@ -113,6 +117,7 @@ $administratorViews = [
     'monitores_reserva',
     'seleccionar_fecha_reserva',
     'disponibilidad_calendario',
+    'eliminar_reserva',
     'perfil',
     'modificar_perfil',
     'cerrar_sesion',

@@ -109,6 +109,8 @@ function deleteReservation($id)
     $stmt->execute([
         ':id' => "$id"
     ]);
+
+    return true;
 }
 
 function changeReservationStatus($id, $status)
