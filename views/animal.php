@@ -37,7 +37,7 @@
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Raza:</span>
-                                <span class="text-break"><?= htmlspecialchars($animal['breed']) ?></span>
+                                <span class="text-break"><?= !empty($animal['breed']) ? htmlspecialchars($animal['breed']) : 'Sin especificar' ?></span>
                             </p>
                         </div>
                         <div class="col">

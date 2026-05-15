@@ -1,9 +1,24 @@
 <?php
 require_once 'models/animals_model.php';
+require_once 'models/users_model.php';
+require_once 'models/rooms_model.php';
+require_once 'models/species_model.php';
 use Dompdf\Dompdf;
 
 function viewReports()
 {
+    $users_with_most_animals = getUsersWithMostAnimals();
+    $users_with_most_adoption_applications = getUsersWithMostAdoptionApplications();
+    $users_with_most_sponsorships = getUsersWithMostSponsorships();
+    $users_by_spending = getUsersBySpending();
+    $users_with_most_reservations = getUsersWithMostReservations();
+    $monitors_with_most_reservations = getMonitorsWithMostReservations();
+    $animals_with_most_reservations = getAnimalsWithMostReservations();
+    $animals_with_most_adoption_applications = getAnimalsWithMostAdoptionApplications();
+    $animals_with_most_sponsorships = getAnimalsWithMostSponsorships();
+    $animals_by_earnings = getAnimalsByEarnings();
+    $rooms_with_most_reservations = getRoomsWithMostReservations();
+    $species_with_most_animals = getSpeciesWithMostAnimals();
     require 'views/reports.php';
 }
 
@@ -46,7 +61,7 @@ function downloadAnimalsPdf()
                     $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                     ?>
                     <img src="<?= $base64 ?>">
-                <?php
+                    <?php
                 }
             endif; ?>
         </div>

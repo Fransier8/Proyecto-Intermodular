@@ -28,8 +28,8 @@
                     </td>
                     <td><?= htmlspecialchars($adoption_application['message']) ?></td>
                     <td><?= htmlspecialchars($adoption_application['status']) ?></td>
-                    <td><?= htmlspecialchars($adoption_application['application_date']) ?></td>
-                    <td><?= htmlspecialchars($adoption_application['modification_date']) ?></td>
+                    <td><?= date('d/m/Y H:i', strtotime($adoption_application['application_date'])) ?></td>
+                    <td><?= date('d/m/Y H:i', strtotime($adoption_application['modification_date'])) ?></td>
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                         <td>
                             <div class="d-flex gap-2">

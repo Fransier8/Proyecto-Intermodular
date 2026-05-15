@@ -24,7 +24,7 @@
                     </td>
                     <td><?= htmlspecialchars($sponsorship['message']) ?></td>
                     <td><?= htmlspecialchars($sponsorship['amount']) ?></td>
-                    <td><?= htmlspecialchars($sponsorship['date']) ?></td>
+                    <td><?= date('d/m/Y H:i', strtotime($sponsorship['date'])) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

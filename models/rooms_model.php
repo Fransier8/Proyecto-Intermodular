@@ -156,4 +156,14 @@ function updateRoom($id, $data)
     ]);
 }
 
+function getRoomsWithMostReservations()
+{
+    $con = get_conexion();
+    $sql = "SELECT ro.id, ro.code, COUNT(r.id) AS total_reservations FROM rooms ro JOIN reservations r ON r.room_id = ro.id GROUP BY ro.id
+        ORDER BY total_reservations DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
 ?>

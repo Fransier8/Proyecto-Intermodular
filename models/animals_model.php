@@ -327,4 +327,44 @@ function updateAnimalAdoptionStatus($id, $data)
     ]);
 }
 
+function getAnimalsWithMostReservations()
+{
+    $con = get_conexion();
+    $sql = "SELECT a.id, a.name, COUNT(r.id) AS total_reservations FROM animals a JOIN reservations r ON r.animal_id = a.id GROUP BY a.id
+        ORDER BY total_reservations DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function getAnimalsWithMostAdoptionApplications()
+{
+    $con = get_conexion();
+    $sql = "SELECT a.id, a.name, COUNT(aa.id) AS total_adoption_applications FROM animals a JOIN adoption_applications aa ON aa.animal_id = a.id GROUP BY a.id
+        ORDER BY total_adoption_applications DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function getAnimalsWithMostSponsorships()
+{
+    $con = get_conexion();
+    $sql = "SELECT a.id, a.name, COUNT(s.id) AS total_sponsorships FROM animals a JOIN sponsorships s ON s.animal_id = a.id GROUP BY a.id
+        ORDER BY total_sponsorships DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function getAnimalsByEarnings()
+{
+    $con = get_conexion();
+    $sql = "SELECT a.id, a.name, SUM(s.amount) AS total_earnings FROM animals a JOIN sponsorships s ON s.animal_id = a.id GROUP BY a.id
+        ORDER BY total_earnings DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
 ?>

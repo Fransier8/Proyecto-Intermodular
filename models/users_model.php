@@ -210,4 +210,64 @@ function updateUser($id, $data)
         ':active' => $data['active']
     ]);
 }
+
+function getUsersWithMostAnimals()
+{
+    $con = get_conexion();
+    $sql = "SELECT u.id, u.user_name, COUNT(a.id) AS total_animals FROM users u JOIN animals a ON a.user_id = u.id WHERE a.status = 'adoptado' GROUP BY u.id
+        ORDER BY total_animals DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function getUsersWithMostAdoptionApplications()
+{
+    $con = get_conexion();
+    $sql = "SELECT u.id, u.user_name, COUNT(a.id) AS total_adoption_applications FROM users u JOIN adoption_applications a ON a.user_id = u.id GROUP BY u.id
+        ORDER BY total_adoption_applications DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function getUsersWithMostSponsorships()
+{
+    $con = get_conexion();
+    $sql = "SELECT u.id, u.user_name, COUNT(s.id) AS total_sponsorships FROM users u JOIN sponsorships s ON s.user_id = u.id GROUP BY u.id
+        ORDER BY total_sponsorships DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function getUsersBySpending()
+{
+    $con = get_conexion();
+    $sql = "SELECT u.id, u.user_name, SUM(s.amount) AS total_spent FROM users u JOIN sponsorships s ON s.user_id = u.id GROUP BY u.id
+        ORDER BY total_spent DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function getUsersWithMostReservations()
+{
+    $con = get_conexion();
+    $sql = "SELECT u.id, u.user_name, COUNT(r.id) AS total_reservations FROM users u JOIN reservations r ON r.user_id = u.id WHERE u.role = 'usuario' GROUP BY u.id
+        ORDER BY total_reservations DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function getMonitorsWithMostReservations()
+{
+    $con = get_conexion();
+    $sql = "SELECT m.id, m.user_name, COUNT(r.id) AS total_reservations FROM users m JOIN reservations r ON r.monitor_id = m.id WHERE m.role = 'monitor' GROUP BY m.id
+        ORDER BY total_reservations DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
 ?>

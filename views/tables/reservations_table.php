@@ -41,9 +41,9 @@ $current_date->setTime(0, 0, 0);
                     </td>
                     <td><?= htmlspecialchars($reservation['reason']) ?></td>
                     <td><?= htmlspecialchars($reservation['companions']) ?></td>
-                    <td><?= htmlspecialchars($reservation['start_time'] . ' - ' . $reservation['end_time']) ?>
+                    <td><?= date('H:i', strtotime($reservation['start_time'])) ?> - <?= date('H:i', strtotime($reservation['end_time'])) ?>
                     </td>
-                    <td><?= htmlspecialchars($reservation['date']) ?></td>
+                    <td><?= date('d/m/Y', strtotime($reservation['date'])) ?></td>
                     <td><?= htmlspecialchars($reservation['status']) ?></td>
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                         <td>

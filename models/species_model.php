@@ -125,4 +125,15 @@ function speciesHasAnimals($id)
 
     return $stmt->fetchColumn() > 0;
 }
+
+function getSpeciesWithMostAnimals()
+{
+    $con = get_conexion();
+    $sql = "SELECT s.id, s.name, COUNT(a.id) AS total_animals FROM species s JOIN animals a ON a.species_id = s.id GROUP BY s.id
+        ORDER BY total_animals DESC LIMIT 10";
+    $stmt = $con->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
 ?>
