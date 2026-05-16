@@ -3,30 +3,55 @@ require_once 'models/users_model.php';
 
 function logIn()
 {
+    unset($_SESSION['inactive_user']);
+    $errors = [];
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
+        $email = trim($_POST['email'] ?? '');
+        $password = trim($_POST['password'] ?? '');
 
         $user = getUserByEmail($email);
-        if ($user && $user['active'] && password_verify($password, $user['password'])) {
-            session_regenerate_id(true);
-            $_SESSION['user'] = [
-                'id' => $user['id'],
-                'email' => $user['email'],
-                'role' => $user['role'],
-                'user_name' => $user['user_name']
-            ];
-            //unset($_SESSION['errores'], $_SESSION['datos_antiguos']);
-            header("Location: " . BASE_URL . "animales");
-            exit;
-        } else {
-            $_SESSION['errors'] = ["Email o contraseña incorrectos o user inactivo"];
-            //$_SESSION['datos_antiguos'] = ['email' => $email];
-            header("Location: " . BASE_URL . "iniciar_sesion");
-            exit();
+
+        if (empty($email)) {
+            $errors[] = "El email es obligatorio.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "El email no es válido.";
+        } elseif (empty($password)) {
+            $errors[] = "La contraseña es obligatoria.";
+        } elseif (!$user || !password_verify($password, $user['password'])) {
+            $errors[] = "Email o contraseña incorrectos";
+        } elseif (!$user['active']) {
+
+            $_SESSION['inactive_user'] = $user['id'];
+
+            $errors[] = "Tu cuenta está desactivada.";
         }
+
+        if (!empty($errors)) {
+            $user = [
+                'email' => $email,
+            ];
+
+            require 'views/log_in.php';
+            return;
+        }
+
+        session_regenerate_id(true);
+        $_SESSION['user'] = [
+            'id' => $user['id'],
+            'email' => $user['email'],
+            'role' => $user['role'],
+            'user_name' => $user['user_name']
+        ];
+
+        header("Location: " . BASE_URL . "animales");
+        exit;
+
+    } else {
+        $user = [
+            'email' => '',
+        ];
+        require 'views/log_in.php';
     }
-    require 'views/log_in.php';
 }
 
 function signUp()
@@ -160,9 +185,6 @@ function signUp()
 
 function logOut()
 {
-    if (!empty($_SESSION['shopping_basket'])) {
-        setcookie('shopping_basket', json_encode($_SESSION['shopping_basket']), time() + 604800, "/");
-    }
     session_unset();
     session_destroy();
     header("Location: " . BASE_URL . "inicio");
@@ -578,24 +600,87 @@ function editProfile()
 
 function resetPassword()
 {
+    $errors = [];
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $email = $_POST['email'] ?? '';
-        $identification = $_POST['identification'] ?? '';
-        $password = $_POST['password'] ?? '';
+        $user_name = trim($_POST['user_name'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $identification = trim($_POST['identification'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+        $verify_password = trim($_POST['verify_password'] ?? '');
 
-        $user = getUserByEmailAndIdentification($email, $identification);
-        if ($user && $user['active']) {
-            $password = password_hash($password, PASSWORD_BCRYPT);
-            updatePassword($user['id'], $password);
-            header("Location: " . BASE_URL . "iniciar_sesion");
-            exit;
-        } else {
-            $_SESSION['errors'] = ["Email o contraseña incorrectos o user inactivo"];
-            header("Location: " . BASE_URL . "restablecer_contraseña");
-            exit();
+        if (empty($user_name)) {
+            $errors[] = "El nombre de usuario es obligatorio.";
         }
+
+        if (empty($email)) {
+            $errors[] = "El email es obligatorio.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = "El email no es válido.";
+        }
+
+        if (empty($identification)) {
+            $errors[] = "La identificación es obligatoria.";
+        } else {
+            $dni_pattern = '/^\d{8}[A-Z]$/';
+            $nie_pattern = '/^[XYZ]\d{7}[A-Z]$/';
+
+            if (
+                !preg_match($dni_pattern, $identification) &&
+                !preg_match($nie_pattern, $identification)
+            ) {
+                $errors[] = "DNI o NIE inválido.";
+            } else {
+                if (preg_match($dni_pattern, $identification)) {
+                    $letras = "TRWAGMYFPDXBNJZSQVHLCKE";
+                    $numero = substr($identification, 0, 8);
+                    $letra = substr($identification, 8, 1);
+
+                    if ($letras[$numero % 23] !== $letra) {
+                        $errors[] = "La letra del DNI no es correcta.";
+                    }
+                }
+            }
+        }
+
+        if (strlen($password) < 4) {
+            $errors[] = "La contraseña debe tener al menos 4 caracteres.";
+        }
+
+        if ($password != $verify_password) {
+            $errors[] = "Las contraseñas no coinciden.";
+        }
+
+        $user = getUserByUserNameAndEmailAndIdentification($user_name, $email, $identification);
+
+        if (!$user) {
+            $errors[] = "Datos incorrectos.";
+        }
+
+        if (!empty($errors)) {
+            $user = [
+                'user_name' => $user_name,
+                'email' => $email,
+                'identification' => $identification
+            ];
+
+            require 'views/reset_password.php';
+            return;
+        }
+
+        $password = password_hash($password, PASSWORD_BCRYPT);
+        updatePassword($user['id'], $password);
+        $_SESSION['password_changed'] = "Contraseña cambiada correctamente";
+        header("Location: " . BASE_URL . "iniciar_sesion");
+        exit;
+
+    } else {
+        $user = [
+            'user_name' => '',
+            'email' => '',
+            'identification' => ''
+        ];
+        require 'views/reset_password.php';
     }
-    require 'views/reset_password.php';
 }
 
 function changeUserActiveStatus()
@@ -622,7 +707,7 @@ function changeUserActiveStatus()
 function deactivateAccount()
 {
     if (empty($_SESSION['user']) || $_SESSION['user']['role'] == 'administrador') {
-        header("Location: " . BASE_URL . "profile");
+        header("Location: " . BASE_URL . "perfil");
         exit();
     }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -630,6 +715,34 @@ function deactivateAccount()
         echo "ok";
         session_unset();
         session_destroy();
+        header("Location: " . BASE_URL . "inicio");
+        exit();
+    }
+}
+
+function reactivateAccount()
+{
+    if (!$_SESSION['inactive_user']) {
+        header("Location: " . BASE_URL . "inicio");
+        exit();
+    }
+
+    $user = getUserById($_SESSION['inactive_user']);
+    if ($user) {
+        changeUserStatus($user['id'], 1);
+        unset($_SESSION['inactive_user']);
+        session_regenerate_id(true);
+        $_SESSION['user'] = [
+            'id' => $user['id'],
+            'email' => $user['email'],
+            'role' => $user['role'],
+            'user_name' => $user['user_name']
+        ];
+
+        header("Location: " . BASE_URL . "animales");
+        exit;
+
+    } else {
         header("Location: " . BASE_URL . "inicio");
         exit();
     }

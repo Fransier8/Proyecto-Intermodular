@@ -54,11 +54,12 @@ $routes = [
     'descargar_salas' => ['controllers/reports_controller.php', 'downloadRoomsPdf'],
     'descargar_especies' => ['controllers/reports_controller.php', 'downloadSpeciesPdf'],
     'descargar_reservas' => ['controllers/reports_controller.php', 'downloadReservationsPdf'],
-    'desactivar_cuenta' => ['controllers/users_controller.php', 'deactivateAccount']
+    'desactivar_cuenta' => ['controllers/users_controller.php', 'deactivateAccount'],
+    'reactivar_cuenta' => ['controllers/users_controller.php', 'reactivateAccount']
 ];
 
 
-$publicViews = ['inicio', 'iniciar_sesion', 'registrarse', 'restablecer_contraseña'];
+$publicViews = ['inicio', 'iniciar_sesion', 'registrarse', 'restablecer_contraseña', 'reactivar_cuenta'];
 $userViews = [
     'animales',
     'animal',

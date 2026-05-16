@@ -11,7 +11,7 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto text-center text-md-start">
                     <?php if (!empty($_SESSION['user'])): ?>
-                        <a href="<?= BASE_URL ?>perfil"><?= $_SESSION['user']['user_name'] ?></a>
+                        <a class="text-black btn" href="<?= BASE_URL ?>perfil"><?= $_SESSION['user']['user_name'] ?></a>
                         <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>animales" class="text-black btn">Animales</a>
                         </li>
                         <li class="nav-item d-md-none"><a class="text-black btn">Salas</a></li>

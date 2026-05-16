@@ -96,11 +96,11 @@ function getUserByIdentification($identification)
     return $stmt->fetch();
 }
 
-function getUserByEmailAndIdentification($email, $identification)
+function getUserByUserNameAndEmailAndIdentification($user_name, $email, $identification)
 {
     $con = get_conexion();
-    $stmt = $con->prepare("SELECT * FROM users WHERE email = :email AND identification = :identification");
-    $stmt->execute([':email' => $email, ':identification' => $identification]);
+    $stmt = $con->prepare("SELECT * FROM users WHERE user_name = :user_name AND email = :email AND identification = :identification");
+    $stmt->execute([':user_name' => $user_name, ':email' => $email, ':identification' => $identification]);
     return $stmt->fetch();
 }
 
