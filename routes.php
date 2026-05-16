@@ -49,7 +49,11 @@ $routes = [
     'pago_exitoso' => ['controllers/sponsorships_controller.php', 'paymentSuccess'],
     'pago_cancelado' => ['controllers/sponsorships_controller.php', 'paymentCancel'],
     'informes' => ['controllers/reports_controller.php', 'viewReports'],
-    'crear_informe' => ['controllers/reports_controller.php', 'downloadAnimalsPdf'],
+    'descargar_animales' => ['controllers/reports_controller.php', 'downloadAnimalsPdf'],
+    'descargar_usuarios' => ['controllers/reports_controller.php', 'downloadUsersPdf'],
+    'descargar_salas' => ['controllers/reports_controller.php', 'downloadRoomsPdf'],
+    'descargar_especies' => ['controllers/reports_controller.php', 'downloadSpeciesPdf'],
+    'descargar_reservas' => ['controllers/reports_controller.php', 'downloadReservationsPdf'],
     'desactivar_cuenta' => ['controllers/users_controller.php', 'deactivateAccount']
 ];
 
@@ -127,7 +131,11 @@ $administratorViews = [
     'quitar_usuario_animal',
     'apadrinamientos',
     'informes',
-    'crear_informe'
+    'descargar_animales',
+    'descargar_usuarios',
+    'descargar_salas',
+    'descargar_especies',
+    'descargar_reservas'
 ];
 
 if (!in_array($view, $publicViews) && !isset($_SESSION['user'])) {

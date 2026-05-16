@@ -6,8 +6,27 @@
         <section class="col p-3 overflow-auto">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h1 class="mb-0">Informes</h1>
-                <a href="<?= BASE_URL ?>crear_informe" class="btn bg-orange-primary rounded-pill btn-lg px-4">
-                    Crear informe
+            </div>
+            <h4>Listas en PDF</h4>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <a href="<?= BASE_URL ?>descargar_animales" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Animales
+                </a>
+
+                <a href="<?= BASE_URL ?>descargar_usuarios" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Usuarios
+                </a>
+
+                <a href="<?= BASE_URL ?>descargar_salas" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Salas
+                </a>
+
+                <a href="<?= BASE_URL ?>descargar_especies" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Especies
+                </a>
+
+                <a href="<?= BASE_URL ?>descargar_reservas" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                    Reservas
                 </a>
             </div>
             <section class="container-fluid mt-4">
