@@ -84,12 +84,16 @@
         form.submit();
     });
 
-    document.querySelector(".reactivate-account-btn").addEventListener("click", function () {
-        const ok = confirm("¿Seguro que quieres reactivar tu cuenta?");
-        if (ok) {
-            window.location.href = this.dataset.url;
-        }
-    });
+    const btn = document.querySelector(".reactivate-account-btn");
+
+    if (btn) {
+        btn.addEventListener("click", function () {
+            const ok = confirm("¿Seguro que quieres reactivar tu cuenta?");
+            if (ok) {
+                window.location.href = this.dataset.url;
+            }
+        });
+    }
 
     function togglePasswordVisibility() {
         const passwordInput = document.getElementById("password");

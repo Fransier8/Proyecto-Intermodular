@@ -729,4 +729,100 @@ function acceptReservation()
         exit();
     }
 }
+
+function requestReservation()
+{
+    $errors = [];
+
+    $prefill_animal_id = $_GET['animal_id'] ?? null;
+    $prefill_room_id = $_GET['room_id'] ?? null;
+
+    $species = getSpecies("", "", 1000, 0);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $reason = trim($_POST['reason'] ?? '');
+        $companions = trim($_POST['companions'] ?? '');
+        $animal_id = trim($_POST['animal-id'] ?? '');
+        $room_id = trim($_POST['room-id'] ?? '');
+
+        if (empty($reason)) {
+            $errors[] = "El motivo es obligatorio.";
+        }
+
+        if (!is_numeric($companions) || (int) $companions < 0) {
+            $errors[] = "Los acompañantes deben ser 0 o más.";
+        }
+
+        if (empty($animal_id)) {
+            $errors[] = "Debes seleccionar un animal.";
+        } else if (!getAnimalById($animal_id)) {
+            $errors[] = "El animal no existe.";
+        }
+
+        $room = null;
+
+        if (empty($room_id)) {
+            $errors[] = "Debes seleccionar una sala.";
+        } else {
+            $room = getRoomById($room_id);
+            if (!$room) {
+                $errors[] = "La sala no existe.";
+            }
+        }
+
+        if ($room && is_numeric($companions) && $room['capacity'] <= $companions) {
+            $errors[] = "La capacidad de la sala no permite tantos acompañantes.";
+        }
+
+        if (!empty($errors)) {
+            $reservation = [
+                'reason' => $reason,
+                'companions' => $companions,
+                'status' => "pendiente",
+                'user_id' => $_SESSION['user']['id'],
+                'animal_id' => $animal_id,
+                'room_id' => $room_id,
+                'monitor_id' => null,
+            ];
+            $users = $users ?? [];
+            $animals = $animals ?? [];
+            $rooms = $rooms ?? [];
+            $page = $page ?? 1;
+            $total_pages = $total_pages ?? 1;
+
+            require 'views/request_reservation.php';
+            return;
+        }
+
+        $_SESSION['reservation'] = [
+            'reason' => $reason,
+            'companions' => $companions,
+            'status' => "pendiente",
+            'user_id' => $_SESSION['user']['id'],
+            'animal_id' => $animal_id,
+            'room_id' => $room_id,
+            'monitor_id' => null,
+        ];
+
+        header("Location: " . BASE_URL . "seleccionar_fecha_reserva");
+        exit;
+
+    } else {
+        $reservation = [
+            'reason' => '',
+            'companions' => '',
+            'status' => 'pendiente',
+            'user_id' => $_SESSION['user']['id'],
+            'animal_id' => $prefill_animal_id ?? '',
+            'room_id' => $prefill_room_id ?? '',
+            'monitor_id' => null,
+        ];
+        $users = $users ?? [];
+        $animals = $animals ?? [];
+        $rooms = $rooms ?? [];
+        $page = $page ?? 1;
+        $total_pages = $total_pages ?? 1;
+        require 'views/request_reservation.php';
+    }
+}
 ?>

@@ -27,7 +27,8 @@
                         <?php endif; ?>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Descripción:</span>
-                                <span class="text-break"><?= !empty($animal['description']) ? htmlspecialchars($animal['description']) : 'Sin descripción' ?></span>
+                                <span
+                                    class="text-break"><?= !empty($animal['description']) ? htmlspecialchars($animal['description']) : 'Sin descripción' ?></span>
                             </p>
                         </div>
                         <div class="col">
@@ -37,7 +38,8 @@
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Raza:</span>
-                                <span class="text-break"><?= !empty($animal['breed']) ? htmlspecialchars($animal['breed']) : 'Sin especificar' ?></span>
+                                <span
+                                    class="text-break"><?= !empty($animal['breed']) ? htmlspecialchars($animal['breed']) : 'Sin especificar' ?></span>
                             </p>
                         </div>
                         <div class="col">
@@ -57,7 +59,8 @@
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Dueño:</span>
-                                <span class="text-break"><?= !empty($animal['user']) ? htmlspecialchars($animal['user']) : 'Sin asignar' ?></span>
+                                <span
+                                    class="text-break"><?= !empty($animal['user']) ? htmlspecialchars($animal['user']) : 'Sin asignar' ?></span>
                             </p>
                         </div>
                         <div class="col">
@@ -92,20 +95,20 @@
                                     class="btn bg-orange-primary border-dark flex-fill">
                                     Adoptar
                                 </a>
-                            <?php else: ?>
-                                <button class="btn btn-secondary flex-fill" disabled>
-                                    No disponible
-                                </button>
-                            <?php endif; ?>
-                            <button class="btn bg-orange-primary border-dark flex-fill">
-                                Visitar
-                            </button>
-                            <?php if ($animal['status'] == 'sin adoptar'): ?>
+                                <a href="<?= BASE_URL ?>solicitar_reserva?animal_id=<?= $animal['id'] ?>" class="btn bg-orange-primary border-dark flex-fill">
+                                    Visitar
+                                </a>
                                 <a href="<?= BASE_URL ?>apadrinar_animal/<?= $animal['id'] ?>"
                                     class="btn bg-orange-primary border-dark flex-fill">
                                     Apadrinar
                                 </a>
                             <?php else: ?>
+                                <button class="btn btn-secondary flex-fill" disabled>
+                                    No disponible
+                                </button>
+                                <button class="btn btn-secondary flex-fill" disabled>
+                                    No disponible
+                                </button>
                                 <button class="btn btn-secondary flex-fill" disabled>
                                     No disponible
                                 </button>

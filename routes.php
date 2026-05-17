@@ -42,6 +42,7 @@ $routes = [
     'cancelar_reserva' => ['controllers/reservations_controller.php', 'cancelReservation'],
     'asignar_monitor_reserva' => ['controllers/reservations_controller.php', 'assignMonitor'],
     'aceptar_reserva' => ['controllers/reservations_controller.php', 'acceptReservation'],
+    'solicitar_reserva' => ['controllers/reservations_controller.php', 'requestReservation'],
     'solicitudes_de_adopcion' => ['controllers/adoption_applications_controller.php', 'listAdoptionApplications'],
     'adoptar_animal' => ['controllers/adoption_applications_controller.php', 'createAdoptionApplication'],
     'modificar_solicitud_de_adopcion' => ['controllers/adoption_applications_controller.php', 'editAdoptionApplication'],
@@ -81,7 +82,10 @@ $userViews = [
     'pago_exitoso',
     'pago_cancelado',
     'desactivar_cuenta',
-    'cancelar_reserva'
+    'cancelar_reserva',
+    'solicitar_reserva',
+    'animales_reserva',
+    'salas_reserva'
 ];
 $monitorViews = [
     'animales',

@@ -84,7 +84,7 @@
                         </div>
                     <?php elseif ($_SESSION['user']['role'] == "usuario"): ?>
                         <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
-                            <a class="btn bg-orange-primary border-dark border-1 flex-fill">Reservar</a>
+                            <a href="<?= BASE_URL ?>solicitar_reserva?room_id=<?= $room['id'] ?>" class="btn bg-orange-primary border-dark border-1 flex-fill">Reservar</a>
                         </div>
                     <?php endif ?>
                 </div>

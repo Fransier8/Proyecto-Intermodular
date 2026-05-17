@@ -6,6 +6,11 @@
         <section class="col p-3 overflow-auto">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h1 class="mb-0">Mis reservas</h1>
+                <?php if ($_SESSION['user']['role'] == "usuario"): ?>
+                    <a href="<?= BASE_URL ?>solicitar_reserva" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                        Solicitar reserva
+                    </a>
+                <?php endif; ?>
             </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
