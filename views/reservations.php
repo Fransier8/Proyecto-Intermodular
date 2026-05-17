@@ -6,9 +6,11 @@
         <section class="col p-3 overflow-auto">
             <div class="d-flex align-items-center justify-content-between mb-2">
                 <h1 class="mb-0">Reservas</h1>
-                <a href="<?= BASE_URL ?>crear_reserva" class="btn bg-orange-primary rounded-pill btn-lg px-4">
-                    Crear reserva
-                </a>
+                <?php if ($_SESSION['user']['role'] == "administrador"): ?>
+                    <a href="<?= BASE_URL ?>crear_reserva" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                        Crear reserva
+                    </a>
+                <?php endif; ?>
             </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">
@@ -101,6 +103,30 @@
                             return;
                         }
 
+                        fetchReservations();
+                    });
+            }
+
+            if (e.target.closest('.assign-monitor-btn')) {
+
+                const btn = e.target.closest('.assign-monitor-btn');
+                const id = btn.dataset.id;
+                const action = btn.dataset.action;
+
+                const message = action === "take"
+                    ? "¿Quieres tomar esta reserva?"
+                    : "¿Quieres dejar esta reserva?";
+
+                if (!confirm(message)) return;
+
+                fetch("<?= BASE_URL ?>asignar_monitor_reserva", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id + "&action=" + action
+                })
+                    .then(() => {
                         fetchReservations();
                     });
             }

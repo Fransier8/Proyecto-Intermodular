@@ -7,7 +7,7 @@
             : BASE_URL . "img/placeholder.webp";
         ?>">
         <p>Especie: <?= htmlspecialchars($animal['species']) ?></p>
-        <p>Raza: <?= htmlspecialchars($animal['breed']) ?></p>
+        <p>Raza: <?= !empty($animal['breed']) ? htmlspecialchars($animal['breed']) : 'Sin especificar' ?></p>
         <div class="mt-auto d-flex flex-column gap-2">
             <button type="button" class="btn border-dark border-1 select-animal-btn" data-id="<?= $animal['id'] ?>"
                 data-name="<?= htmlspecialchars($animal['name']) ?>">

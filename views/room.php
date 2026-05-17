@@ -30,7 +30,9 @@
 
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Ubicación:</span>
-                                <span class="text-break"><?= htmlspecialchars($room['location']) ?></span>
+                                <span class="text-break"><?= !empty($room['location'])
+                                    ? htmlspecialchars($room['location'])
+                                    : 'Sin especificar' ?></span>
                             </p>
                         </div>
 
@@ -43,7 +45,7 @@
                         <div class="col-md-12">
                             <p class="mb-1 text-break"><span class="fw-bold">Descripción:</span>
                                 <span class="text-break">
-                                    <?= htmlspecialchars($room['description']) ?>
+                                    <?= !empty($room['description']) ? htmlspecialchars($room['description']) : 'Sin descripción' ?>
                                 </span>
                             </p>
                         </div>
@@ -60,19 +62,20 @@
                                 <?php endforeach; ?>
                             </ul>
                         </div>
+                        <?php if ($photos): ?>
+                            <div class="col">
+                                <p class="fw-bold">Fotos:</p>
 
-                        <div class="col">
-                            <p class="fw-bold">Fotos:</p>
-
-                            <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
-                                <?php foreach ($photos as $photo): ?>
-                                    <div class="col">
-                                        <img src="<?= BASE_URL ?>uploads/rooms/<?= htmlspecialchars($photo['photo']) ?>"
-                                            class="room-photo img-fluid rounded" alt="Foto sala">
-                                    </div>
-                                <?php endforeach; ?>
+                                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
+                                    <?php foreach ($photos as $photo): ?>
+                                        <div class="col">
+                                            <img src="<?= BASE_URL ?>uploads/rooms/<?= htmlspecialchars($photo['photo']) ?>"
+                                                class="room-photo img-fluid rounded" alt="Foto sala">
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                         <div class="d-flex flex-column flex-sm-row gap-2 mt-4">

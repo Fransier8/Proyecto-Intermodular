@@ -17,28 +17,36 @@
                     <div class="row row-cols-1 row-cols-md-2 g-3">
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Nombre:</span>
-                                <span class="text-break"><?= htmlspecialchars($user['name']) ?></span></p>
+                                <span class="text-break"><?= htmlspecialchars($user['name']) ?></span>
+                            </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Email:</span>
-                                <span class="text-break"><?= htmlspecialchars($user['email']) ?></span></p>
+                                <span class="text-break"><?= htmlspecialchars($user['email']) ?></span>
+                            </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Identifiacación (DNI/NIE):</span>
-                                <span><?= htmlspecialchars($user['identification']) ?></span></p>
+                                <span><?= htmlspecialchars($user['identification']) ?></span>
+                            </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Rol:</span>
-                                <span><?= htmlspecialchars($user['role']) ?></span></p>
+                                <span><?= ucfirst(htmlspecialchars($user['role'])) ?></span>
+                            </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Teléfono:</span>
-                                <span><?= htmlspecialchars($user['phone']) ?></span>
+                                <span><?= !empty($user['phone'])
+                                    ? htmlspecialchars($user['phone'])
+                                    : 'Sin especificar' ?></span>
                             </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Dirección:</span>
-                                <span class="text-break"><?= htmlspecialchars($user['address']) ?></span>
+                                <span class="text-break"><?= !empty($user['address'])
+                                ? htmlspecialchars($user['address'])
+                                : 'Sin especificar' ?></span>
                             </p>
                         </div>
                         <div class="col">

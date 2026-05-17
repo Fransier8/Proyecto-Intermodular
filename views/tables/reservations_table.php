@@ -17,9 +17,7 @@ $current_date->setTime(0, 0, 0);
                 <th>Hora</th>
                 <th>Fecha</th>
                 <th>Estado</th>
-                <?php if ($_SESSION['user']['role'] == "administrador"): ?>
-                    <th>Acciones</th>
-                <?php endif; ?>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -37,17 +35,20 @@ $current_date->setTime(0, 0, 0);
                         <?= htmlspecialchars($reservation['room_code']) ?>
                     </td>
                     <td>
-                        <?= htmlspecialchars($reservation['monitor_user_name']) ?>
+                        <?= !empty($reservation['monitor_user_name'])
+                            ? htmlspecialchars($reservation['monitor_user_name'])
+                            : 'Sin especificar' ?>
                     </td>
                     <td><?= htmlspecialchars($reservation['reason']) ?></td>
                     <td><?= htmlspecialchars($reservation['companions']) ?></td>
-                    <td><?= date('H:i', strtotime($reservation['start_time'])) ?> - <?= date('H:i', strtotime($reservation['end_time'])) ?>
+                    <td><?= date('H:i', strtotime($reservation['start_time'])) ?> -
+                        <?= date('H:i', strtotime($reservation['end_time'])) ?>
                     </td>
                     <td><?= date('d/m/Y', strtotime($reservation['date'])) ?></td>
-                    <td><?= htmlspecialchars($reservation['status']) ?></td>
-                    <?php if ($_SESSION['user']['role'] == "administrador"): ?>
-                        <td>
-                            <div class="d-flex gap-2">
+                    <td><?= ucfirst(htmlspecialchars($reservation['status'])) ?></td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                                 <?php if ($reservation['status'] == "pendiente"): ?>
                                     <a href="<?= BASE_URL ?>modificar_reserva/<?= $reservation['id'] ?>"
                                         class="btn btn-sm bg-orange-primary d-flex align-items-center gap-1">
@@ -62,9 +63,38 @@ $current_date->setTime(0, 0, 0);
                                         <span>Eliminar</span>
                                     </button>
                                 <?php endif; ?>
-                            </div>
-                        </td>
-                    <?php endif; ?>
+                            <?php elseif ($_SESSION['user']['role'] == "usuario"): ?>
+                                <?php if (new DateTime($reservation['date']) > $current_date && ($reservation['status'] == "pendiente" || $reservation['status'] == "aceptada")): ?>
+                                    <button class="btn btn-sm cancel-btn btn-danger d-flex align-items-center gap-1"
+                                        data-id="<?= $reservation['id'] ?>">
+                                        <i class="bi bi-trash3"></i>
+                                        <span>Cancelar</span>
+                                    </button>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <?php
+                                if ($reservation['status'] == "pendiente" && $_SESSION['user']['id'] == $reservation['monitor_id']): ?>
+                                    <button class="btn btn-sm accept-btn btn-success d-flex align-items-center gap-1"
+                                        data-id="<?= $reservation['id'] ?>">
+                                        <i class="bi bi-person-check"></i>
+                                        <span>Aceptar</span>
+                                    </button>
+                                <?php endif; ?>
+                                <?php
+                                $is_mine = !empty($reservation['monitor_id']) && $_SESSION['user']['id'] == $reservation['monitor_id'];
+                                if (
+                                    new DateTime($reservation['date']) > $current_date && $reservation['status'] == "pendiente" && (!$reservation['monitor_id'] ||
+                                        $is_mine)
+                                ): ?>
+                                    <button class="btn btn-sm assign-monitor-btn <?= $is_mine ? 'btn-warning' : 'btn-success' ?>"
+                                        data-id="<?= $reservation['id'] ?>" data-action="<?= $is_mine ? 'leave' : 'take' ?>">
+                                        <i class="bi <?= $is_mine ? 'bi-person-x' : 'bi-person-check' ?>"></i>
+                                        <span><?= $is_mine ? 'Dejar' : 'Tomar' ?></span>
+                                    </button>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

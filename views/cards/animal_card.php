@@ -8,7 +8,7 @@
         ?>">
         <p>Especie: <?= htmlspecialchars($animal['species']) ?></p>
         <p>Raza: <?= !empty($animal['breed']) ? htmlspecialchars($animal['breed']) : 'Sin especificar' ?></p>
-        <p>Estado: <?= htmlspecialchars($animal['status']) ?></p>
+        <p>Estado: <?= ucfirst(htmlspecialchars($animal['status'])) ?></p>
         <div class="mt-auto d-flex flex-column gap-2">
             <a href="<?= BASE_URL ?>animal/<?= $animal['id'] ?>" class="btn bg-orange-primary border-dark border-1">Más
                 información</a>

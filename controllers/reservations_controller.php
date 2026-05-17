@@ -41,12 +41,21 @@ function listMyReservations()
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $per_page = 8;
 
-    $total_reservations = countReservationsByUserId($search, $status, $_SESSION['user']['id']);
+    if ($_SESSION['user']['role'] == "usuario") {
+        $total_reservations = countReservationsByUserId($search, $status, $_SESSION['user']['id']);
+    } else {
+        $total_reservations = countReservationsByMonitorId($search, $status, $_SESSION['user']['id']);
+    }
 
     $total_pages = $total_reservations > 0 ? ceil($total_reservations / $per_page) : 1;
 
     $offset = ($page - 1) * $per_page;
-    $reservations = getReservationsByUserId($search, $order, $status, $_SESSION['user']['id'], $per_page, $offset);
+
+    if ($_SESSION['user']['role'] == "usuario") {
+        $reservations = getReservationsByUserId($search, $order, $status, $_SESSION['user']['id'], $per_page, $offset);
+    } else {
+        $reservations = getReservationsByMonitorId($search, $order, $status, $_SESSION['user']['id'], $per_page, $offset);
+    }
 
     if (isset($_GET['ajax'])) {
         require 'views/lists/reservations_list.php';
@@ -69,6 +78,8 @@ function createReservation()
         $animal_id = trim($_POST['animal-id'] ?? '');
         $room_id = trim($_POST['room-id'] ?? '');
         $monitor_id = trim($_POST['monitor-id'] ?? '');
+
+        $monitor_id = $monitor_id !== '' ? $monitor_id : null;
 
         if (empty($reason)) {
             $errors[] = "El motivo es obligatorio.";
@@ -195,29 +206,102 @@ function selectReservationDate()
             $errors[] = "Debes seleccionar una fecha y hora.";
         }
 
-        if ($start_time) {
-            $parts = explode(':', $start_time);
+        if ($date <= date('Y-m-d')) {
+            $errors[] = "No puedes seleccionar fechas de hoy o anteriores.";
+        }
 
-            $minutes = (int) $parts[1];
+        $reservations = getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($reservation['user_id'], $reservation['animal_id'], $reservation['room_id'], $reservation['monitor_id']);
 
-            if ($minutes % $interval != 0) {
-                $errors[] = "La hora no coincide con el intervalo seleccionado.";
+        $new_start = strtotime($date . " " . $start_time);
+        $new_end = strtotime($date . " " . $end_time);
+
+        $buffer = 5 * 60;
+
+        foreach ($reservations as $r) {
+
+            if (!isset($r['date']) || $r['date'] !== $date) {
+                continue;
+            }
+
+            $r_start = strtotime($r['date'] . " " . $r['start_time']) - $buffer;
+            $r_end = strtotime($r['date'] . " " . $r['end_time']) + $buffer;
+
+            if ($new_start < $r_end && $new_end > $r_start) {
+                $errors[] = "Ya existe una reserva que se solapa (con margen de 5 minutos).";
+                break;
             }
         }
 
+        if (empty($reservation['reason'])) {
+            $errors[] = "El motivo es obligatorio.";
+        }
+
+        if (!is_numeric($reservation['companions']) || (int) $reservation['companions'] < 0) {
+            $errors[] = "Los acompañantes deben ser 0 o más.";
+        }
+
+        if ($reservation['status'] != "pendiente" && $reservation['status'] != "aceptada") {
+            $errors[] = "Estado incorrecto.";
+        }
+
+        if (empty($reservation['user_id'])) {
+            $errors[] = "Debes seleccionar un usuario.";
+        } else if (!getUserById($reservation['user_id'])) {
+            $errors[] = "El usuario no existe.";
+        }
+
+        if (empty($reservation['animal_id'])) {
+            $errors[] = "Debes seleccionar un animal.";
+        } else if (!getAnimalById($reservation['animal_id'])) {
+            $errors[] = "El animal no existe.";
+        }
+
+        $room_test = null;
+
+        if (empty($reservation['room_id'])) {
+            $errors[] = "Debes seleccionar una sala.";
+        } else {
+            $room_test = getRoomById($reservation['room_id']);
+            if (!$room_test) {
+                $errors[] = "La sala no existe.";
+            }
+        }
+
+        if ($room_test && is_numeric($reservation['companions']) && $room_test['capacity'] <= $reservation['companions']) {
+            $errors[] = "La capacidad de la sala no permite tantos acompañantes.";
+        }
+
+        if ($reservation['status'] == "aceptada" && empty($reservation['monitor_id'])) {
+            $errors[] = "Debes seleccionar un monitor.";
+        } else if ($reservation['status'] == "aceptada" && !getUserById($reservation['monitor_id'])) {
+            $errors[] = "El monitor no existe.";
+        }
+
+
         if (!empty($errors)) {
 
+            $user = getUserById($reservation['user_id']);
+            $animal = getAnimalById($reservation['animal_id']);
             $room = getRoomById($reservation['room_id']);
+            $monitor = $reservation['monitor_id'] ? getUserById($reservation['monitor_id']) : '';
             $schedules = getRoomSchedulesByRoomId($reservation['room_id']);
-            $reservations = getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($reservation['user_id'], $reservation['animal_id'], $reservation['room_id'], $reservation['monitor_id']);
-
 
             require 'views/select_reservation_date.php';
             return;
         }
 
-        insertReservation($reservation['user_id'], $reservation['animal_id'], $reservation['room_id'], $reservation['monitor_id'], $date, $start_time, $end_time,
-        $reservation['companions'], $reservation['reason'], $reservation['status']);
+        insertReservation(
+            $reservation['user_id'],
+            $reservation['animal_id'],
+            $reservation['room_id'],
+            $reservation['monitor_id'],
+            $date,
+            $start_time,
+            $end_time,
+            $reservation['companions'],
+            $reservation['reason'],
+            $reservation['status']
+        );
 
         unset($_SESSION['reservation']);
 
@@ -226,7 +310,10 @@ function selectReservationDate()
 
     } else {
 
+        $user = getUserById($reservation['user_id']);
+        $animal = getAnimalById($reservation['animal_id']);
         $room = getRoomById($reservation['room_id']);
+        $monitor = $reservation['monitor_id'] ? getUserById($reservation['monitor_id']) : '';
         $schedules = getRoomSchedulesByRoomId($reservation['room_id']);
         $reservations = getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($reservation['user_id'], $reservation['animal_id'], $reservation['room_id'], $reservation['monitor_id']);
 
@@ -476,6 +563,167 @@ function removeReservation()
             echo json_encode([
                 'success' => false,
                 'message' => 'No puedes eliminar esta reserva'
+            ]);
+        }
+        exit();
+    }
+}
+
+function cancelReservation()
+{
+    $is_ajax = isset($_GET['ajax']);
+    if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'usuario') {
+        if ($is_ajax) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No autorizado'
+            ]);
+        } else {
+            header("Location: " . BASE_URL . "inicio");
+        }
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'] ?? null;
+
+        if (!$id) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'ID inválido'
+            ]);
+            exit();
+        }
+
+        $result = changeReservationStatus($id, "cancelada");
+
+        if ($result) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Cancelada correctamente'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No puedes cancelar esta reserva'
+            ]);
+        }
+        exit();
+    }
+}
+
+function assignMonitor()
+{
+    $is_ajax = isset($_GET['ajax']);
+    if (empty($_SESSION['user']) || $_SESSION['user']['role'] != 'monitor') {
+        if ($is_ajax) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No autorizado'
+            ]);
+        } else {
+            header("Location: " . BASE_URL . "inicio");
+        }
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'] ?? null;
+        $action = $_POST['action'] ?? null;
+
+        if (!$id) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'ID inválido'
+            ]);
+            exit();
+        }
+
+        $reservation = getReservationById($id);
+
+        if (!$reservation || ($reservation['monitor_id'] && $reservation['monitor_id'] != $_SESSION['user']['id'])) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Reserva inválida'
+            ]);
+            exit();
+        }
+
+        $result = null;
+
+        if ($action == "take") {
+            $result = assignReservationMonitor($id, $_SESSION['user']['id']);
+        } else {
+            $result = assignReservationMonitor($id, null);
+        }
+
+        if ($result && $action == "take") {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Tomada correctamente'
+            ]);
+        } else if ($result && $action != "take") {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Dejada correctamente'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No puedes asignar esta reserva'
+            ]);
+        }
+        exit();
+    }
+}
+
+function acceptReservation()
+{
+    $is_ajax = isset($_GET['ajax']);
+    if (empty($_SESSION['user']) || $_SESSION['user']['role'] == 'usuario') {
+        if ($is_ajax) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No autorizado'
+            ]);
+        } else {
+            header("Location: " . BASE_URL . "inicio");
+        }
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id = $_POST['id'] ?? null;
+
+        if (!$id) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'ID inválido'
+            ]);
+            exit();
+        }
+
+        $reservation = getReservationById($id);
+
+        if (!$reservation || ($_SESSION['user']['role'] == 'monitor' && $reservation['monitor_id'] && $reservation['monitor_id'] != $_SESSION['user']['id'])) {
+            echo json_encode([
+                'success' => false,
+                'message' => 'Reserva inválida'
+            ]);
+            exit();
+        }
+
+        $result = changeReservationStatus($id, "aceptada");
+
+        if ($result) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'Aceptada correctamente'
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => 'No puedes aceptar esta reserva'
             ]);
         }
         exit();

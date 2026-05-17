@@ -7,7 +7,9 @@
             : BASE_URL . "img/placeholder.webp";
         ?>">
         <p>Nombre: <?= htmlspecialchars($room['name']) ?></p>
-        <p>Ubicación: <?= htmlspecialchars($room['location']) ?></p>
+        <p>Ubicación: <?= !empty($room['location'])
+            ? htmlspecialchars($room['location'])
+            : 'Sin especificar' ?></p>
         <p>Capacidad: <?= htmlspecialchars($room['capacity']) ?></p>
         <div class="mt-auto d-flex flex-column gap-2">
             <button type="button" class="btn border-dark border-1 select-room-btn" data-id="<?= $room['id'] ?>"

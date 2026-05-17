@@ -16,8 +16,23 @@
                 <div class="col-12 col-md-12 fs-5">
                     <form action="<?= BASE_URL ?>seleccionar_fecha_reserva" method="post" class="row g-4">
                         <div class="col-12 col-md-12 fs-5">
-                            <div class="row row-cols-1 g-3">
-                                <div class="col">
+                            <div class="row row-cols-1 g-3 mb-4">
+                                <div class="col-md-6">
+                                    <p><span class="fw-bold">Usuario:</span>
+                                        <span class="text-break"><?= htmlspecialchars($user['user_name']) ?></span>
+                                    </p>
+                                    <p><span class="fw-bold">Animal:</span>
+                                        <span class="text-break"><?= htmlspecialchars($animal['name']) ?></span>
+                                    </p>
+                                    <p><span class="fw-bold">Sala:</span>
+                                        <span class="text-break"><?= htmlspecialchars($room['code']) ?></span>
+                                    </p>
+                                    <p><span class="fw-bold">Monitor:</span>
+                                        <span
+                                            class="text-break"><?= $monitor ? htmlspecialchars($monitor['user_name']) : 'Sin especificar' ?></span>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
                                     <p class="fw-bold">Horarios:</p>
                                     <ul>
                                         <?php foreach ($schedules as $s): ?>
@@ -29,7 +44,7 @@
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-12">
                                     <label for="interval-select" class="form-label fw-bold">
                                         Intervalo
                                     </label>
@@ -125,25 +140,33 @@
         }
 
         intervalSelect.addEventListener("change", function () {
+            selectedReservation = null;
+            selectedDate = null;
+            openDay = null;
+            document.getElementById("reservation-date").value = "";
+            document.getElementById("reservation-start").value = "";
+            document.getElementById("reservation-end").value = "";
+            document.querySelectorAll(".calendar-cell")
+                .forEach(c => c.classList.remove("calendar-selected"));
             loadCalendar();
         });
 
         function renderCalendar(data) {
             calendarContainer.innerHTML = "";
 
-            // CONTROLES
+            // CONTROLS
             const controls = document.createElement("div");
             controls.className = "d-flex justify-content-between mb-3";
 
             const prev = document.createElement("button");
             prev.type = "button";
-            prev.textContent = "← Mes anterior";
-            prev.className = "btn btn-outline-primary";
+            prev.textContent = "Mes anterior";
+            prev.className = "btn bg-orange-primary border-dark border-1";
 
             const next = document.createElement("button");
             next.type = "button";
             next.textContent = "Mes siguiente";
-            next.className = "btn btn-outline-primary";
+            next.className = "btn bg-orange-primary border-dark border-1";
 
             prev.onclick = () => {
                 currentDate.setMonth(currentDate.getMonth() - 1);
@@ -160,7 +183,7 @@
 
             calendarContainer.appendChild(controls);
 
-            // CALENDARIO
+            // CALENDAR
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
 
@@ -205,6 +228,14 @@
                 const dateString =
                     `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                const currentCellDate = new Date(dateString);
+                currentCellDate.setHours(0, 0, 0, 0);
+
+                const isPastOrToday = currentCellDate <= today;
+
                 const dayData = data.find(d => d.date === dateString);
 
                 const hasFreeSlots =
@@ -216,7 +247,7 @@
 
                 cell.className = "calendar-cell";
 
-                if (hasFreeSlots) {
+                if (hasFreeSlots && !isPastOrToday) {
                     cell.classList.add("calendar-available");
                 } else {
                     cell.classList.add("calendar-unavailable");
@@ -228,14 +259,14 @@
 
                 cell.appendChild(number);
 
-                if (dayData) {
+                if (dayData && !isPastOrToday) {
 
                     cell.style.cursor = "pointer";
 
                     cell.addEventListener("click", function (e) {
                         if (e.target.closest("button")) return;
 
-                        // cerrar anterior abierto
+                        // close previous open
                         if (openDay && openDay !== cell) {
                             const old = openDay.querySelector(".slots-container");
                             if (old) old.remove();
@@ -342,8 +373,42 @@
 
             let errors = [];
 
-            if (!selectedReservation) {
+            const date =
+                document.getElementById("reservation-date").value;
+
+            const startTime =
+                document.getElementById("reservation-start").value;
+
+            const endTime =
+                document.getElementById("reservation-end").value;
+
+            const interval =
+                parseInt(document.getElementById("interval-select").value);
+
+            const allowedIntervals =
+                [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
+
+            if (!selectedReservation || !date || !startTime || !endTime) {
                 errors.push("Debes seleccionar una fecha y hora.");
+            }
+
+            if (!allowedIntervals.includes(interval)) {
+                errors.push("Intervalo inválido.");
+            }
+
+            if (date) {
+
+                const today = new Date();
+
+                today.setHours(0, 0, 0, 0);
+
+                const selectedDate = new Date(date);
+
+                selectedDate.setHours(0, 0, 0, 0);
+
+                if (selectedDate <= today) {
+                    errors.push("No puedes seleccionar fechas de hoy o anteriores.");
+                }
             }
 
             const errorBox = document.getElementById("errorBox");

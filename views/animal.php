@@ -27,7 +27,7 @@
                         <?php endif; ?>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Descripción:</span>
-                                <span class="text-break"><?= htmlspecialchars($animal['description']) ?></span>
+                                <span class="text-break"><?= !empty($animal['description']) ? htmlspecialchars($animal['description']) : 'Sin descripción' ?></span>
                             </p>
                         </div>
                         <div class="col">
@@ -52,12 +52,12 @@
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Fecha de nacimiento:</span>
-                                <span><?= htmlspecialchars($animal['birth_day']) ?></span>
+                                <span><?= !empty($animal['birth_day']) ? date('d/m/Y', strtotime($animal['birth_day'])) : 'Sin especificar' ?></span>
                             </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Dueño:</span>
-                                <span class="text-break"><?= htmlspecialchars($animal['user']) ?></span>
+                                <span class="text-break"><?= !empty($animal['user']) ? htmlspecialchars($animal['user']) : 'Sin asignar' ?></span>
                             </p>
                         </div>
                         <div class="col">

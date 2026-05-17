@@ -121,6 +121,8 @@ function changeReservationStatus($id, $status)
         ':id' => $id,
         ':status' => $status
     ]);
+
+    return true;
 }
 
 function insertReservation($user_id, $animal_id, $room_id, $monitor_id, $date, $start_time, $end_time, $companions, $reason, $status)
@@ -243,5 +245,100 @@ function getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($user_id, $animal_
     $stmt = $con->prepare($sql);
     $stmt->execute($params);
     return $stmt->fetchAll();
+}
+
+function getReservationById($id)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("SELECT * FROM reservations WHERE id = :id");
+    $stmt->execute([':id' => $id]);
+    return $stmt->fetch();
+}
+
+function assignReservationMonitor($id, $monitor_id)
+{
+    $con = get_conexion();
+    $stmt = $con->prepare("UPDATE reservations SET monitor_id = :monitor_id WHERE id = :id");
+    $stmt->execute([
+        ':id' => $id,
+        ':monitor_id' => $monitor_id
+    ]);
+
+    return true;
+}
+
+function getReservationsByMonitorId($search, $order, $status, $monitor_id, $limit = null, $offset = 0)
+{
+    $con = get_conexion();
+    $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
+    JOIN rooms ro ON r.room_id = ro.id WHERE r.monitor_id = :monitor_id AND (a.name LIKE :search OR a.breed LIKE :search
+     OR ro.code LIKE :search OR u.user_name LIKE :search)";
+
+    $params = [
+        ':search' => "%$search%",
+        ':monitor_id' => $monitor_id
+    ];
+
+    if (!empty($status)) {
+        $sql .= " AND r.status = :status";
+        $params[':status'] = $status;
+    }
+
+    switch ($order) {
+        case 'date_asc':
+            $sql .= " ORDER BY r.date ASC, r.start_time ASC, r.end_time ASC";
+            break;
+        case 'date_desc':
+            $sql .= " ORDER BY r.date DESC, r.end_time DESC, r.start_time DESC";
+            break;
+        case 'companions_asc':
+            $sql .= " ORDER BY r.companions ASC";
+            break;
+        case 'companions_desc':
+            $sql .= " ORDER BY r.companions DESC";
+            break;
+        default:
+            $sql .= " ORDER BY r.date DESC, r.end_time DESC, r.start_time DESC";
+            break;
+    }
+    if ($limit != null) {
+        $sql .= " LIMIT :offset, :limit";
+        $params[':offset'] = (int) $offset;
+        $params[':limit'] = (int) $limit;
+    }
+    $stmt = $con->prepare($sql);
+    foreach ($params as $key => $value) {
+        if ($key === ':offset' || $key === ':limit') {
+            $stmt->bindValue($key, $value, PDO::PARAM_INT);
+        } else {
+            $stmt->bindValue($key, $value);
+        }
+    }
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function countReservationsByMonitorId($search, $status, $monitor_id)
+{
+    $con = get_conexion();
+
+    $sql = "SELECT COUNT(*) FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
+    JOIN rooms ro ON r.room_id = ro.id WHERE r.monitor_id = :monitor_id AND (a.name LIKE :search OR a.breed LIKE :search
+     OR ro.code LIKE :search OR u.user_name LIKE :search)";
+
+    $params = [
+        ':search' => "%$search%",
+        ':monitor_id' => $monitor_id
+    ];
+
+    if (!empty($status)) {
+        $sql .= " AND r.status = :status";
+        $params[':status'] = $status;
+    }
+
+    $stmt = $con->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchColumn();
 }
 ?>

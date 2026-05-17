@@ -73,6 +73,85 @@
                 const page = e.target.closest('.page-link').dataset.page;
                 fetchReservations(page);
             }
+
+            if (e.target.closest('.cancel-btn')) {
+                const btn = e.target.closest('.cancel-btn');
+                const id = btn.dataset.id;
+
+                if (!confirm('¿Seguro que quieres cancelar esta reserva?')) {
+                    return;
+                }
+
+                fetch("<?= BASE_URL ?>cancelar_reserva?ajax=1", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id
+                })
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if (!data.success) {
+                            alert("Error: " + data.message);
+                            return;
+                        }
+
+                        fetchReservations();
+                    });
+            }
+
+            if (e.target.closest('.accept-btn')) {
+                const btn = e.target.closest('.accept-btn');
+                const id = btn.dataset.id;
+
+                if (!confirm('¿Seguro que quieres aceptar esta reserva?')) {
+                    return;
+                }
+
+                fetch("<?= BASE_URL ?>aceptar_reserva?ajax=1", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id
+                })
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if (!data.success) {
+                            alert("Error: " + data.message);
+                            return;
+                        }
+
+                        fetchReservations();
+                    });
+            }
+
+            if (e.target.closest('.assign-monitor-btn')) {
+
+                const btn = e.target.closest('.assign-monitor-btn');
+                const id = btn.dataset.id;
+                const action = btn.dataset.action;
+
+                const message = action === "take"
+                    ? "¿Quieres tomar esta reserva?"
+                    : "¿Quieres dejar esta reserva?";
+
+                if (!confirm(message)) return;
+
+                fetch("<?= BASE_URL ?>asignar_monitor_reserva", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id + "&action=" + action
+                })
+                    .then(() => {
+                        fetchReservations();
+                    });
+            }
+
         });
 
         form.addEventListener("submit", function (e) {

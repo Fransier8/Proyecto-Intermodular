@@ -534,7 +534,9 @@ function renderReservationsSection($title, $reservations)
                     <tr>
                         <td class="label">Monitor</td>
                         <td>
-                            <?= htmlspecialchars($reservation['monitor_user_name']) ?>
+                            <?= !empty($reservation['monitor_user_name'])
+                                ? htmlspecialchars($reservation['monitor_user_name'])
+                                : 'Sin especificar' ?>
                         </td>
                     </tr>
 

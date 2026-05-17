@@ -49,7 +49,9 @@
                                     </p>
                                     <p class="mb-1"><span class="fw-bold">Teléfono:</span>
                                         <span>
-                                            <?= htmlspecialchars($user['phone']) ?>
+                                            <?= !empty($user['phone'])
+                                ? htmlspecialchars($user['phone'])
+                                : 'Sin especificar' ?>
                                         </span>
                                     </p>
                                     <p>
