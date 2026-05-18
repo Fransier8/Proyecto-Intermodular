@@ -107,6 +107,60 @@
                     });
             }
 
+            if (e.target.closest('.accept-btn')) {
+                const btn = e.target.closest('.accept-btn');
+                const id = btn.dataset.id;
+
+                if (!confirm('¿Seguro que quieres aceptar esta reserva?')) {
+                    return;
+                }
+
+                fetch("<?= BASE_URL ?>aceptar_reserva?ajax=1", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id
+                })
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if (!data.success) {
+                            alert("Error: " + data.message);
+                            return;
+                        }
+
+                        fetchReservations();
+                    });
+            }
+
+            if (e.target.closest('.deny-btn')) {
+                const btn = e.target.closest('.deny-btn');
+                const id = btn.dataset.id;
+
+                if (!confirm('¿Seguro que quieres denegar esta reserva?')) {
+                    return;
+                }
+
+                fetch("<?= BASE_URL ?>denegar_reserva?ajax=1", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: "id=" + id
+                })
+                    .then(res => res.json())
+                    .then(data => {
+
+                        if (!data.success) {
+                            alert("Error: " + data.message);
+                            return;
+                        }
+
+                        fetchReservations();
+                    });
+            }
+
             if (e.target.closest('.assign-monitor-btn')) {
 
                 const btn = e.target.closest('.assign-monitor-btn');

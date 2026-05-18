@@ -43,6 +43,12 @@ $routes = [
     'asignar_monitor_reserva' => ['controllers/reservations_controller.php', 'assignMonitor'],
     'aceptar_reserva' => ['controllers/reservations_controller.php', 'acceptReservation'],
     'solicitar_reserva' => ['controllers/reservations_controller.php', 'requestReservation'],
+    'seleccionar_fecha_reserva_solicitada' => ['controllers/reservations_controller.php', 'selectReservationDateUser'],
+    'modificar_reserva' => ['controllers/reservations_controller.php', 'editReservation'],
+    'modificar_fecha_reserva' => ['controllers/reservations_controller.php', 'editReservationDate'],
+    'denegar_reserva' => ['controllers/reservations_controller.php', 'denyReservation'],
+    'modificar_solicitud_reserva' => ['controllers/reservations_controller.php', 'editReservationRequest'],
+    'modificar_fecha_solicitud_reserva' => ['controllers/reservations_controller.php', 'editReservationRequestDate'],
     'solicitudes_de_adopcion' => ['controllers/adoption_applications_controller.php', 'listAdoptionApplications'],
     'adoptar_animal' => ['controllers/adoption_applications_controller.php', 'createAdoptionApplication'],
     'modificar_solicitud_de_adopcion' => ['controllers/adoption_applications_controller.php', 'editAdoptionApplication'],
@@ -85,7 +91,11 @@ $userViews = [
     'cancelar_reserva',
     'solicitar_reserva',
     'animales_reserva',
-    'salas_reserva'
+    'salas_reserva',
+    'seleccionar_fecha_reserva_solicitada',
+    'disponibilidad_calendario',
+    'modificar_solicitud_reserva',
+    'modificar_fecha_solicitud_reserva'
 ];
 $monitorViews = [
     'animales',
@@ -147,7 +157,10 @@ $administratorViews = [
     'descargar_salas',
     'descargar_especies',
     'descargar_reservas',
-    'aceptar_reserva'
+    'aceptar_reserva',
+    'modificar_reserva',
+    'modificar_fecha_reserva',
+    'denegar_reserva'
 ];
 
 if (!in_array($view, $publicViews) && !isset($_SESSION['user'])) {

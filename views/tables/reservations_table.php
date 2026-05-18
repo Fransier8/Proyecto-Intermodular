@@ -55,6 +55,18 @@ $current_date->setTime(0, 0, 0);
                                         <i class="bi bi-pencil"></i>
                                         <span>Modificar</span>
                                     </a>
+                                    <?php if ($reservation['monitor_id']): ?>
+                                        <button class="btn btn-sm accept-btn btn-success d-flex align-items-center gap-1"
+                                            data-id="<?= $reservation['id'] ?>">
+                                            <i class="bi bi-person-check"></i>
+                                            <span>Aceptar</span>
+                                        </button>
+                                    <?php endif; ?>
+                                    <button class="btn btn-sm deny-btn btn-warning d-flex align-items-center gap-1"
+                                        data-id="<?= $reservation['id'] ?>">
+                                        <i class="bi bi-person-check"></i>
+                                        <span>Denegar</span>
+                                    </button>
                                 <?php endif; ?>
                                 <?php if (new DateTime($reservation['date']) > $current_date): ?>
                                     <button class="btn btn-sm delete-btn btn-danger d-flex align-items-center gap-1"
@@ -65,6 +77,13 @@ $current_date->setTime(0, 0, 0);
                                 <?php endif; ?>
                             <?php elseif ($_SESSION['user']['role'] == "usuario"): ?>
                                 <?php if (new DateTime($reservation['date']) > $current_date && ($reservation['status'] == "pendiente" || $reservation['status'] == "aceptada")): ?>
+                                    <?php if ($reservation['status'] == "pendiente"): ?>
+                                        <a href="<?= BASE_URL ?>modificar_solicitud_reserva/<?= $reservation['id'] ?>"
+                                            class="btn btn-sm bg-orange-primary d-flex align-items-center gap-1">
+                                            <i class="bi bi-pencil"></i>
+                                            <span>Modificar</span>
+                                        </a>
+                                    <?php endif; ?>
                                     <button class="btn btn-sm cancel-btn btn-danger d-flex align-items-center gap-1"
                                         data-id="<?= $reservation['id'] ?>">
                                         <i class="bi bi-trash3"></i>
