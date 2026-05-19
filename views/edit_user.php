@@ -54,7 +54,7 @@
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Rol:</label>
-                                    <select name="role" class="form-select" <?= $user['id'] == $_SESSION['user']['id'] ? 'disabled' : '' ?>>
+                                    <select name="role" class="form-select">
                                         <option value="usuario" <?= $user['role'] == 'usuario' ? 'selected' : '' ?>>Usuario
                                         </option>
                                         <option value="monitor" <?= $user['role'] == 'monitor' ? 'selected' : '' ?>>

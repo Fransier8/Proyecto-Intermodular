@@ -45,8 +45,8 @@
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Dirección:</span>
                                 <span class="text-break"><?= !empty($user['address'])
-                                ? htmlspecialchars($user['address'])
-                                : 'Sin especificar' ?></span>
+                                    ? htmlspecialchars($user['address'])
+                                    : 'Sin especificar' ?></span>
                             </p>
                         </div>
                         <div class="col">
@@ -55,10 +55,12 @@
                             </p>
                         </div>
                     </div>
-                    <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
-                        <a href="<?= BASE_URL ?>modificar_usuario/<?= $user['id'] ?>"
-                            class="btn bg-orange-primary border-dark border-1 flex-fill">Modificar</a>
-                    </div>
+                    <?php if ($_SESSION['user']['id'] != $user['id']): ?>
+                        <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+                            <a href="<?= BASE_URL ?>modificar_usuario/<?= $user['id'] ?>"
+                                class="btn bg-orange-primary border-dark border-1 flex-fill">Modificar</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </article>
         </section>

@@ -26,17 +26,21 @@
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Rol:</span>
-                                <span><?= htmlspecialchars($user['role']) ?></span>
+                                <span><?= ucfirst(htmlspecialchars($user['role'])) ?></span>
                             </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Teléfono:</span>
-                                <span><?= htmlspecialchars($user['phone']) ?></span>
+                                <span><?= !empty($user['phone'])
+                                    ? htmlspecialchars($user['phone'])
+                                    : 'Sin especificar' ?></span>
                             </p>
                         </div>
                         <div class="col">
                             <p class="mb-1"><span class="fw-bold">Dirección:</span>
-                                <span class="text-break"><?= htmlspecialchars($user['address']) ?></span>
+                                <span class="text-break"><?= !empty($user['address'])
+                                ? htmlspecialchars($user['address'])
+                                : 'Sin especificar' ?></span>
                             </p>
                         </div>
                         <div class="col">

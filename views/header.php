@@ -12,11 +12,35 @@
                 <ul class="navbar-nav ms-auto text-center text-md-start">
                     <?php if (!empty($_SESSION['user'])): ?>
                         <a class="text-black btn" href="<?= BASE_URL ?>perfil"><?= $_SESSION['user']['user_name'] ?></a>
-                        <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>animales" class="text-black btn">Animales</a>
+                        <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>animales"
+                                class="text-black btn w-100">Animales</a>
                         </li>
-                        <li class="nav-item d-md-none"><a class="text-black btn">Salas</a></li>
-                        <li class="nav-item d-md-none"><a class="text-black btn">Mis animales</a></li>
-                        <li class="nav-item d-md-none"><a class="text-black btn">Mis reservas</a></li>
+                        <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>salas" class="text-black btn w-100">Salas</a></li>
+                        <?php if ($_SESSION['user']['role'] == "monitor"): ?>
+                            <li class="nav-item d-md-none"></li><a href="<?= BASE_URL ?>reservas"
+                                class="text-black btn w-100">Reservas</a></li>
+                        <?php endif; ?>
+                        <?php if ($_SESSION['user']['role'] == "administrador"): ?>
+                            <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>usuarios"
+                                    class="text-black btn w-100">Usuarios</a></li>
+                            <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>reservas"
+                                    class="text-black btn w-100">Reservas</a></li>
+                            <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>especies"
+                                    class="text-black btn w-100">Especies</a></li>
+                            <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>informes"
+                                    class="text-black btn w-100">Informes</a></li>
+                        <?php else: ?>
+                            <?php if ($_SESSION['user']['role'] == "usuario"): ?>
+                                <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>mis_animales"
+                                        class="text-black btn w-100">Mis animales</a></li>
+                            <?php endif; ?>
+                            <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>mis_reservas"
+                                    class="text-black btn w-100">Mis reservas</a></li>
+                        <?php endif; ?>
+                        <?php if ($_SESSION['user']['role'] != "monitor"): ?>
+                            <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>solicitudes_de_adopcion" class="text-black btn w-100">Adopciones</a></li>
+                            <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>apadrinamientos" class="text-black btn w-100">Apadrinamientos</a></li>
+                        <?php endif; ?>
                         <li class="nav-item"><a href="<?= BASE_URL ?>cerrar_sesion" class="text-black btn">Cerrar
                                 sesión</a></li>
                     <?php else: ?>
@@ -24,7 +48,8 @@
                         <li class="nav-item"><a href="#footer" class="text-black btn">Contacto</a></li>
                         <li class="nav-item"><a href="<?= BASE_URL ?>iniciar_sesion" class="text-black btn">Iniciar
                                 sesión</a></li>
-                        <li class="nav-item"><a href="<?= BASE_URL ?>registrarse" class="text-black btn">Registrarse</a></li>
+                        <li class="nav-item"><a href="<?= BASE_URL ?>registrarse" class="text-black btn">Registrarse</a>
+                        </li>
                     <?php endif; ?>
                 </ul>
             </div>

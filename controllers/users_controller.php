@@ -119,7 +119,7 @@ function signUp()
 
         $existing_identification = getUserByIdentification($identification);
         if ($existing_identification) {
-            $errors[] = "La idnetificación ya existe";
+            $errors[] = "La identificación ya existe";
         }
 
         if (!empty($phone) && !preg_match('/^[0-9]{9}$/', $phone)) {
@@ -294,7 +294,7 @@ function createUser()
 
         $existing_identification = getUserByIdentification($identification);
         if ($existing_identification) {
-            $errors[] = "La idnetificación ya existe";
+            $errors[] = "La identificación ya existe";
         }
 
         if (!empty($phone) && !preg_match('/^[0-9]{9}$/', $phone)) {
@@ -460,7 +460,7 @@ function editUser()
 
     } else {
         $id = $_GET['id'] ?? null;
-        if (!$id) {
+        if (!$id || $id == $_SESSION['user']['id']) {
             header("Location: " . BASE_URL . "usuarios");
             exit();
         }
@@ -498,8 +498,6 @@ function editProfile()
             'address' => trim($_POST['address'] ?? ''),
             'password' => trim($_POST['password'] ?? ''),
             'verify_password' => trim($_POST['verify_password'] ?? ''),
-            'role' => $_POST['role'] ?? '',
-            'active' => isset($_POST['active']) ? 1 : 0
         ];
 
         if (empty($data['user_name'])) {
@@ -552,7 +550,7 @@ function editProfile()
 
         $existing_identification = getUserByIdentification($data['identification']);
         if ($existing_identification && $existing_identification['id'] != $id) {
-            $errors[] = "La idnetificación ya existe";
+            $errors[] = "La identificación ya existe";
         }
 
         if (!empty($data['phone']) && !preg_match('/^[0-9]{9}$/', $data['phone'])) {
@@ -575,9 +573,14 @@ function editProfile()
             unset($user['password']);
             unset($user['verify_password']);
 
-            require 'views/edit_user.php';
+            require 'views/edit_profile.php';
             return;
         }
+
+        $current_user = getUserById($id);
+
+        $data['role'] = $current_user['role'];
+        $data['active'] = $current_user['active'];
 
         updateUser($id, $data);
         if (!empty($data['password'])) {
