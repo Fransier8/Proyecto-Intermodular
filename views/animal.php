@@ -57,17 +57,19 @@
                                 <span><?= !empty($animal['birth_day']) ? date('d/m/Y', strtotime($animal['birth_day'])) : 'Sin especificar' ?></span>
                             </p>
                         </div>
-                        <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Dueño:</span>
-                                <span
-                                    class="text-break"><?= !empty($animal['user']) ? htmlspecialchars($animal['user']) : 'Sin asignar' ?></span>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Activo:</span>
-                                <span><?= $animal['active'] ? 'Sí' : 'No' ?></span>
-                            </p>
-                        </div>
+                        <?php if ($_SESSION['user']['role'] == "administrador"): ?>
+                            <div class="col">
+                                <p class="mb-1"><span class="fw-bold">Dueño:</span>
+                                    <span
+                                        class="text-break"><?= !empty($animal['user']) ? htmlspecialchars($animal['user']) : 'Sin asignar' ?></span>
+                                </p>
+                            </div>
+                            <div class="col">
+                                <p class="mb-1"><span class="fw-bold">Activo:</span>
+                                    <span><?= $animal['active'] ? 'Sí' : 'No' ?></span>
+                                </p>
+                            </div>
+                        <?php endif; ?>
                         <?php if ($_SESSION['user']['role'] == "administrador" && $animal['user_id']): ?>
                             <div class="col">
                                 <form action="<?= BASE_URL ?>quitar_usuario_animal" method="post"
@@ -95,7 +97,8 @@
                                     class="btn bg-orange-primary border-dark flex-fill">
                                     Adoptar
                                 </a>
-                                <a href="<?= BASE_URL ?>solicitar_reserva?animal_id=<?= $animal['id'] ?>" class="btn bg-orange-primary border-dark flex-fill">
+                                <a href="<?= BASE_URL ?>solicitar_reserva?animal_id=<?= $animal['id'] ?>"
+                                    class="btn bg-orange-primary border-dark flex-fill">
                                     Visitar
                                 </a>
                                 <a href="<?= BASE_URL ?>apadrinar_animal/<?= $animal['id'] ?>"

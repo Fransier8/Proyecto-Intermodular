@@ -15,7 +15,7 @@
             <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                 <button class="btn change-status-btn <?= $animal['active'] ? 'btn-warning' : 'btn-success' ?>"
                     data-id="<?= $animal['id'] ?>" data-active="<?= $animal['active'] ? 0 : 1 ?>">
-                    <i class="bi <?= $animal['active'] ? 'bi-person-x' : 'bi-person-check' ?>"></i>
+                    <i class="bi <?= $animal['active'] ? 'bi-x-circle' : 'bi-check-circle' ?>"></i>
                     <?= $animal['active'] ? 'Desactivar' : 'Activar' ?>
                 </button>
             <?php endif ?>

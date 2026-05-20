@@ -85,7 +85,7 @@
                                 <button type="submit"
                                     class="btn bg-orange-primary border-dark border-1 flex-fill">Modificar solicitud de
                                     reserva</button>
-                                <a href="<?= BASE_URL ?>modificar_reserva/<?= $reservation['id'] ?>"
+                                <a href="<?= BASE_URL ?>modificar_solicitud_reserva/<?= $reservation['id'] ?>"
                                     class="btn bg-orange-primary border-dark border-1 flex-fill">Cancelar</a>
                             </div>
                         </div>
@@ -129,8 +129,6 @@
         let selectedReservation = null;
         let openDay = null;
 
-        loadCalendar();
-
         if (initialReservation.date) {
             selectedReservation = {
                 date: initialReservation.date,
@@ -144,11 +142,11 @@
             document.getElementById("reservation-date").value = initialReservation.date;
             document.getElementById("reservation-start").value = initialReservation.start;
             document.getElementById("reservation-end").value = initialReservation.end;
-        }
 
-        if (initialReservation.date) {
             currentDate = new Date(initialReservation.date);
         }
+
+        loadCalendar();
 
         function normalizeTime(t) {
             return t ? t.toString().trim().slice(0, 5) : '';

@@ -17,7 +17,7 @@
                         </li>
                         <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>salas" class="text-black btn w-100">Salas</a></li>
                         <?php if ($_SESSION['user']['role'] == "monitor"): ?>
-                            <li class="nav-item d-md-none"></li><a href="<?= BASE_URL ?>reservas"
+                            <li class="nav-item d-md-none"><a href="<?= BASE_URL ?>reservas"
                                 class="text-black btn w-100">Reservas</a></li>
                         <?php endif; ?>
                         <?php if ($_SESSION['user']['role'] == "administrador"): ?>

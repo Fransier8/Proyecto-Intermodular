@@ -150,7 +150,7 @@ function signUp()
             return;
         }
 
-        password_hash($password, PASSWORD_BCRYPT);
+        $password = password_hash($password, PASSWORD_BCRYPT);
 
         $id = insertUser($user_name, $name, $email, $password, $role, $phone, $identification, $address, $active);
 
@@ -165,7 +165,7 @@ function signUp()
             ];
         }
 
-        header("Location: " . BASE_URL . "perfil");
+        header("Location: " . BASE_URL . "animales");
         exit();
 
     } else {
@@ -329,7 +329,7 @@ function createUser()
             return;
         }
 
-        password_hash($password, PASSWORD_BCRYPT);
+        $password = password_hash($password, PASSWORD_BCRYPT);
 
         $id = insertUser($user_name, $name, $email, $password, $role, $phone, $identification, $address, $active);
 

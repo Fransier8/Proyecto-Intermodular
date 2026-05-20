@@ -17,7 +17,7 @@
             <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                 <button class="btn change-status-btn <?= $room['active'] ? 'btn-warning' : 'btn-success' ?>"
                     data-id="<?= $room['id'] ?>" data-active="<?= $room['active'] ? 0 : 1 ?>">
-                    <i class="bi <?= $room['active'] ? 'bi-person-x' : 'bi-person-check' ?>"></i>
+                    <i class="bi <?= $room['active'] ? 'bi-x-circle' : 'bi-check-circle' ?>"></i>
                     <?= $room['active'] ? 'Desactivar' : 'Activar' ?>
                 </button>
             <?php endif ?>
