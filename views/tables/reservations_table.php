@@ -6,7 +6,7 @@ $current_date->setTime(0, 0, 0);
     <table class="table table-striped table-hover align-middle">
         <thead class="bg-orange-primary border-dark">
             <tr>
-                <?php if ($_SESSION['user']['role'] == "administrador"): ?>
+                <?php if ($_SESSION['user']['role'] != "usuario"): ?>
                     <th>Usuario</th>
                 <?php endif; ?>
                 <th>Animal</th>
@@ -23,7 +23,7 @@ $current_date->setTime(0, 0, 0);
         <tbody>
             <?php foreach ($reservations as $reservation): ?>
                 <tr>
-                    <?php if ($_SESSION['user']['role'] == "administrador"): ?>
+                    <?php if ($_SESSION['user']['role'] != "usuario"): ?>
                         <td>
                             <?= htmlspecialchars($reservation['user_user_name']) ?>
                         </td>
@@ -58,13 +58,13 @@ $current_date->setTime(0, 0, 0);
                                     <?php if ($reservation['monitor_id']): ?>
                                         <button class="btn btn-sm accept-btn btn-success d-flex align-items-center gap-1"
                                             data-id="<?= $reservation['id'] ?>">
-                                            <i class="bi bi-person-check"></i>
+                                            <i class="bi bi-check-circle"></i>
                                             <span>Aceptar</span>
                                         </button>
                                     <?php endif; ?>
                                     <button class="btn btn-sm deny-btn btn-warning d-flex align-items-center gap-1"
                                         data-id="<?= $reservation['id'] ?>">
-                                        <i class="bi bi-person-check"></i>
+                                        <i class="bi bi-x-circle"></i>
                                         <span>Denegar</span>
                                     </button>
                                 <?php endif; ?>
@@ -95,7 +95,7 @@ $current_date->setTime(0, 0, 0);
                                 if ($reservation['status'] == "pendiente" && $_SESSION['user']['id'] == $reservation['monitor_id']): ?>
                                     <button class="btn btn-sm accept-btn btn-success d-flex align-items-center gap-1"
                                         data-id="<?= $reservation['id'] ?>">
-                                        <i class="bi bi-person-check"></i>
+                                        <i class="bi bi-check-circle"></i>
                                         <span>Aceptar</span>
                                     </button>
                                 <?php endif; ?>
@@ -107,7 +107,7 @@ $current_date->setTime(0, 0, 0);
                                 ): ?>
                                     <button class="btn btn-sm assign-monitor-btn <?= $is_mine ? 'btn-warning' : 'btn-success' ?>"
                                         data-id="<?= $reservation['id'] ?>" data-action="<?= $is_mine ? 'leave' : 'take' ?>">
-                                        <i class="bi <?= $is_mine ? 'bi-person-x' : 'bi-person-check' ?>"></i>
+                                        <i class="bi <?= $is_mine ? 'bi-x-circle' : 'bi-check-circle' ?>"></i>
                                         <span><?= $is_mine ? 'Dejar' : 'Tomar' ?></span>
                                     </button>
                                 <?php endif; ?>

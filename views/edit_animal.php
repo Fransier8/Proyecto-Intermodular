@@ -26,8 +26,8 @@
                                         value="<?= htmlspecialchars($animal['name']) ?>">
                                 </div>
 
-                                <div class="col">
-                                    <div class="form-check mt-3">
+                                <div class="col d-flex align-items-end">
+                                    <div class="form-check">
                                         <input type="checkbox" class="form-check-input" name="active" value="1"
                                             <?= $animal['active'] ? 'checked' : '' ?>
                                             onclick="return confirm('¿Seguro que quieres cambiar el estado de este animal?')">

@@ -54,7 +54,7 @@
                                     onsubmit="return confirm('¿Seguro que quieres desactivar tu cuenta?');">
 
                                     <button type="submit" class="btn btn-danger flex-fill">
-                                        <i class="bi bi-arrow-counterclockwise"></i>
+                                        <i class="bi bi-x-circle"></i>
                                         Desactivar cuenta
                                     </button>
                                 </form>

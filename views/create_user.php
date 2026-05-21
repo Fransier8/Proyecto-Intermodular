@@ -23,8 +23,8 @@
                                         value="<?= htmlspecialchars($user['user_name']) ?>">
                                 </div>
 
-                                <div class="col">
-                                    <div class="form-check mt-3">
+                                <div class="col d-flex align-items-end">
+                                    <div class="form-check">
                                         <input type="checkbox" class="form-check-input" name="active" value="1"
                                             <?= $user['active'] ? 'checked' : '' ?>
                                             onclick="return confirm('¿Seguro que quieres cambiar el estado de este usuario?')">

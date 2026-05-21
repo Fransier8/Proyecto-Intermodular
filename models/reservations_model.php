@@ -5,8 +5,8 @@ function getReservations($search, $order, $status, $limit = null, $offset = 0)
 {
     $con = get_conexion();
     $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
-    JOIN rooms ro ON r.room_id = ro.id WHERE (a.name LIKE :search OR a.breed LIKE :search OR u.identification LIKE :search OR u.user_name LIKE :search OR u.name LIKE :search
-     OR ro.code LIKE :search OR m.identification LIKE :search OR m.user_name LIKE :search OR m.name LIKE :search)";
+    JOIN rooms ro ON r.room_id = ro.id WHERE (a.name LIKE :search OR u.user_name LIKE :search
+     OR ro.code LIKE :search OR m.user_name LIKE :search)";
 
     $params = [
         ':search' => "%$search%"
@@ -55,7 +55,7 @@ function getReservationsByUserId($search, $order, $status, $user_id, $limit = nu
 {
     $con = get_conexion();
     $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
-    JOIN rooms ro ON r.room_id = ro.id WHERE r.user_id = :user_id AND (a.name LIKE :search OR a.breed LIKE :search
+    JOIN rooms ro ON r.room_id = ro.id WHERE r.user_id = :user_id AND (a.name LIKE :search
      OR ro.code LIKE :search OR m.user_name LIKE :search)";
 
     $params = [
@@ -183,8 +183,8 @@ function countReservations($search, $status)
     $con = get_conexion();
 
     $sql = "SELECT COUNT(*) FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
-    JOIN rooms ro ON r.room_id = ro.id WHERE (a.name LIKE :search OR a.breed LIKE :search OR u.identification LIKE :search OR u.user_name LIKE :search OR u.name LIKE :search
-     OR ro.code LIKE :search OR m.identification LIKE :search OR m.user_name LIKE :search OR m.name LIKE :search)";
+    JOIN rooms ro ON r.room_id = ro.id WHERE (a.name LIKE :search OR u.user_name LIKE :search
+     OR ro.code LIKE :search OR m.user_name LIKE :search)";
 
     $params = [':search' => "%$search%"];
 
@@ -204,7 +204,7 @@ function countReservationsByUserId($search, $status, $user_id)
     $con = get_conexion();
 
     $sql = "SELECT COUNT(*) FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
-    JOIN rooms ro ON r.room_id = ro.id WHERE r.user_id = :user_id AND (a.name LIKE :search OR a.breed LIKE :search
+    JOIN rooms ro ON r.room_id = ro.id WHERE r.user_id = :user_id AND (a.name LIKE :search
      OR ro.code LIKE :search OR m.user_name LIKE :search)";
 
     $params = [
@@ -271,7 +271,7 @@ function getReservationsByMonitorId($search, $order, $status, $monitor_id, $limi
 {
     $con = get_conexion();
     $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
-    JOIN rooms ro ON r.room_id = ro.id WHERE r.monitor_id = :monitor_id AND (a.name LIKE :search OR a.breed LIKE :search
+    JOIN rooms ro ON r.room_id = ro.id WHERE r.monitor_id = :monitor_id AND (a.name LIKE :search
      OR ro.code LIKE :search OR u.user_name LIKE :search)";
 
     $params = [
@@ -323,7 +323,7 @@ function countReservationsByMonitorId($search, $status, $monitor_id)
     $con = get_conexion();
 
     $sql = "SELECT COUNT(*) FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
-    JOIN rooms ro ON r.room_id = ro.id WHERE r.monitor_id = :monitor_id AND (a.name LIKE :search OR a.breed LIKE :search
+    JOIN rooms ro ON r.room_id = ro.id WHERE r.monitor_id = :monitor_id AND (a.name LIKE :search
      OR ro.code LIKE :search OR u.user_name LIKE :search)";
 
     $params = [

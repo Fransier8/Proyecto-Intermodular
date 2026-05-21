@@ -9,14 +9,14 @@
                     <?php if (!empty($prefill_animal_id)): ?>
                         <li class="breadcrumb-item">
                             <a href="<?= BASE_URL ?>animales">Animales</a>
-                        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>animal/<?= $prefill_animal_id ?>">Animal</a>
                         </li>
+                        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>animal/<?= $prefill_animal_id ?>">Animal</a>
                         </li>
                     <?php elseif (!empty($prefill_room_id)): ?>
                         <li class="breadcrumb-item">
                             <a href="<?= BASE_URL ?>salas">Salas</a>
-                        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>sala/<?= $prefill_room_id ?>">Sala</a></li>
                         </li>
+                        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>sala/<?= $prefill_room_id ?>">Sala</a></li>
                     <?php else: ?>
                         <li class="breadcrumb-item">
                             <a href="<?= BASE_URL ?>mis_reservas">Mis reservas</a>

@@ -855,6 +855,10 @@ function requestReservation()
             'room_id' => $prefill_room_id ?? '',
             'monitor_id' => null,
         ];
+        $_SESSION['breadcrumb'] = [
+            'prefill_animal_id' => $prefill_animal_id ?? '',
+            'prefill_room_id' => $prefill_room_id ?? ''
+        ];
         $users = $users ?? [];
         $animals = $animals ?? [];
         $rooms = $rooms ?? [];
@@ -1064,6 +1068,7 @@ function selectReservationDateUser()
         );
 
         unset($_SESSION['reservation']);
+        unset($_SESSION['breadcrumb']);
 
         header("Location: " . BASE_URL . "mis_reservas");
         exit;

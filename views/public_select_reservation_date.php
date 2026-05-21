@@ -6,7 +6,22 @@
         <section class="col p-3 overflow-auto">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>mis_reservas">Mis reservas</a></li>
+                    <?php if (!empty($_SESSION['breadcrumb']['prefill_animal_id'])): ?>
+                        <li class="breadcrumb-item">
+                            <a href="<?= BASE_URL ?>animales">Animales</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>animal/<?= $_SESSION['breadcrumb']['prefill_animal_id'] ?>">Animal</a>
+                        </li>
+                    <?php elseif (!empty($_SESSION['breadcrumb']['prefill_room_id'])): ?>
+                        <li class="breadcrumb-item">
+                            <a href="<?= BASE_URL ?>salas">Salas</a>
+                        </li>
+                        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>sala/<?= $_SESSION['breadcrumb']['prefill_room_id'] ?>">Sala</a></li>
+                    <?php else: ?>
+                        <li class="breadcrumb-item">
+                            <a href="<?= BASE_URL ?>mis_reservas">Mis reservas</a>
+                        </li>
+                    <?php endif; ?>
                     <li class="breadcrumb-item"><a href="<?= BASE_URL ?>crear_reserva">Solicitar reserva</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Seleccionar fecha reserva solicitada</li>
                 </ol>

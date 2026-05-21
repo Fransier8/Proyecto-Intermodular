@@ -25,7 +25,7 @@
                                         value="<?= htmlspecialchars($user['user_name']) ?>">
                                 </div>
 
-                                <div class="col d-flex align-items-end ">
+                                <div class="col d-flex align-items-end">
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input" name="active" value="1"
                                             <?= $user['active'] ? 'checked' : '' ?>

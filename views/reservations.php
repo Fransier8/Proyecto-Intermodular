@@ -35,9 +35,7 @@
                 </div>
                 <div class="col-12 col-md-5">
                     <label class="form-label">Buscar</label>
-                    <input name="search" type="text" class="form-control" placeholder="<?= $_SESSION['user']['role'] == 'administrador'
-                        ? 'Buscar por usuario, animal, sala o monitor'
-                        : 'Buscar por animal, sala o monitor' ?>">
+                    <input name="search" type="text" class="form-control" placeholder="Buscar por usuario, animal, sala o monitor">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">
