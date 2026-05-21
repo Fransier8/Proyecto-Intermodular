@@ -64,17 +64,48 @@
                                 <?php endforeach; ?>
                             </ul>
                         </div>
-                        <?php if ($photos): ?>
-                            <div class="col">
-                                <p class="fw-bold">Fotos:</p>
+                        <?php if (!empty($photos)): ?>
+                            <div class="col-12">
 
-                                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3">
-                                    <?php foreach ($photos as $photo): ?>
-                                        <div class="col">
-                                            <img src="<?= BASE_URL ?>uploads/rooms/<?= htmlspecialchars($photo['photo']) ?>"
-                                                class="room-photo img-fluid rounded" alt="Foto sala">
-                                        </div>
-                                    <?php endforeach; ?>
+                                <p class="fw-bold mb-2">Fotos:</p>
+
+                                <div id="roomCarousel<?= $room['id'] ?>" class="carousel slide" data-bs-ride="carousel">
+
+                                    <div class="carousel-indicators">
+                                        <?php foreach ($photos as $i => $photo): ?>
+                                            <button type="button" data-bs-target="#roomCarousel<?= $room['id'] ?>"
+                                                data-bs-slide-to="<?= $i ?>" class="<?= $i === 0 ? 'active' : '' ?>"
+                                                aria-current="<?= $i === 0 ? 'true' : 'false' ?>">
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
+
+                                    <div class="carousel-inner rounded text-center">
+
+                                        <?php foreach ($photos as $i => $photo): ?>
+                                            <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
+
+                                                <img src="<?= BASE_URL ?>uploads/rooms/<?= htmlspecialchars($photo['photo']) ?>"
+                                                    class="img-fluid mx-auto d-block"
+                                                    style="max-height: 400px; object-fit: contain;" alt="Foto sala">
+
+                                            </div>
+                                        <?php endforeach; ?>
+
+                                    </div>
+
+                                    <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#roomCarousel<?= $room['id'] ?>" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                        <span class="visually-hidden">Anterior</span>
+                                    </button>
+
+                                    <button class="carousel-control-next" type="button"
+                                        data-bs-target="#roomCarousel<?= $room['id'] ?>" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                        <span class="visually-hidden">Siguiente</span>
+                                    </button>
+
                                 </div>
                             </div>
                         <?php endif; ?>

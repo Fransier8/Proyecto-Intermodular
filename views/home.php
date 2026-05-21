@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-12 col-md-6 text-center text-md-start">
                         <h3>Consultar los animales de la protectora</h3>
-                        <p>Puedes ver todos los animales y sus estados (sin adoptar, adoptados, apadrinados...)
+                        <p>Puedes ver todos los animales y sus estados (sin adoptar, adoptados, reservados...)
                             desde la vista de animales de la página. También podrás ver todos sus datos, tales como
                             el nombre, fecha de nacimiento, especie, raza...</p>
                         <p>Puedes seleccionar el animal en el que estés interesado y solicitar su adopción o
@@ -48,9 +48,8 @@
                     <div class="col-12 col-md-6 text-center text-md-start">
                         <h3>Consultar tus reservas</h3>
                         <p>Una vez hayas realizado una reserva de una visita, podrás ver toda la información en la
-                            vista de reservas. También podrás ver
-                            los procesos de adopción y de apadrinamiento que estés llevando a cabo en la vista de
-                            mis animales.
+                            vista de reservas. También podrás ver en la vista de
+                            mis animales los animales con los que estés llevando a cabo un proceso de adopción .
                         </p>
                     </div>
                 </div>

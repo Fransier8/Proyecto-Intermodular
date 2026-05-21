@@ -18,72 +18,88 @@
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
                     <h2 class="mb-3 text-break"><?= htmlspecialchars($animal['name']) ?></h2>
-                    <div class="row row-cols-1 row-cols-md-2 g-3">
+                    <div class="row g-3">
                         <?php if (!empty($animal['photo'])): ?>
                             <div class="col-12 col-md-4">
                                 <img src="<?= BASE_URL ?>uploads/animals/<?= htmlspecialchars($animal['photo']) ?>"
                                     class="img-fluid rounded w-100" style="aspect-ratio: 4/3; object-fit: cover;">
                             </div>
                         <?php endif; ?>
-                        <div class="col">
+                        <?php if (!empty($animal['photo'])): ?>
+                            <div class="col-12 col-md-6">
+                                <div class="row row-cols-1 g-3">
+                                <?php endif; ?>
+                                <div class="<?= empty($animal['photo']) ? 'col-12 col-md-6' : 'col' ?>">
+                                    <p class="mb-1"><span class="fw-bold">Especie:</span>
+                                        <span class="text-break"><?= htmlspecialchars($animal['species']) ?></span>
+                                    </p>
+                                </div>
+                                <div class="<?= empty($animal['photo']) ? 'col-12 col-md-6' : 'col' ?>">
+                                    <p class="mb-1"><span class="fw-bold">Raza:</span>
+                                        <span
+                                            class="text-break"><?= !empty($animal['breed']) ? htmlspecialchars($animal['breed']) : 'Sin especificar' ?></span>
+                                    </p>
+                                </div>
+                                <div class="<?= empty($animal['photo']) ? 'col-12 col-md-6' : 'col' ?>">
+                                    <p class="mb-1"><span class="fw-bold">Género:</span>
+                                        <span>
+                                            <?= ucfirst(htmlspecialchars($animal['gender'])) ?>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="<?= empty($animal['photo']) ? 'col-12 col-md-6' : 'col' ?>">
+                                    <p class="mb-1"><span class="fw-bold">Fecha de nacimiento:</span>
+                                        <span><?= !empty($animal['birth_day']) ? date('d/m/Y', strtotime($animal['birth_day'])) : 'Sin especificar' ?></span>
+                                    </p>
+                                </div>
+                                <div class="<?= empty($animal['photo']) ? 'col-12 col-md-6' : 'col' ?>">
+                                    <p class="mb-1"><span class="fw-bold">Estado:</span>
+                                        <span>
+                                            <?= ucfirst(htmlspecialchars($animal['status'])) ?>
+                                        </span>
+                                    </p>
+                                </div>
+                                <?php if ($_SESSION['user']['role'] == "administrador"): ?>
+                                    <div class="<?= empty($animal['photo']) ? 'col-12 col-md-6' : 'col' ?> d-flex justify-content-between align-items-center gap-3">
+                                        <p class="mb-1"><span class="fw-bold">Dueño:</span>
+                                            <span class="text-break">
+                                                <?= !empty($animal['user']) ? htmlspecialchars($animal['user']) : 'Sin asignar' ?>
+                                            </span>
+                                        </p>
+                                        <?php if ($_SESSION['user']['role'] == "administrador" && $animal['user_id']): ?>
+                                            <div class="col">
+                                                <form action="<?= BASE_URL ?>quitar_usuario_animal" method="post"
+                                                    onsubmit="return confirm('¿Seguro que quieres quitar el usuario de este animal?');">
+
+                                                    <input type="hidden" name="id" value="<?= $animal['id'] ?>">
+
+                                                    <button type="submit" class="btn btn-danger flex-fill">
+                                                        <i class="bi bi-x-circle"></i>
+                                                        Quitar usuario
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="<?= empty($animal['photo']) ? 'col-12 col-md-6' : 'col' ?>">
+                                        <p class="mb-1"><span class="fw-bold">Activo:</span>
+                                            <span>
+                                                <?= $animal['active'] ? 'Sí' : 'No' ?>
+                                            </span>
+                                        </p>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if (!empty($animal['photo'])): ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <div class="col-12">
                             <p class="mb-1"><span class="fw-bold">Descripción:</span>
-                                <span
-                                    class="text-break"><?= !empty($animal['description']) ? htmlspecialchars($animal['description']) : 'Sin descripción' ?></span>
+                                <span class="text-break">
+                                    <?= !empty($animal['description']) ? htmlspecialchars($animal['description']) : 'Sin descripción' ?>
+                                </span>
                             </p>
                         </div>
-                        <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Especie:</span>
-                                <span class="text-break"><?= htmlspecialchars($animal['species']) ?></span>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Raza:</span>
-                                <span
-                                    class="text-break"><?= !empty($animal['breed']) ? htmlspecialchars($animal['breed']) : 'Sin especificar' ?></span>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Estado:</span>
-                                <span><?= ucfirst(htmlspecialchars($animal['status'])) ?></span>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Género:</span>
-                                <span><?= ucfirst(htmlspecialchars($animal['gender'])) ?></span>
-                            </p>
-                        </div>
-                        <div class="col">
-                            <p class="mb-1"><span class="fw-bold">Fecha de nacimiento:</span>
-                                <span><?= !empty($animal['birth_day']) ? date('d/m/Y', strtotime($animal['birth_day'])) : 'Sin especificar' ?></span>
-                            </p>
-                        </div>
-                        <?php if ($_SESSION['user']['role'] == "administrador"): ?>
-                            <div class="col">
-                                <p class="mb-1"><span class="fw-bold">Dueño:</span>
-                                    <span
-                                        class="text-break"><?= !empty($animal['user']) ? htmlspecialchars($animal['user']) : 'Sin asignar' ?></span>
-                                </p>
-                            </div>
-                            <div class="col">
-                                <p class="mb-1"><span class="fw-bold">Activo:</span>
-                                    <span><?= $animal['active'] ? 'Sí' : 'No' ?></span>
-                                </p>
-                            </div>
-                        <?php endif; ?>
-                        <?php if ($_SESSION['user']['role'] == "administrador" && $animal['user_id']): ?>
-                            <div class="col">
-                                <form action="<?= BASE_URL ?>quitar_usuario_animal" method="post"
-                                    onsubmit="return confirm('¿Seguro que quieres quitar el usuario de este animal?');">
-
-                                    <input type="hidden" name="id" value="<?= $animal['id'] ?>">
-
-                                    <button type="submit" class="btn btn-danger flex-fill">
-                                        <i class="bi bi-arrow-counterclockwise"></i>
-                                        Quitar usuario
-                                    </button>
-                                </form>
-                            </div>
-                        <?php endif; ?>
                     </div>
                     <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                         <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
