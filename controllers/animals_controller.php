@@ -62,7 +62,6 @@ function createAnimal()
         $species_id = trim($_POST['species_id'] ?? '');
         $breed = trim($_POST['breed'] ?? '');
         $description = trim($_POST['description'] ?? '');
-        $status = trim($_POST['status'] ?? '');
         $gender = trim($_POST['gender'] ?? '');
         $birth_day = !empty($_POST['birth_day']) ? $_POST['birth_day'] : null;
         $photo = $_FILES['photo'] ?? null;
@@ -79,10 +78,6 @@ function createAnimal()
 
         if (empty($species_id) || !getSpeciesById($species_id)) {
             $errors[] = "La especie no existe";
-        }
-
-        if ($status != "sin adoptar" && $status != "reservado" && $status != "adoptado") {
-            $errors[] = "Selecciona un estado.";
         }
 
         if ($gender != "macho" && $gender != "hembra") {
@@ -108,11 +103,11 @@ function createAnimal()
                 'species_id' => $species_id,
                 'breed' => $breed,
                 'description' => $description,
-                'status' => $status,
+                'status' => 'sin adoptar',
                 'gender' => $gender,
                 'birth_day' => $birth_day,
                 'photo' => '',
-                'user_id' => $user_id,
+                'user_id' => null,
                 'active' => $active
             ];
             $species = getSpecies("", "", 1000, 0);
@@ -121,7 +116,7 @@ function createAnimal()
             return;
         }
 
-        $id = insertAnimal($name, $description, $species_id, $breed, $status, $gender, $birth_day, '', $user_id, $active);
+        $id = insertAnimal($name, $description, $species_id, $breed, 'sin adoptar', $gender, $birth_day, '', null, $active);
 
 
         $photo_name = "";
@@ -153,11 +148,11 @@ function createAnimal()
                         'description' => $description,
                         'species_id' => $species_id,
                         'breed' => $breed,
-                        'status' => $status,
+                        'status' => 'sin adoptar',
                         'gender' => $gender,
                         'birth_day' => $birth_day,
                         'photo' => $photo_name,
-                        'user_id' => $user_id,
+                        'user_id' => null,
                         'active' => $active
                     ]);
                 }
@@ -215,10 +210,6 @@ function editAnimal()
             $errors[] = "La especie no existe";
         }
 
-        if ($data['status'] != "sin adoptar" && $data['status'] != "reservado" && $data['status'] != "adoptado") {
-            $errors[] = "Selecciona un estado.";
-        }
-
         if ($data['gender'] != "macho" && $data['gender'] != "hembra") {
             $errors[] = "Selecciona un género.";
         }
@@ -236,6 +227,7 @@ function editAnimal()
 
         $animal_original = getAnimalById($id);
         $data['user_id'] = $animal_original['user_id'];
+        $data['status'] = $animal_original['status'];
         $photo_name = $animal_original['photo'];
 
         $preview = $animal_original['photo'];

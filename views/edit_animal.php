@@ -52,18 +52,6 @@
                                 </div>
 
                                 <div class="col">
-                                    <label class="form-label fw-bold">Estado:</label>
-                                    <select name="status" class="form-select" required>
-                                        <option value="sin adoptar" <?= $animal['status'] == 'sin adoptar' ? 'selected' : '' ?>>Sin adoptar
-                                        </option>
-                                        <option value="reservado" <?= $animal['status'] == 'reservado' ? 'selected' : '' ?>>
-                                            Reservado</option>
-                                        <option value="adoptado" <?= $animal['status'] == 'adoptado' ? 'selected' : '' ?>>
-                                            Adoptado</option>
-                                    </select>
-                                </div>
-
-                                <div class="col">
                                     <label class="form-label fw-bold">Género:</label>
                                     <select name="gender" class="form-select" required>
                                         <option value="macho" <?= $animal['gender'] == 'macho' ? 'selected' : '' ?>>Macho
@@ -144,7 +132,6 @@
 
         const name = form.querySelector('[name="name"]').value.trim();
         const speciesId = form.querySelector('[name="species_id"]').value.trim();
-        const status = form.querySelector('[name="status"]').value.trim();
         const gender = form.querySelector('[name="gender"]').value.trim();
 
         let errors = [];
@@ -155,10 +142,6 @@
 
         if (!speciesId) {
             errors.push("Selecciona una especie.");
-        }
-
-        if (status != "sin adoptar" && status != "reservado" && status != "adoptado") {
-            errors.push("Selecciona un estado.");
         }
 
         if (gender != "macho" && gender != "hembra") {

@@ -1323,7 +1323,7 @@ function editReservationDate()
             $errors[] = "Debes seleccionar un animal.";
         } else {
             $animal_test = getAnimalById($reservation['animal_id']);
-            if (!$animal_test || !$animal_test['active']) {
+            if (!$animal_test || !$animal_test['active'] || $animal_test['user_id']) {
                 $errors[] = "El animal no existe.";
             }
         }
@@ -1669,7 +1669,7 @@ function editReservationRequestDate()
             $errors[] = "Debes seleccionar un animal.";
         } else {
             $animal_test = getAnimalById($reservation['animal_id']);
-            if (!$animal_test || !$animal_test['active']) {
+            if (!$animal_test || !$animal_test['active'] || $animal_test['user_id']) {
                 $errors[] = "El animal no existe.";
             }
         }
