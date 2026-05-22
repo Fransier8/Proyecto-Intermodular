@@ -4,11 +4,23 @@
         require 'views/aside.php';
         ?>
         <section class="col p-3 overflow-auto">
-            <div class="d-flex align-items-center justify-content-between mb-2">
+            <div
+                class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3 mb-2">
                 <h1 class="mb-0">Mis reservas</h1>
                 <?php if ($_SESSION['user']['role'] == "usuario"): ?>
-                    <a href="<?= BASE_URL ?>solicitar_reserva" class="btn bg-orange-primary rounded-pill btn-lg px-4">
-                        Solicitar reserva
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="<?= BASE_URL ?>descargar_reservas_usuario"
+                            class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                            Descargar reservas
+                        </a>
+                        <a href="<?= BASE_URL ?>solicitar_reserva" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                            Solicitar reserva
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <a href="<?= BASE_URL ?>descargar_reservas_monitor"
+                        class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                        Descargar reservas
                     </a>
                 <?php endif; ?>
             </div>

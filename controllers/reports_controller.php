@@ -568,4 +568,58 @@ function renderReservationsSection($title, $reservations)
     <?php
     return ob_get_clean();
 }
+
+function downloadUserReservationsPdf()
+{
+    require_once 'vendor/autoload.php';
+
+    $reservations = getReservationsByUserId("", "date_desc", "", $_SESSION['user']['id'], null, 0);
+
+    $html = "";
+
+    $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
+    $html .= renderReservationsSection("Lista de reservas", $reservations);
+    $dompdf = new Dompdf();
+
+    $dompdf->loadHtml($html);
+
+    $dompdf->setPaper('A4', 'portrait');
+
+    $dompdf->render();
+
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+
+    $dompdf->stream("reservas.pdf", ["Attachment" => true]);
+
+    exit;
+}
+
+function downloadMonitorReservationsPdf()
+{
+    require_once 'vendor/autoload.php';
+
+    $reservations = getReservationsByMonitorId("", "date_desc", "", $_SESSION['user']['id'], null, 0);
+
+    $html = "";
+
+    $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
+    $html .= renderReservationsSection("Lista de reservas", $reservations);
+    $dompdf = new Dompdf();
+
+    $dompdf->loadHtml($html);
+
+    $dompdf->setPaper('A4', 'portrait');
+
+    $dompdf->render();
+
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+
+    $dompdf->stream("reservas.pdf", ["Attachment" => true]);
+
+    exit;
+}
 ?>

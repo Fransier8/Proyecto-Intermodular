@@ -14,14 +14,15 @@
             <h1>Modificar sala</h1>
             <article class="row g-4">
                 <div class="col-12 col-md-12 fs-5">
-                    <form action="<?= BASE_URL ?>modificar_sala" method="post" class="row g-4" enctype="multipart/form-data">
+                    <form action="<?= BASE_URL ?>modificar_sala" method="post" class="row g-4"
+                        enctype="multipart/form-data">
                         <input type="hidden" name="id" value="<?= $room['id'] ?>">
                         <div class="col-12 col-md-12 fs-5">
                             <div class="row row-cols-1 row-cols-md-2 g-3">
                                 <div class="col">
                                     <label class="form-label fw-bold">Código:</label>
-                                    <input type="text" name="code" class="form-control" required maxlength="20" placeholder="Escribe el código"
-                                        value="<?= htmlspecialchars($room['code']) ?>">
+                                    <input type="text" name="code" class="form-control" required maxlength="20"
+                                        placeholder="Escribe el código" value="<?= htmlspecialchars($room['code']) ?>">
                                 </div>
 
                                 <div class="col d-flex align-items-end">
@@ -34,25 +35,28 @@
                                 </div>
                                 <div class="col">
                                     <label class="form-label fw-bold">Nombre:</label>
-                                    <input type="text" name="name" class="form-control" required maxlength="300" placeholder="Escribe el nombre"
-                                        value="<?= htmlspecialchars($room['name']) ?>">
+                                    <input type="text" name="name" class="form-control" required maxlength="300"
+                                        placeholder="Escribe el nombre" value="<?= htmlspecialchars($room['name']) ?>">
                                 </div>
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Capacidad:</label>
-                                    <input type="number" name="capacity" class="form-control" required maxlength="11" placeholder="Escribe la capacidad"
-                                        min="1" value="<?= htmlspecialchars($room['capacity']) ?>">
+                                    <input type="number" name="capacity" class="form-control" required maxlength="11"
+                                        placeholder="Escribe la capacidad" min="1"
+                                        value="<?= htmlspecialchars($room['capacity']) ?>">
                                 </div>
 
                                 <div class="col-md-12">
                                     <label class="form-label fw-bold">Descripción (opcional):</label>
-                                    <textarea name="description" class="form-control" placeholder="Escribe la descripción"
+                                    <textarea name="description" class="form-control"
+                                        placeholder="Escribe la descripción"
                                         maxlength="2000"><?= htmlspecialchars($room['description']) ?></textarea>
                                 </div>
 
                                 <div class="col">
                                     <label class="form-label fw-bold">Ubicación (opcional):</label>
-                                    <input type="text" name="location" class="form-control" maxlength="500" placeholder="Escribe la ubicación"
+                                    <input type="text" name="location" class="form-control" maxlength="500"
+                                        placeholder="Escribe la ubicación"
                                         value="<?= htmlspecialchars($room['location']) ?>">
                                 </div>
 
@@ -82,11 +86,22 @@
                                 <div class="col mt-3">
                                     <div class="d-flex flex-wrap gap-2">
                                         <?php foreach ($photos as $photo): ?>
-                                            <div>
-                                                <img src="<?= BASE_URL ?>uploads/rooms/<?= $photo['photo'] ?>" width="120">
+                                            <div class="rounded p-2 bg-orange-primary text-center card">
 
-                                                <input type="checkbox" name="delete_photos[]" value="<?= $photo['id'] ?>">
-                                                <small>Eliminar</small>
+                                                <img src="<?= BASE_URL ?>uploads/rooms/<?= $photo['photo'] ?>"
+                                                    class="rounded mb-2 object-fit-cover"
+                                                    style="width: 140px; height: 140px;" alt="Foto sala">
+
+                                                <div class="form-check d-flex justify-content-center">
+                                                    <input type="checkbox" class="form-check-input me-2"
+                                                        name="delete_photos[]" value="<?= $photo['id'] ?>"
+                                                        id="photo<?= $photo['id'] ?>">
+
+                                                    <label class="form-check-label small" for="photo<?= $photo['id'] ?>">
+                                                        Eliminar
+                                                    </label>
+                                                </div>
+
                                             </div>
                                         <?php endforeach; ?>
                                     </div>

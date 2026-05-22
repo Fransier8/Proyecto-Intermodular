@@ -304,11 +304,18 @@ function editRoom()
         if (!empty($_FILES['photos']['name'])) {
             $current = count(getRoomPhotosByRoomId($id));
 
+
+            $to_delete = !empty($_POST['delete_photos']) && is_array($_POST['delete_photos'])
+                ? count($_POST['delete_photos'])
+                : 0;
+
             $new = is_array($_FILES['photos']['name'])
                 ? count(array_filter($_FILES['photos']['name'], fn($n) => !empty($n)))
                 : 0;
 
-            if (($current + $new) > 5) {
+            $total_after_changes = $current - $to_delete + $new;
+
+            if ($total_after_changes > 5) {
                 $errors[] = "Máximo 5 imágenes en total.";
             }
         }
@@ -335,6 +342,15 @@ function editRoom()
             }
         }
 
+        if (!empty($errors)) {
+            $room = array_merge(getRoomById($id), $data);
+            $schedules = !empty($data['schedules']) ? $data['schedules'] : getRoomSchedulesByRoomId($id);
+            $photos = getRoomPhotosByRoomId($id);
+
+            require 'views/edit_room.php';
+            return;
+        }
+
         if (!empty($_POST['delete_photos']) && is_array($_POST['delete_photos'])) {
             foreach ($_POST['delete_photos'] as $photo_id) {
 
@@ -350,15 +366,6 @@ function editRoom()
                     deleteRoomPhoto($photo_id);
                 }
             }
-        }
-
-        if (!empty($errors)) {
-            $room = array_merge(getRoomById($id), $data);
-            $schedules = !empty($data['schedules']) ? $data['schedules'] : getRoomSchedulesByRoomId($id);
-            $photos = getRoomPhotosByRoomId($id);
-
-            require 'views/edit_room.php';
-            return;
         }
 
         $old_room = getRoomById($id);

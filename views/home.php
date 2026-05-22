@@ -10,7 +10,7 @@
             <div class="carousel-item active">
                 <div class="row">
                     <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mb-2 mb-md-0">
-                        <img src="img/perro.jpg" class="w-50">
+                        <img src="img/perro.webp" class="w-50">
                     </div>
                     <div class="col-12 col-md-6 text-center text-md-start">
                         <h3>Consultar los animales de la protectora</h3>
@@ -25,7 +25,7 @@
             <div class="carousel-item">
                 <div class="row ">
                     <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mb-2 mb-md-0">
-                        <img src="img/sala.jpg" class="w-50">
+                        <img src="img/sala.webp" class="w-50">
                     </div>
                     <div class="col-12 col-md-6 text-center text-md-start">
                         <h3>Consultar las salas diponibles</h3>

@@ -65,7 +65,9 @@ $routes = [
     'descargar_especies' => ['controllers/reports_controller.php', 'downloadSpeciesPdf'],
     'descargar_reservas' => ['controllers/reports_controller.php', 'downloadReservationsPdf'],
     'desactivar_cuenta' => ['controllers/users_controller.php', 'deactivateAccount'],
-    'reactivar_cuenta' => ['controllers/users_controller.php', 'reactivateAccount']
+    'reactivar_cuenta' => ['controllers/users_controller.php', 'reactivateAccount'],
+    'descargar_reservas_usuario' => ['controllers/reports_controller.php', 'downloadUserReservationsPdf'],
+    'descargar_reservas_monitor' => ['controllers/reports_controller.php', 'downloadMonitorReservationsPdf']
 ];
 
 
@@ -95,7 +97,8 @@ $userViews = [
     'seleccionar_fecha_reserva_solicitada',
     'disponibilidad_calendario',
     'modificar_solicitud_reserva',
-    'modificar_fecha_solicitud_reserva'
+    'modificar_fecha_solicitud_reserva',
+    'descargar_reservas_usuario'
 ];
 $monitorViews = [
     'animales',
@@ -110,7 +113,8 @@ $monitorViews = [
     'cerrar_sesion',
     'desactivar_cuenta',
     'asignar_monitor_reserva',
-    'aceptar_reserva'
+    'aceptar_reserva',
+    'descargar_reservas_monitor'
 ];
 $administratorViews = [
     'animales',
