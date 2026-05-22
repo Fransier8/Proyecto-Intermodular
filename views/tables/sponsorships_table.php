@@ -23,7 +23,7 @@
                         <?= htmlspecialchars($sponsorship['animal_name']) ?>
                     </td>
                     <td><?= htmlspecialchars($sponsorship['message']) ?></td>
-                    <td><?= htmlspecialchars($sponsorship['amount']) ?></td>
+                    <td><?= number_format($sponsorship['amount'], 2, ',', '.') ?> €</td>
                     <td><?= date('d/m/Y - H:i', strtotime($sponsorship['date'])) ?></td>
                 </tr>
             <?php endforeach; ?>
