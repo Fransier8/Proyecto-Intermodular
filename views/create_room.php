@@ -85,7 +85,7 @@
                                     <div class="d-flex flex-wrap gap-2">
                                         <?php foreach ($photos as $photo): ?>
                                             <div>
-                                                <img src="<?= BASE_URL ?>uploads/rooms/<?= $photo['photo'] ?>" width="120">
+                                                <img src="<?= BASE_URL ?>uploads/rooms/<?= $photo['photo'] ?>" width="120" alt="">
 
                                                 <input type="checkbox" name="delete_photos[]" value="<?= $photo['id'] ?>">
                                                 <small>Eliminar</small>

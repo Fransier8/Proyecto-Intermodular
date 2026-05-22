@@ -10,22 +10,22 @@
             <div class="carousel-item active">
                 <div class="row">
                     <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mb-2 mb-md-0">
-                        <img src="img/perro.webp" class="w-50">
+                        <img src="img/perro.webp" class="w-50" alt="">
                     </div>
                     <div class="col-12 col-md-6 text-center text-md-start">
                         <h3>Consultar los animales de la protectora</h3>
                         <p>Puedes ver todos los animales y sus estados (sin adoptar, adoptados, reservados...)
                             desde la vista de animales de la página. También podrás ver todos sus datos, tales como
                             el nombre, fecha de nacimiento, especie, raza...</p>
-                        <p>Puedes seleccionar el animal en el que estés interesado y solicitar su adopción o
-                            apadrinamiento.</p>
+                        <p>Puedes seleccionar el animal en el que estés interesado y solicitar su adopción, apadrinarlo
+                            o reservar una visita.</p>
                     </div>
                 </div>
             </div>
             <div class="carousel-item">
                 <div class="row ">
                     <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mb-2 mb-md-0">
-                        <img src="img/sala.webp" class="w-50">
+                        <img src="img/sala.webp" class="w-50" alt="">
                     </div>
                     <div class="col-12 col-md-6 text-center text-md-start">
                         <h3>Consultar las salas diponibles</h3>
@@ -43,13 +43,13 @@
             <div class="carousel-item">
                 <div class="row">
                     <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mb-2 mb-md-0">
-                        <img src="img/persona-con-mascota.webp" class="w-50">
+                        <img src="img/persona-con-mascota.webp" class="w-50" alt="">
                     </div>
                     <div class="col-12 col-md-6 text-center text-md-start">
                         <h3>Consultar tus reservas</h3>
                         <p>Una vez hayas realizado una reserva de una visita, podrás ver toda la información en la
                             vista de reservas. También podrás ver en la vista de
-                            mis animales los animales con los que estés llevando a cabo un proceso de adopción .
+                            mis animales los animales con los que estés llevando a cabo un proceso de adopción.
                         </p>
                     </div>
                 </div>

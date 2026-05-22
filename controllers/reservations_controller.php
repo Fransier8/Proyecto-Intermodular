@@ -11,15 +11,17 @@ function listReservations()
     $search = $_GET['search'] ?? '';
     $order = $_GET['order'] ?? '';
     $status = $_GET['status'] ?? '';
+    $date_from = $_GET['date_from'] ?? '';
+    $date_to = $_GET['date_to'] ?? '';
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $per_page = 8;
 
-    $total_reservations = countReservations($search, $status);
+    $total_reservations = countReservations($search, $status, $date_from, $date_to);
 
     $total_pages = $total_reservations > 0 ? ceil($total_reservations / $per_page) : 1;
 
     $offset = ($page - 1) * $per_page;
-    $reservations = getReservations($search, $order, $status, $per_page, $offset);
+    $reservations = getReservations($search, $order, $status, $date_from, $date_to, $per_page, $offset);
 
     if (isset($_GET['ajax'])) {
         require 'views/lists/reservations_list.php';
@@ -38,13 +40,15 @@ function listMyReservations()
     $search = $_GET['search'] ?? '';
     $order = $_GET['order'] ?? '';
     $status = $_GET['status'] ?? '';
+    $date_from = $_GET['date_from'] ?? '';
+    $date_to = $_GET['date_to'] ?? '';
     $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $per_page = 8;
 
     if ($_SESSION['user']['role'] == "usuario") {
-        $total_reservations = countReservationsByUserId($search, $status, $_SESSION['user']['id']);
+        $total_reservations = countReservationsByUserId($search, $status, $_SESSION['user']['id'], $date_from, $date_to);
     } else {
-        $total_reservations = countReservationsByMonitorId($search, $status, $_SESSION['user']['id']);
+        $total_reservations = countReservationsByMonitorId($search, $status, $_SESSION['user']['id'], $date_from, $date_to);
     }
 
     $total_pages = $total_reservations > 0 ? ceil($total_reservations / $per_page) : 1;
@@ -52,9 +56,9 @@ function listMyReservations()
     $offset = ($page - 1) * $per_page;
 
     if ($_SESSION['user']['role'] == "usuario") {
-        $reservations = getReservationsByUserId($search, $order, $status, $_SESSION['user']['id'], $per_page, $offset);
+        $reservations = getReservationsByUserId($search, $order, $status, $_SESSION['user']['id'], $date_from, $date_to, $per_page, $offset);
     } else {
-        $reservations = getReservationsByMonitorId($search, $order, $status, $_SESSION['user']['id'], $per_page, $offset);
+        $reservations = getReservationsByMonitorId($search, $order, $status, $_SESSION['user']['id'], $date_from, $date_to, $per_page, $offset);
     }
 
     if (isset($_GET['ajax'])) {

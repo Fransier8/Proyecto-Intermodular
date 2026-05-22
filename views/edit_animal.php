@@ -97,7 +97,7 @@
                                         ? BASE_URL . "uploads/animals/" . htmlspecialchars($animal['photo'])
                                         : BASE_URL . "img/placeholder.webp";
                                     ?>" class="img-fluid rounded w-100"
-                                        style="aspect-ratio: 4/3; object-fit: cover;">
+                                        style="aspect-ratio: 4/3; object-fit: cover;" alt="">
                                 </div>
                             </div>
 

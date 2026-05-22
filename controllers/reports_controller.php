@@ -472,7 +472,7 @@ function downloadReservationsPdf()
 {
     require_once 'vendor/autoload.php';
 
-    $reservations = getReservations("", "date_desc", "", null, 0);
+    $reservations = getReservations("", "date_desc", "", "", "", null, 0);
 
     $html = "";
 
@@ -573,7 +573,7 @@ function downloadUserReservationsPdf()
 {
     require_once 'vendor/autoload.php';
 
-    $reservations = getReservationsByUserId("", "date_desc", "", $_SESSION['user']['id'], null, 0);
+    $reservations = getReservationsByUserId("", "date_desc", "", $_SESSION['user']['id'], "", "", null, 0);
 
     $html = "";
 
@@ -600,7 +600,7 @@ function downloadMonitorReservationsPdf()
 {
     require_once 'vendor/autoload.php';
 
-    $reservations = getReservationsByMonitorId("", "date_desc", "", $_SESSION['user']['id'], null, 0);
+    $reservations = getReservationsByMonitorId("", "date_desc", "", $_SESSION['user']['id'], "", "", null, 0);
 
     $html = "";
 

@@ -23,7 +23,7 @@
                         <option value="companions_desc">Acompañantes descendente</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-2">
+                <div class="col-12 col-md-3">
                     <label class="form-label">Estado</label>
                     <select class="form-select" name="status">
                         <option value="">Todos</option>
@@ -33,9 +33,18 @@
                         <option value="aceptada">Aceptada</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-5">
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Desde</label>
+                    <input type="date" name="date_from" class="form-control">
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label">Hasta</label>
+                    <input type="date" name="date_to" class="form-control">
+                </div>
+                <div class="col-12 col-md-10">
                     <label class="form-label">Buscar</label>
-                    <input name="search" type="text" class="form-control" placeholder="Buscar por usuario, animal, sala o monitor">
+                    <input name="search" type="text" class="form-control"
+                        placeholder="Buscar por usuario, animal, sala o monitor">
                 </div>
                 <div class="col-12 col-md-2">
                     <button type="submit" class="btn bg-orange-primary w-100">

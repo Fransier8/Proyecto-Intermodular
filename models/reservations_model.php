@@ -1,7 +1,7 @@
 <?php
 require_once 'config/connect_db.php';
 
-function getReservations($search, $order, $status, $limit = null, $offset = 0)
+function getReservations($search, $order, $status, $date_from, $date_to, $limit = null, $offset = 0)
 {
     $con = get_conexion();
     $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
@@ -15,6 +15,16 @@ function getReservations($search, $order, $status, $limit = null, $offset = 0)
     if (!empty($status)) {
         $sql .= " AND r.status = :status";
         $params[':status'] = $status;
+    }
+
+    if (!empty($date_from)) {
+        $sql .= " AND r.date >= :date_from";
+        $params[':date_from'] = $date_from;
+    }
+
+    if (!empty($date_to)) {
+        $sql .= " AND r.date <= :date_to";
+        $params[':date_to'] = $date_to;
     }
 
     switch ($order) {
@@ -51,7 +61,7 @@ function getReservations($search, $order, $status, $limit = null, $offset = 0)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getReservationsByUserId($search, $order, $status, $user_id, $limit = null, $offset = 0)
+function getReservationsByUserId($search, $order, $status, $user_id, $date_from, $date_to, $limit = null, $offset = 0)
 {
     $con = get_conexion();
     $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
@@ -66,6 +76,16 @@ function getReservationsByUserId($search, $order, $status, $user_id, $limit = nu
     if (!empty($status)) {
         $sql .= " AND r.status = :status";
         $params[':status'] = $status;
+    }
+
+    if (!empty($date_from)) {
+        $sql .= " AND r.date >= :date_from";
+        $params[':date_from'] = $date_from;
+    }
+
+    if (!empty($date_to)) {
+        $sql .= " AND r.date <= :date_to";
+        $params[':date_to'] = $date_to;
     }
 
     switch ($order) {
@@ -178,7 +198,7 @@ function updateReservation($id, $data)
     ]);
 }
 
-function countReservations($search, $status)
+function countReservations($search, $status, $date_from, $date_to)
 {
     $con = get_conexion();
 
@@ -193,13 +213,23 @@ function countReservations($search, $status)
         $params[':status'] = $status;
     }
 
+    if (!empty($date_from)) {
+        $sql .= " AND r.date >= :date_from";
+        $params[':date_from'] = $date_from;
+    }
+
+    if (!empty($date_to)) {
+        $sql .= " AND r.date <= :date_to";
+        $params[':date_to'] = $date_to;
+    }
+
     $stmt = $con->prepare($sql);
     $stmt->execute($params);
 
     return $stmt->fetchColumn();
 }
 
-function countReservationsByUserId($search, $status, $user_id)
+function countReservationsByUserId($search, $status, $user_id, $date_from, $date_to)
 {
     $con = get_conexion();
 
@@ -215,6 +245,16 @@ function countReservationsByUserId($search, $status, $user_id)
     if (!empty($status)) {
         $sql .= " AND r.status = :status";
         $params[':status'] = $status;
+    }
+
+    if (!empty($date_from)) {
+        $sql .= " AND r.date >= :date_from";
+        $params[':date_from'] = $date_from;
+    }
+
+    if (!empty($date_to)) {
+        $sql .= " AND r.date <= :date_to";
+        $params[':date_to'] = $date_to;
     }
 
     $stmt = $con->prepare($sql);
@@ -267,7 +307,7 @@ function assignReservationMonitor($id, $monitor_id)
     return true;
 }
 
-function getReservationsByMonitorId($search, $order, $status, $monitor_id, $limit = null, $offset = 0)
+function getReservationsByMonitorId($search, $order, $status, $monitor_id, $date_from, $date_to, $limit = null, $offset = 0)
 {
     $con = get_conexion();
     $sql = "SELECT r.*, a.name AS animal_name, u.user_name AS user_user_name, m.user_name AS monitor_user_name, ro.code AS room_code FROM reservations r JOIN animals a ON r.animal_id = a.id JOIN users u ON r.user_id = u.id LEFT JOIN users m ON r.monitor_id = m.id
@@ -282,6 +322,16 @@ function getReservationsByMonitorId($search, $order, $status, $monitor_id, $limi
     if (!empty($status)) {
         $sql .= " AND r.status = :status";
         $params[':status'] = $status;
+    }
+
+    if (!empty($date_from)) {
+        $sql .= " AND r.date >= :date_from";
+        $params[':date_from'] = $date_from;
+    }
+
+    if (!empty($date_to)) {
+        $sql .= " AND r.date <= :date_to";
+        $params[':date_to'] = $date_to;
     }
 
     switch ($order) {
@@ -318,7 +368,7 @@ function getReservationsByMonitorId($search, $order, $status, $monitor_id, $limi
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function countReservationsByMonitorId($search, $status, $monitor_id)
+function countReservationsByMonitorId($search, $status, $monitor_id, $date_from, $date_to)
 {
     $con = get_conexion();
 
@@ -334,6 +384,16 @@ function countReservationsByMonitorId($search, $status, $monitor_id)
     if (!empty($status)) {
         $sql .= " AND r.status = :status";
         $params[':status'] = $status;
+    }
+
+    if (!empty($date_from)) {
+        $sql .= " AND r.date >= :date_from";
+        $params[':date_from'] = $date_from;
+    }
+
+    if (!empty($date_to)) {
+        $sql .= " AND r.date <= :date_to";
+        $params[':date_to'] = $date_to;
     }
 
     $stmt = $con->prepare($sql);

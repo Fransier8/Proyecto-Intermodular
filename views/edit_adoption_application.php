@@ -28,7 +28,7 @@
                                         !empty($animal['photo'])
                                         ? BASE_URL . "uploads/animals/" . htmlspecialchars($animal['photo'])
                                         : BASE_URL . "img/placeholder.webp";
-                                    ?>" class="img-fluid rounded w-100" style="aspect-ratio: 4/3; object-fit: cover;">
+                                    ?>" class="img-fluid rounded w-100" style="aspect-ratio: 4/3; object-fit: cover;" alt="">
                                 </div>
                                 <div class="col-12 col-md-8">
                                     <h4 class="mb-3">

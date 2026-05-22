@@ -22,7 +22,7 @@
                         <?php if (!empty($animal['photo'])): ?>
                             <div class="col-12 col-md-4">
                                 <img src="<?= BASE_URL ?>uploads/animals/<?= htmlspecialchars($animal['photo']) ?>"
-                                    class="img-fluid rounded w-100" style="aspect-ratio: 4/3; object-fit: cover;">
+                                    class="img-fluid rounded w-100" style="aspect-ratio: 4/3; object-fit: cover;" alt="">
                             </div>
                         <?php endif; ?>
                         <?php if (!empty($animal['photo'])): ?>
