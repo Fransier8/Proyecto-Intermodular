@@ -4,13 +4,19 @@
         require 'views/aside.php';
         ?>
         <section class="col p-3 overflow-auto">
-            <div class="d-flex align-items-center justify-content-between mb-2">
+            <div
+                class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3 mb-2">
                 <h1 class="mb-0">Reservas</h1>
-                <?php if ($_SESSION['user']['role'] == "administrador"): ?>
-                    <a href="<?= BASE_URL ?>crear_reserva" class="btn bg-orange-primary rounded-pill btn-lg px-4">
-                        Crear reserva
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="<?= BASE_URL ?>calendario_reservas" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                        Calendario
                     </a>
-                <?php endif; ?>
+                    <?php if ($_SESSION['user']['role'] == "administrador"): ?>
+                        <a href="<?= BASE_URL ?>crear_reserva" class="btn bg-orange-primary rounded-pill btn-lg px-4">
+                            Crear reserva
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
             <h4>Búsqueda y filtros</h4>
             <form class="row g-2 align-items-end">

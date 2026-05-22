@@ -100,60 +100,89 @@ aside {
 
 /* Calendar */
 
-.calendar-grid{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
-    gap:10px;
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
 }
 
-.calendar-header{
-    font-weight:bold;
-    text-align:center;
-    padding:10px;
+.calendar-header {
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
 }
 
-.calendar-cell{
-    border:1px solid #ccc;
-    border-radius:10px;
-    padding:8px;
-    min-height:120px;
-    transition:0.2s;
+.calendar-cell {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 8px;
+    min-height: 120px;
+    transition: 0.2s;
 }
 
-.calendar-day-number{
-    font-weight:bold;
-    margin-bottom:5px;
+.calendar-day-number {
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-.calendar-available{
-    background:#d1f7d6;
+.calendar-available {
+    background: #d1f7d6;
 }
 
-.calendar-unavailable{
-    background:#f3f3f3;
-    opacity:0.7;
+.calendar-unavailable {
+    background: #f3f3f3;
+    opacity: 0.7;
 }
 
-.calendar-selected{
-    background:#ffe082 !important;
-    border:2px solid #ff9800;
+.calendar-selected {
+    background: #ffe082 !important;
+    border: 2px solid #ff9800;
 }
 
 .slots-container {
     background: #fff;
     border-radius: 8px;
     padding: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 768px){
+.reservation-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
 
-    .calendar-grid{
-        grid-template-columns:repeat(2,1fr);
+.reservation-status-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.reservation-status-aceptada {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.reservation-status-cancelada {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.reservation-status-denegada {
+    background-color: #212529;
+    color: white;
+}
+
+@media (max-width: 768px) {
+
+    .calendar-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .calendar-cell{
-        min-height:auto;
+    .calendar-cell {
+        min-height: auto;
     }
 
 }

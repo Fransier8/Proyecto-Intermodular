@@ -1735,4 +1735,40 @@ function editReservationRequestDate()
         require 'views/public_edit_reservation_date.php';
     }
 }
+
+function loadBookingCalendar()
+{
+    $search = $_GET['search'] ?? '';
+    $order = 'date_asc';
+    $status = $_GET['status'] ?? '';
+    $date_from = $_GET['date_from'] ?? '';
+    $date_to = $_GET['date_to'] ?? '';
+
+    $reservations = getReservations($search, $order, $status, $date_from, $date_to, 9999, 0);
+
+    if (isset($_GET['ajax'])) {
+
+        header("Content-Type: application/json; charset=utf-8");
+
+        $result = [];
+
+        foreach ($reservations as $r) {
+            $result[] = [
+                "date" => $r['date'],
+                "start_time" => $r['start_time'],
+                "end_time" => $r['end_time'],
+                "status" => $r['status'],
+                "user_name" => $r['user_user_name'],
+                "animal_name" => $r['animal_name'],
+                "room_code" => $r['room_code'],
+                "monitor_name" => $r['monitor_user_name'] ?? null
+            ];
+        }
+
+        echo json_encode($result);
+        exit;
+    }
+
+    require 'views/booking_calendar.php';
+}
 ?>
