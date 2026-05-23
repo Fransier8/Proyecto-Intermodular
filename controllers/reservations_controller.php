@@ -910,12 +910,15 @@ function selectReservationDateUser()
 
         $reservations = getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($reservation['user_id'], $reservation['animal_id'], $reservation['room_id'], null);
 
+        $current_user_id = $_SESSION['user']['id'];
+
         $same_day_reservations = array_filter(
             $reservations,
-            function ($r) use ($date) {
+            function ($r) use ($date, $current_user_id) {
 
                 return (
                     isset($r['date']) &&
+                    $r['user_id'] == $current_user_id &&
                     $r['date'] === $date &&
                     $r['status'] !== "cancelada" &&
                     $r['status'] !== "denegada"
@@ -934,11 +937,12 @@ function selectReservationDateUser()
 
         $animal_reservations_week = array_filter(
             $reservations,
-            function ($r) use ($reservation, $selected_week, $selected_year) {
+            function ($r) use ($reservation, $selected_week, $selected_year, $current_user_id) {
 
                 return (
                     $r['status'] !== "cancelada" &&
                     $r['status'] !== "denegada" &&
+                    $r['user_id'] == $current_user_id &&
                     (int) $r['animal_id'] === (int) $reservation['animal_id'] &&
                     getWeekNumber($r['date']) === $selected_week &&
                     date('Y', strtotime($r['date'])) == $selected_year
@@ -953,11 +957,12 @@ function selectReservationDateUser()
 
         $room_reservations_week = array_filter(
             $reservations,
-            function ($r) use ($reservation, $selected_week, $selected_year) {
+            function ($r) use ($reservation, $selected_week, $selected_year, $current_user_id) {
 
                 return (
                     $r['status'] !== "cancelada" &&
                     $r['status'] !== "denegada" &&
+                    $r['user_id'] == $current_user_id &&
                     (int) $r['room_id'] === (int) $reservation['room_id'] &&
                     getWeekNumber($r['date']) === $selected_week &&
                     date('Y', strtotime($r['date'])) == $selected_year
@@ -1604,6 +1609,75 @@ function editReservationRequestDate()
         }
 
         $reservations = getReservationsByUserIdOrAnimalIdOrRoomIdOrMonitorId($_SESSION['user']['id'], $reservation['animal_id'], $reservation['room_id'], $reservation['monitor_id']);
+
+        $current_user_id = $_SESSION['user']['id'];
+
+        $same_day_reservations = array_filter(
+            $reservations,
+            function ($r) use ($date, $current_user_id, $reservation) {
+
+                return (
+                    isset($r['date']) &&
+                    $r['user_id'] == $current_user_id &&
+                    $r['id'] != $reservation['id'] &&
+                    $r['date'] === $date &&
+                    $r['status'] !== "cancelada" &&
+                    $r['status'] !== "denegada"
+                );
+            }
+        );
+
+        if (count($same_day_reservations) >= 1) {
+            $errors[] =
+                "No puedes realizar más de una reserva el mismo día.";
+        }
+
+        $selected_week = getWeekNumber($date);
+
+        $selected_year = date('Y', strtotime($date));
+
+        $animal_reservations_week = array_filter(
+            $reservations,
+            function ($r) use ($reservation, $selected_week, $selected_year, $current_user_id) {
+
+                return (
+                    $r['status'] !== "cancelada" &&
+                    $r['status'] !== "denegada" &&
+                    $r['user_id'] == $current_user_id &&
+                    (int) $r['animal_id'] === (int) $reservation['animal_id'] &&
+                    $r['id'] != $reservation['id'] &&
+                    getWeekNumber($r['date']) === $selected_week &&
+                    date('Y', strtotime($r['date'])) == $selected_year
+                );
+            }
+        );
+
+        if (count($animal_reservations_week) >= 2) {
+            $errors[] =
+                "No puedes reservar el mismo animal más de 2 veces por semana.";
+        }
+
+        $room_reservations_week = array_filter(
+            $reservations,
+            function ($r) use ($reservation, $selected_week, $selected_year, $current_user_id) {
+
+                return (
+                    $r['status'] !== "cancelada" &&
+                    $r['status'] !== "denegada" &&
+                    $r['user_id'] == $current_user_id &&
+                    (int) $r['room_id'] === (int) $reservation['room_id'] &&
+                    $r['id'] != $reservation['id'] &&
+                    getWeekNumber($r['date']) === $selected_week &&
+                    date('Y', strtotime($r['date'])) == $selected_year
+                );
+            }
+        );
+
+        if (count($room_reservations_week) >= 2) {
+            $errors[] =
+                "No puedes reservar la misma sala más de 2 veces por semana.";
+        }
+
 
         $new_start = strtotime($date . " " . $start_time);
         $new_end = strtotime($date . " " . $end_time);

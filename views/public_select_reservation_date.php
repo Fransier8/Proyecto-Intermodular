@@ -418,7 +418,7 @@
 
             const sameDayReservations =
                 existingReservations.filter(r =>
-                    r.date == date &&
+                    r.date == date && parseInt(r.user_id) == parseInt(userId) &&
                     r.status != "cancelada" && r.status != "denegada"
                 );
 
@@ -455,7 +455,7 @@
                     const reservationDate = new Date(r.date);
 
                     return (
-                        parseInt(r.animal_id) === parseInt(animalId) &&
+                        parseInt(r.animal_id) === parseInt(animalId) && parseInt(r.user_id) == parseInt(userId) &&
                         getWeekNumber(r.date) === selectedWeek &&
                         reservationDate.getFullYear() === selectedYear
                     );
@@ -478,7 +478,7 @@
                     const reservationDate = new Date(r.date);
 
                     return (
-                        parseInt(r.room_id) === parseInt(roomId) &&
+                        parseInt(r.room_id) === parseInt(roomId) && parseInt(r.user_id) == parseInt(userId) &&
                         getWeekNumber(r.date) === selectedWeek &&
                         reservationDate.getFullYear() === selectedYear
                     );
