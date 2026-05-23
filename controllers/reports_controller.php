@@ -32,8 +32,9 @@ function downloadAnimalsPdf()
     $animals = getAnimals("", "name_asc", "", "", "", 1, null, 0, true);
     $deactivated_animals = getAnimals("", "name_asc", "", "", "", "0", null, 0, true);
 
-    $html = "";
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
+    $html = '<meta charset="UTF-8">';
     $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
     $html .= renderAnimalsSection("Lista de animales activos", $animals);
     $html .= "<div style='page-break-before: always;'></div>";
@@ -172,8 +173,9 @@ function downloadUsersPdf()
     $users = getUsers("", "user_name_asc", "", 1, null, 0);
     $deactivated_users = getUsers("", "user_name_asc", "", "0", null, 0);
 
-    $html = "";
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
+    $html = '<meta charset="UTF-8">';
     $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
     $html .= renderUsersSection("Lista de usuarios activos", $users);
     $html .= "<div style='page-break-before: always;'></div>";
@@ -292,8 +294,9 @@ function downloadRoomsPdf()
 
     unset($room);
 
-    $html = "";
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
+    $html = '<meta charset="UTF-8">';
     $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
     $html .= renderRoomsSection("Lista de salas activas", $rooms);
     $html .= "<div style='page-break-before: always;'></div>";
@@ -422,8 +425,9 @@ function downloadSpeciesPdf()
 
     $species = getSpecies("", "name_asc", null, 0);
 
-    $html = "";
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
+    $html = '<meta charset="UTF-8">';
     $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
     $html .= renderSpeciesSection("Lista de especies", $species);
 
@@ -474,8 +478,9 @@ function downloadReservationsPdf()
 
     $reservations = getReservations("", "date_desc", "", "", "", null, 0);
 
-    $html = "";
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
+    $html = '<meta charset="UTF-8">';
     $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
     $html .= renderReservationsSection("Lista de reservas", $reservations);
     $dompdf = new Dompdf();
@@ -575,8 +580,10 @@ function downloadUserReservationsPdf()
 
     $reservations = getReservationsByUserId("", "date_desc", "", $_SESSION['user']['id'], "", "", null, 0);
 
-    $html = "";
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
+    $html = '<meta charset="UTF-8">';
+    $html = '<meta charset="UTF-8">';
     $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
     $html .= renderReservationsSection("Lista de reservas", $reservations);
     $dompdf = new Dompdf();
@@ -602,8 +609,9 @@ function downloadMonitorReservationsPdf()
 
     $reservations = getReservationsByMonitorId("", "date_desc", "", $_SESSION['user']['id'], "", "", null, 0);
 
-    $html = "";
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
 
+    $html = '<meta charset="UTF-8">';
     $html .= "<style>" . file_get_contents(__DIR__ . "/../styles/pdf_styles.css") . "</style>";
     $html .= renderReservationsSection("Lista de reservas", $reservations);
     $dompdf = new Dompdf();
