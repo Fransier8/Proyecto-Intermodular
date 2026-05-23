@@ -78,7 +78,7 @@
 
                                     <div id="schedulesContainer"></div>
 
-                                    <button type="button" class="btn btn-sm btn-success mt-2" onclick="addSchedule()">
+                                    <button type="button" class="btn btn-success mt-2 w-100 w-md-auto" onclick="addSchedule()">
                                         + Añadir horario
                                     </button>
                                 </div>

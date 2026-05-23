@@ -50,11 +50,13 @@ $current_date->setTime(0, 0, 0);
                         <div class="d-flex gap-2">
                             <?php if ($_SESSION['user']['role'] == "administrador"): ?>
                                 <?php if ($reservation['status'] == "pendiente"): ?>
-                                    <a href="<?= BASE_URL ?>modificar_reserva/<?= $reservation['id'] ?>"
-                                        class="btn btn-sm bg-orange-primary d-flex align-items-center gap-1">
-                                        <i class="bi bi-pencil"></i>
-                                        <span>Modificar</span>
-                                    </a>
+                                    <?php if (new DateTime($reservation['date']) > $current_date): ?>
+                                        <a href="<?= BASE_URL ?>modificar_reserva/<?= $reservation['id'] ?>"
+                                            class="btn btn-sm bg-orange-primary d-flex align-items-center gap-1">
+                                            <i class="bi bi-pencil"></i>
+                                            <span>Modificar</span>
+                                        </a>
+                                    <?php endif; ?>
                                     <?php if ($reservation['monitor_id']): ?>
                                         <button class="btn btn-sm accept-btn btn-success d-flex align-items-center gap-1"
                                             data-id="<?= $reservation['id'] ?>">
