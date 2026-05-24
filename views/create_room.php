@@ -60,7 +60,7 @@
 
 
                                 <div class="col">
-                                    <label class="fw-bold">Fotos:</label>
+                                    <label class="form-label fw-bold">Fotos (opcional):</label>
                                     <input type="file" name="photos[]" multiple class="form-control">
                                 </div>
 

@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <label class="form-label fw-bold">Raza:</label>
+                                    <label class="form-label fw-bold">Raza (opcional):</label>
                                     <input type="text" name="breed" class="form-control" maxlength="300"
                                         placeholder="Escribe la raza" value="<?= htmlspecialchars($animal['breed']) ?>">
                                 </div>
@@ -60,7 +60,7 @@
                                 </div>
 
                                 <div class="col">
-                                    <label class="form-label fw-bold">Fecha de nacimiento:</label>
+                                    <label class="form-label fw-bold">Fecha de nacimiento (opcional):</label>
                                     <input type="date" name="birth_day" class="form-control"
                                         value="<?= htmlspecialchars($animal['birth_day']) ?>">
                                 </div>
@@ -73,7 +73,7 @@
                                 </div>
 
                                 <div class="col">
-                                    <label class="fw-bold">Foto:</label>
+                                    <label class="form-label fw-bold">Foto (opcional):</label>
                                     <input type="file" name="photo" class="form-control">
                                 </div>
 
