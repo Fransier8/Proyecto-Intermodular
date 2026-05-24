@@ -1433,7 +1433,7 @@ function denyReservation()
 
         $reservation = getReservationById($id);
 
-        if (!$reservation || !$reservation['monitor_id']) {
+        if (!$reservation) {
             echo json_encode([
                 'success' => false,
                 'message' => 'Reserva inválida'

@@ -22,7 +22,7 @@
                             <a href="<?= BASE_URL ?>mis_reservas">Mis reservas</a>
                         </li>
                     <?php endif; ?>
-                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>crear_reserva">Solicitar reserva</a></li>
+                    <li class="breadcrumb-item"><a href="<?= BASE_URL ?>solicitar_reserva">Solicitar reserva</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Seleccionar fecha reserva solicitada</li>
                 </ol>
             </nav>
